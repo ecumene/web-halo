@@ -1,0 +1,25 @@
+port/web/tests/shell_loading_input_test.js
+  s_f22d08b6c8b199::t_b57141efa282ad 92-100
+port/web/shell.html
+  s_f22d08b6c8b199::t_b57141efa282ad 1582,1766-1787,1928-1931,1940
+port/linux/src/sdl_platform.c
+  s_f22d08b6c8b199::t_b57141efa282ad 865-872
+port/linux/src/xinput_sdl.c
+  s_f22d08b6c8b199::t_b57141efa282ad 6-7
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "25ba5abcda98e8c2cdf187c9a684dbdda6920929",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
