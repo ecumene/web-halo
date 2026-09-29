@@ -1,0 +1,4036 @@
+.github/workflows/deploy.yml
+  s_f22d08b6c8b199::t_7293ae67302624 1-32,34-38
+  s_f22d08b6c8b199::t_9e4f4870e05410 33
+README.md
+  s_f22d08b6c8b199::t_7293ae67302624 2,7-77,83-199
+  s_f22d08b6c8b199::t_9e4f4870e05410 1,3-6,78-82
+.github/workflows/ci.yml
+  s_f22d08b6c8b199::t_7293ae67302624 1-39
+.github/scripts/verify-source-only.mjs
+  s_f22d08b6c8b199::t_9e4f4870e05410 11,13,20-27,31-34
+  s_f22d08b6c8b199::t_7293ae67302624 1-10,12,14-19,28-30,35-48
+.editorconfig
+  s_f22d08b6c8b199::t_e42d7e8d38ecb9 1
+.gitignore
+  s_f22d08b6c8b199::t_9e2dfae30811ff 1-45
+LICENSE.md
+  s_f22d08b6c8b199::t_e4d5583c4bd6c0 1-121
+config/config.json
+  s_f22d08b6c8b199::t_f7bd7a239c3952 1-1304
+config/contribs.json
+  s_f22d08b6c8b199::t_03e4544b75152a 1-22457
+config/object_admission_rejections.json
+  s_f22d08b6c8b199::t_7d1258596f20ed 1-45
+config/parked.json
+  s_f22d08b6c8b199::t_5b2dfc6c2dc2dc 1-1162
+config/regression_adjudications_xdk_plasma_energy.json
+  s_f22d08b6c8b199::t_bf87e0ed4206ac 1-20
+config/regression_adjudications_xdk_text.json
+  s_f22d08b6c8b199::t_6c82de1996290b 1-102
+config/relocs.json
+  s_f22d08b6c8b199::t_b2832b5dbe11b5 1-113827
+config/semantic_credit_rejections.json
+  s_f22d08b6c8b199::t_d98052b19a43dd 1-4
+config/semantic_data_matches.json
+  s_f22d08b6c8b199::t_b0ad012842d8e8 1-581
+config/semantic_matches.json
+  s_f22d08b6c8b199::t_49fe972af8dfec 1-587
+config/splits.json
+  s_f22d08b6c8b199::t_359390a2d61f1d 1-68
+config/symbol_ownership.json
+  s_f22d08b6c8b199::t_a0533138704130 1-39
+config/symbols.json
+  s_f22d08b6c8b199::t_de8aa6eb86bfd2 1-23861
+configure.py
+  s_f22d08b6c8b199::t_f0e5c14e795569 1-240
+docs/telemetry.md
+  s_f22d08b6c8b199::t_6da3350c74c3f9 1-63
+libs/binkxbox/bink.h
+  s_f22d08b6c8b199::t_c4539104f46395 1-429
+libs/binkxbox/binkac.c
+  s_f22d08b6c8b199::t_0feb5ea73008dd 1-142
+libs/binkxbox/binkaudio.h
+  s_f22d08b6c8b199::t_20d5e7611788f0 1-35
+libs/binkxbox/binkaudio_internal.h
+  s_f22d08b6c8b199::t_c2aebb532d54ea 1-41
+libs/binkxbox/binkds.cpp
+  s_f22d08b6c8b199::t_3c1f9c5929d52f 1-369
+libs/binkxbox/binkds.h
+  s_f22d08b6c8b199::t_24a9e1b69b974b 1-12
+libs/binkxbox/binkds_state.h
+  s_f22d08b6c8b199::t_9c4039a63e6282 1-35
+libs/binkxbox/binkds_volume_table.inc
+  s_f22d08b6c8b199::t_5b1f1ef8c1f1d6 1-16
+libs/binkxbox/binkfile.c
+  s_f22d08b6c8b199::t_f2efad7fcdecbf 1-402
+libs/binkxbox/binkfile.h
+  s_f22d08b6c8b199::t_c8914dca65fb85 1-17
+libs/binkxbox/binkio.h
+  s_f22d08b6c8b199::t_1af59bf4c7e5ea 1-103
+libs/binkxbox/binkread.c
+  s_f22d08b6c8b199::t_77819ddb722fad 1-1239
+libs/binkxbox/binkxbox.c
+  s_f22d08b6c8b199::t_525e336f8a6512 1-159
+libs/binkxbox/binkxbox.h
+  s_f22d08b6c8b199::t_9e49d887d5173a 1-19
+libs/binkxbox/radcb.c
+  s_f22d08b6c8b199::t_6932b563022673 1-483
+libs/binkxbox/radcb.h
+  s_f22d08b6c8b199::t_d35e0bca6f285d 1-104
+libs/binkxbox/radmath.h
+  s_f22d08b6c8b199::t_a63a116d2a2b87 1-17
+libs/binkxbox/radmem.h
+  s_f22d08b6c8b199::t_589c58878ea0b8 1-17
+libs/binkxbox/radplatform.h
+  s_f22d08b6c8b199::t_a07f5fd280c817 1-16
+libs/binkxbox/radtimer.h
+  s_f22d08b6c8b199::t_25d1400f497ba5 1-7
+libs/binkxbox/varbits.c
+  s_f22d08b6c8b199::t_afca1673259c3e 1-47
+libs/binkxbox/varbits.h
+  s_f22d08b6c8b199::t_668af496770434 1-59
+libs/binkxbox/wintimer.c
+  s_f22d08b6c8b199::t_49d2ed0f06c647 1-65
+libs/d3d8/LICENSE.GPL-3.0
+  s_f22d08b6c8b199::t_01836bf9d2b0b9 1-674
+libs/d3d8/PROVENANCE.md
+  s_f22d08b6c8b199::t_96cfcf2c3439f7 1-52
+libs/d3d8/README.md
+  s_f22d08b6c8b199::t_b9f799f693edba 1-25
+libs/d3d8/block.cpp
+  s_f22d08b6c8b199::t_c56399a1fb8a1f 1-718
+libs/d3d8/block_internal.h
+  s_f22d08b6c8b199::t_b0716f30bdf621 1-68
+libs/d3d8/buffer.cpp
+  s_f22d08b6c8b199::t_2b4369ba748aeb 1-140
+libs/d3d8/buffer_internal.h
+  s_f22d08b6c8b199::t_18c80c053571d3 1-9
+libs/d3d8/checksum_internal.h
+  s_f22d08b6c8b199::t_bf3af601adafc3 1-19
+libs/d3d8/clear.cpp
+  s_f22d08b6c8b199::t_67483fa9bcca86 1-172
+libs/d3d8/combiner.cpp
+  s_f22d08b6c8b199::t_d9dbc123680a2d 1-793
+libs/d3d8/combiner_internal.h
+  s_f22d08b6c8b199::t_9e29c9bf2f5b58 1-79
+libs/d3d8/d3dbase.cpp
+  s_f22d08b6c8b199::t_5fc0f4c6eaf7e2 1-1275
+libs/d3d8/d3ddev.cpp
+  s_f22d08b6c8b199::t_0b48ff3f2495ce 1-39
+libs/d3d8/device_layout.h
+  s_f22d08b6c8b199::t_22d4608d6284e2 1-732
+libs/d3d8/display_internal.h
+  s_f22d08b6c8b199::t_fde1c781a53ed0 1-75
+libs/d3d8/display_modes.inc
+  s_f22d08b6c8b199::t_c69e6850c3f606 1-193
+libs/d3d8/draw_internal.h
+  s_f22d08b6c8b199::t_2502ce5e1d2f15 1-10
+libs/d3d8/drawprim.cpp
+  s_f22d08b6c8b199::t_00fb3733c6b2b9 1-260
+libs/d3d8/dxgcreate.cpp
+  s_f22d08b6c8b199::t_87b4f2ccdf59ab 1-340
+libs/d3d8/dxgcreate_internal.h
+  s_f22d08b6c8b199::t_7ec7e7d3f0eae7 1-34
+libs/d3d8/enum.cpp
+  s_f22d08b6c8b199::t_d46167bbf90c31 1-192
+libs/d3d8/floatmath.cpp
+  s_f22d08b6c8b199::t_29879bf6a368dc 1-27
+libs/d3d8/generate_sdk_overlay.py
+  s_f22d08b6c8b199::t_175ffd7cc791eb 1-62
+libs/d3d8/graphics_context_internal.h
+  s_f22d08b6c8b199::t_53f426633d9f1b 1-42
+libs/d3d8/hardware_internal.h
+  s_f22d08b6c8b199::t_ede2a278f26ed1 1-134
+libs/d3d8/initial_states.inc
+  s_f22d08b6c8b199::t_d39d58ecf358c7 1-127
+libs/d3d8/kernel_clock.h
+  s_f22d08b6c8b199::t_926ea9d18e4b89 1-9
+libs/d3d8/kernel_debug.h
+  s_f22d08b6c8b199::t_d2a8e3d5730a7a 1-7
+libs/d3d8/kernel_dispatcher.h
+  s_f22d08b6c8b199::t_d419e5355021a2 1-53
+libs/d3d8/kernel_gpu.h
+  s_f22d08b6c8b199::t_0ea6baa946b2d0 1-14
+libs/d3d8/kernel_interrupt.h
+  s_f22d08b6c8b199::t_4f46d78291e90d 1-53
+libs/d3d8/kernel_memory.h
+  s_f22d08b6c8b199::t_b8baa675f2502a 1-20
+libs/d3d8/kernel_records.h
+  s_f22d08b6c8b199::t_58a687fb9386b3 1-68
+libs/d3d8/lazy.cpp
+  s_f22d08b6c8b199::t_4055f51ebbf71a 1-1028
+libs/d3d8/lazy_internal.h
+  s_f22d08b6c8b199::t_f604f89c7e73b9 1-89
+libs/d3d8/math.cpp
+  s_f22d08b6c8b199::t_42e0f5e034646d 1-73
+libs/d3d8/math_internal.h
+  s_f22d08b6c8b199::t_e0de32c016cd17 1-59
+libs/d3d8/memory.cpp
+  s_f22d08b6c8b199::t_c385a8086fa47b 1-160
+libs/d3d8/memory_internal.h
+  s_f22d08b6c8b199::t_e1229b25b22bca 1-46
+libs/d3d8/miniport_constants.h
+  s_f22d08b6c8b199::t_62879fc947e225 1-69
+libs/d3d8/mpcore.cpp
+  s_f22d08b6c8b199::t_41017006aafea5 1-564
+libs/d3d8/mpdac.cpp
+  s_f22d08b6c8b199::t_237667bff0d2f3 1-46
+libs/d3d8/mphal.cpp
+  s_f22d08b6c8b199::t_28cf9d0bb99355 1-1124
+libs/d3d8/mpintr.cpp
+  s_f22d08b6c8b199::t_ec3c461e764d12 1-419
+libs/d3d8/mpmode.cpp
+  s_f22d08b6c8b199::t_cd2deffbc03487 1-167
+libs/d3d8/notification_internal.h
+  s_f22d08b6c8b199::t_db8048ada9c89f 1-16
+libs/d3d8/pixeljar.cpp
+  s_f22d08b6c8b199::t_c237d826275b38 1-442
+libs/d3d8/pixeljar.h
+  s_f22d08b6c8b199::t_62b53049671243 1-248
+libs/d3d8/present.cpp
+  s_f22d08b6c8b199::t_aa3f0185aedb70 1-381
+libs/d3d8/present_internal.h
+  s_f22d08b6c8b199::t_6bb27a3d090f93 1-60
+libs/d3d8/pshader.cpp
+  s_f22d08b6c8b199::t_1eeebb2d379c96 1-185
+libs/d3d8/push_float_internal.h
+  s_f22d08b6c8b199::t_8c64d366c4692a 1-56
+libs/d3d8/push_internal.h
+  s_f22d08b6c8b199::t_4de5b729f1e819 1-215
+libs/d3d8/pusher.cpp
+  s_f22d08b6c8b199::t_6ca59b58bdc6cb 1-386
+libs/d3d8/pusher_state.h
+  s_f22d08b6c8b199::t_78e74faaee8fd4 1-27
+libs/d3d8/resource.cpp
+  s_f22d08b6c8b199::t_e4d5cbfa11daaa 1-371
+libs/d3d8/resource_internal.h
+  s_f22d08b6c8b199::t_4e7a7268645185 1-32
+libs/d3d8/state.cpp
+  s_f22d08b6c8b199::t_9bf823105bf68d 1-677
+libs/d3d8/state_internal.h
+  s_f22d08b6c8b199::t_9abe22a652e292 1-43
+libs/d3d8/surface.cpp
+  s_f22d08b6c8b199::t_a5fd7b9541bede 1-173
+libs/d3d8/surface_internal.h
+  s_f22d08b6c8b199::t_4d357f598e7b83 1-19
+libs/d3d8/texture.cpp
+  s_f22d08b6c8b199::t_6e20795b5aa5ed 1-135
+libs/d3d8/visibility_internal.h
+  s_f22d08b6c8b199::t_66bca3a8c3482e 1-19
+libs/d3d8/vshader.cpp
+  s_f22d08b6c8b199::t_42492bfe65f6e4 1-822
+libs/d3d8/vshader_internal.h
+  s_f22d08b6c8b199::t_51b1da29e06240 1-90
+libs/d3d8/xmetal_internal.h
+  s_f22d08b6c8b199::t_825a2b80dafaf0 1-47
+libs/d3d8/xmetal_memory_internal.h
+  s_f22d08b6c8b199::t_ff72f44e7901a4 1-39
+libs/libcmt/_ctype.c
+  s_f22d08b6c8b199::t_b7d54e48d37c21 1-166
+libs/libcmt/_filbuf.c
+  s_f22d08b6c8b199::t_8e730102308873 1-128
+libs/libcmt/_file.c
+  s_f22d08b6c8b199::t_a0db9d64852b19 1-250
+libs/libcmt/_filwbuf.c
+  s_f22d08b6c8b199::t_f2782065d59b92 1-126
+libs/libcmt/_flsbuf.c
+  s_f22d08b6c8b199::t_120a61e5bff300 1-156
+libs/libcmt/_freebuf.c
+  s_f22d08b6c8b199::t_ffa97e982b7e90 1-30
+libs/libcmt/_getbuf.c
+  s_f22d08b6c8b199::t_fbbe54a1f2b594 1-45
+libs/libcmt/_newmode.c
+  s_f22d08b6c8b199::t_47615df58a3b73 1-10
+libs/libcmt/_open.c
+  s_f22d08b6c8b199::t_bab3ec6ec47c76 1-168
+libs/libcmt/_sftbuf.c
+  s_f22d08b6c8b199::t_d59560dcfb974b 1-87
+libs/libcmt/_wopen.c
+  s_f22d08b6c8b199::t_a4f86ab863ac21 1-175
+libs/libcmt/atox.c
+  s_f22d08b6c8b199::t_875befb9139cc6 1-84
+libs/libcmt/calloc.c
+  s_f22d08b6c8b199::t_80ff12b26ea3e7 1-65
+libs/libcmt/cfin.c
+  s_f22d08b6c8b199::t_c6f5912282c8cf 1-111
+libs/libcmt/cfout.c
+  s_f22d08b6c8b199::t_0158e8039f7b3a 1-156
+libs/libcmt/cmiscdat.c
+  s_f22d08b6c8b199::t_894fb96e4b8ccd 1-24
+libs/libcmt/constpow.c
+  s_f22d08b6c8b199::t_0b6a409fe07d18 1-84
+libs/libcmt/crt0.c
+  s_f22d08b6c8b199::t_1229be64fbd134 1-39
+libs/libcmt/crt0dat.c
+  s_f22d08b6c8b199::t_2ddf54a56e7b9d 1-143
+libs/libcmt/crt0fp.c
+  s_f22d08b6c8b199::t_c9b463a22e2c42 1-21
+libs/libcmt/crt0init.c
+  s_f22d08b6c8b199::t_9d250cbd89f494 1-30
+libs/libcmt/crt0msg.c
+  s_f22d08b6c8b199::t_bb52c91753771f 1-384
+libs/libcmt/ctype.c
+  s_f22d08b6c8b199::t_90491486340912 1-440
+libs/libcmt/cv.h
+  s_f22d08b6c8b199::t_fdfbb9fa97ea8b 1-89
+libs/libcmt/days.c
+  s_f22d08b6c8b199::t_d06816cf7c99dd 1-19
+libs/libcmt/delete.c
+  s_f22d08b6c8b199::t_b4f4bb51ad2c62 1-16
+libs/libcmt/dosmap.c
+  s_f22d08b6c8b199::t_b6d0208ab8a056 1-137
+libs/libcmt/fileatt.c
+  s_f22d08b6c8b199::t_14b83fa65b9cc7 1-66
+libs/libcmt/filecrea.c
+  s_f22d08b6c8b199::t_88b0ca6df72cf8 1-68
+libs/libcmt/filedel.c
+  s_f22d08b6c8b199::t_94c122088a1d31 1-41
+libs/libcmt/fp8.c
+  s_f22d08b6c8b199::t_4bca11cdf64743 1-27
+libs/libcmt/frnd.c
+  s_f22d08b6c8b199::t_a7e2e0c1dd4a11 1-21
+libs/libcmt/gmtime.c
+  s_f22d08b6c8b199::t_d37d4a874854e4 1-141
+libs/libcmt/handler.c
+  s_f22d08b6c8b199::t_e03579fbeb7a2f 1-59
+libs/libcmt/heapinit.c
+  s_f22d08b6c8b199::t_6996a33caeb9e2 1-19
+libs/libcmt/huge.c
+  s_f22d08b6c8b199::t_95225612dd497f 1-10
+libs/libcmt/ioinit.c
+  s_f22d08b6c8b199::t_f627ff32b7530c 1-97
+libs/libcmt/isatty.c
+  s_f22d08b6c8b199::t_6ebe395aee82a2 1-60
+libs/libcmt/isctype.c
+  s_f22d08b6c8b199::t_bde19c6ba88fcc 1-32
+libs/libcmt/ismbspc.c
+  s_f22d08b6c8b199::t_4ab6c8cb2fbdd5 1-20
+libs/libcmt/iswctype.c
+  s_f22d08b6c8b199::t_a1de5c47402861 1-47
+libs/libcmt/lldiv.asm
+  s_f22d08b6c8b199::t_62c0b0809ad6e5 1-95
+libs/libcmt/llmul.asm
+  s_f22d08b6c8b199::t_d546d64dfab052 1-36
+libs/libcmt/llshr.asm
+  s_f22d08b6c8b199::t_6a1aebd1ec2227 1-35
+libs/libcmt/localtim.c
+  s_f22d08b6c8b199::t_c18c0bc830e395 1-147
+libs/libcmt/malloc.c
+  s_f22d08b6c8b199::t_49fdd7cbcdebeb 1-82
+libs/libcmt/mantold.c
+  s_f22d08b6c8b199::t_c168aed6c5b61f 1-145
+libs/libcmt/matherr.c
+  s_f22d08b6c8b199::t_bb37c66a918727 1-23
+libs/libcmt/mbstowcs.c
+  s_f22d08b6c8b199::t_48776318684c0e 1-44
+libs/libcmt/mbtowc.c
+  s_f22d08b6c8b199::t_1832ac339bc342 1-34
+libs/libcmt/ncommode.c
+  s_f22d08b6c8b199::t_e00102a2962bec 1-10
+libs/libcmt/new.c
+  s_f22d08b6c8b199::t_36d863e2ab3291 1-9
+libs/libcmt/nlsdata1.c
+  s_f22d08b6c8b199::t_ad777459d2c941 1-14
+libs/libcmt/nlsdata2.c
+  s_f22d08b6c8b199::t_369522c51ffb07 1-17
+libs/libcmt/output.c
+  s_f22d08b6c8b199::t_071d4420eeca1c 1-662
+libs/libcmt/purevirt.c
+  s_f22d08b6c8b199::t_2e8c7346b45650 1-21
+libs/libcmt/rand.c
+  s_f22d08b6c8b199::t_dc2fef5c834751 1-50
+libs/libcmt/snprintf.c
+  s_f22d08b6c8b199::t_55e72832b4dc17 1-43
+libs/libcmt/snwprint.c
+  s_f22d08b6c8b199::t_69d183f1efd53b 1-43
+libs/libcmt/sprintf.c
+  s_f22d08b6c8b199::t_823055c5c73131 1-64
+libs/libcmt/stream.c
+  s_f22d08b6c8b199::t_4cfcc3c6811b71 1-137
+libs/libcmt/strerror.c
+  s_f22d08b6c8b199::t_df9786f3b7ba4f 1-80
+libs/libcmt/stricmp.c
+  s_f22d08b6c8b199::t_d32972211ae08a 1-45
+libs/libcmt/strncmp.asm
+  s_f22d08b6c8b199::t_0aa8748492b57f 1-47
+libs/libcmt/strnicmp.c
+  s_f22d08b6c8b199::t_e7e8dd08da6fb7 1-52
+libs/libcmt/strrchr.asm
+  s_f22d08b6c8b199::t_294a3f23fa1982 1-40
+libs/libcmt/strtok.c
+  s_f22d08b6c8b199::t_67478e446d50c2 1-70
+libs/libcmt/strtol.c
+  s_f22d08b6c8b199::t_704f2ebdb7a3b9 1-185
+libs/libcmt/syserr.c
+  s_f22d08b6c8b199::t_e7b634c5edca63 1-59
+libs/libcmt/tenpow.c
+  s_f22d08b6c8b199::t_7e01eb15331f80 1-285
+libs/libcmt/time.c
+  s_f22d08b6c8b199::t_fec9bdb5e8ccc7 1-44
+libs/libcmt/timeset.c
+  s_f22d08b6c8b199::t_ee1336c519e076 1-21
+libs/libcmt/tolower.c
+  s_f22d08b6c8b199::t_513ca1ef63b81a 1-47
+libs/libcmt/toupper.c
+  s_f22d08b6c8b199::t_362b61adc439b1 1-47
+libs/libcmt/towlower.c
+  s_f22d08b6c8b199::t_78dce22e53621a 1-52
+libs/libcmt/towupper.c
+  s_f22d08b6c8b199::t_07b42b9195bc4d 1-52
+libs/libcmt/txtmode.c
+  s_f22d08b6c8b199::t_f5d9022f2fcb73 1-10
+libs/libcmt/ulldiv.asm
+  s_f22d08b6c8b199::t_6a22655b0a4bdc 1-62
+libs/libcmt/ulldvrm.asm
+  s_f22d08b6c8b199::t_53c931f145e569 1-78
+libs/libcmt/ullrem.asm
+  s_f22d08b6c8b199::t_f0b57cab418604 1-63
+libs/libcmt/ullshr.asm
+  s_f22d08b6c8b199::t_76c5596621ab1d 1-34
+libs/libcmt/unlink.c
+  s_f22d08b6c8b199::t_709a19f6d1a161 1-45
+libs/libcmt/vsnprint.c
+  s_f22d08b6c8b199::t_fcaf725b5ab127 1-39
+libs/libcmt/vsnwprnt.c
+  s_f22d08b6c8b199::t_2fda18232bb64b 1-40
+libs/libcmt/vsprintf.c
+  s_f22d08b6c8b199::t_3f1a970f925312 1-58
+libs/libcmt/vswprint.c
+  s_f22d08b6c8b199::t_9727de000976ea 1-58
+libs/libcmt/waccess.c
+  s_f22d08b6c8b199::t_bb3173bf40355c 1-68
+libs/libcmt/wasctime.c
+  s_f22d08b6c8b199::t_728ad7f7939dc2 1-120
+libs/libcmt/wchtodig.c
+  s_f22d08b6c8b199::t_9e3c5cd3581182 1-78
+libs/libcmt/wcscat.c
+  s_f22d08b6c8b199::t_32e8d2212a7475 1-48
+libs/libcmt/wcschr.c
+  s_f22d08b6c8b199::t_bd747f0e11e372 1-25
+libs/libcmt/wcscmp.c
+  s_f22d08b6c8b199::t_9bce08120a247d 1-32
+libs/libcmt/wcscoll.c
+  s_f22d08b6c8b199::t_b66148eef24d2b 1-25
+libs/libcmt/wcscspn.c
+  s_f22d08b6c8b199::t_9c548a05c70986 1-37
+libs/libcmt/wcsicmp.c
+  s_f22d08b6c8b199::t_9785739c2fb4b7 1-69
+libs/libcmt/wcslen.c
+  s_f22d08b6c8b199::t_68badb81bc6dd4 1-23
+libs/libcmt/wcslwr.c
+  s_f22d08b6c8b199::t_118e00168cb10c 1-32
+libs/libcmt/wcsncat.c
+  s_f22d08b6c8b199::t_b187634e5c3415 1-40
+libs/libcmt/wcsncmp.c
+  s_f22d08b6c8b199::t_2897ca5cecff4e 1-29
+libs/libcmt/wcsncpy.c
+  s_f22d08b6c8b199::t_e29b5b11759eda 1-32
+libs/libcmt/wcsnicmp.c
+  s_f22d08b6c8b199::t_7b59ec6f70cbd3 1-67
+libs/libcmt/wcspbrk.c
+  s_f22d08b6c8b199::t_f8e56961f21795 1-34
+libs/libcmt/wcsrchr.c
+  s_f22d08b6c8b199::t_d35ab32cf6a662 1-27
+libs/libcmt/wcsspn.c
+  s_f22d08b6c8b199::t_d98de8311cc47b 1-32
+libs/libcmt/wcsstr.c
+  s_f22d08b6c8b199::t_0eba78e097d47d 1-41
+libs/libcmt/wcstok.c
+  s_f22d08b6c8b199::t_9b59d5a1631dac 1-76
+libs/libcmt/wcstol.c
+  s_f22d08b6c8b199::t_a16ab03f614465 1-187
+libs/libcmt/wcstombs.c
+  s_f22d08b6c8b199::t_4528b637281251 1-210
+libs/libcmt/wcsupr.c
+  s_f22d08b6c8b199::t_ed363a51fb75d3 1-32
+libs/libcmt/wcsxfrm.c
+  s_f22d08b6c8b199::t_f5db5eafafc2df 1-34
+libs/libcmt/wctime.c
+  s_f22d08b6c8b199::t_350efe1435c1fe 1-52
+libs/libcmt/wctomb.c
+  s_f22d08b6c8b199::t_544fef02c93bfe 1-34
+libs/libcmt/winxfltr.c
+  s_f22d08b6c8b199::t_77ef62bdd85bb6 1-209
+libs/libcmt/woutput.c
+  s_f22d08b6c8b199::t_213fea3b395b53 1-11
+libs/libcmt/wtox.c
+  s_f22d08b6c8b199::t_512d53f76563df 1-81
+libs/libcmt/wunlink.c
+  s_f22d08b6c8b199::t_4ef9b42e72bab8 1-53
+libs/libcmt/x10fout.c
+  s_f22d08b6c8b199::t_54be987db1e1cc 1-198
+libs/libcmt/xtoa.c
+  s_f22d08b6c8b199::t_be40be9e1318af 1-163
+libs/libcmt/xtow.c
+  s_f22d08b6c8b199::t_f7ba36c4bdf4bb 1-77
+libs/xapilib/handle.c
+  s_f22d08b6c8b199::t_fe056eec7e3090 1-47
+libs/xapilib/perfctr.c
+  s_f22d08b6c8b199::t_96c8493773dd0c 1-26
+port/android/.gitignore
+  s_f22d08b6c8b199::t_63ccecc484bb01 1-7
+port/android/README.md
+  s_f22d08b6c8b199::t_98b97eace33123 1-302
+port/android/app/build.gradle
+  s_f22d08b6c8b199::t_937723b02d9010 1-86
+port/android/app/src/main/AndroidManifest.xml
+  s_f22d08b6c8b199::t_e63916f1b43d9e 1-93
+port/android/app/src/main/java/com/halo/decomp/HaloActivity.java
+  s_f22d08b6c8b199::t_21743e6d244d92 1-49
+port/android/app/src/main/java/com/halo/decomp/LauncherActivity.java
+  s_f22d08b6c8b199::t_8169e6b075632a 1-280
+port/android/app/src/main/java/com/halo/decomp/UpdateProvider.java
+  s_f22d08b6c8b199::t_12ff1b6f2bdb84 1-72
+port/android/app/src/main/java/com/halo/decomp/UpdateReceiver.java
+  s_f22d08b6c8b199::t_05c07329cfcdc0 1-29
+port/android/app/src/main/java/com/halo/decomp/Updater.java
+  s_f22d08b6c8b199::t_c77f30599e774f 1-354
+port/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+  s_f22d08b6c8b199::t_11bdfe8cd7f9dc 1-7
+port/android/app/src/main/res/values/ic_launcher_background.xml
+  s_f22d08b6c8b199::t_bdbd17d9a8e812 1-5
+port/android/app/src/main/res/values/strings.xml
+  s_f22d08b6c8b199::t_c9cd9b11396777 1-4
+port/android/app/src/main/res/xml/game_mode_config.xml
+  s_f22d08b6c8b199::t_308dc9546eec24 1-10
+port/android/build.gradle
+  s_f22d08b6c8b199::t_5bb4a143e92d81 1-3
+port/android/gradle.properties
+  s_f22d08b6c8b199::t_b1a1b9492f9f27 1-2
+port/android/gradle/wrapper/gradle-wrapper.properties
+  s_f22d08b6c8b199::t_61f80c64a2cbaf 1-9
+port/android/gradlew
+  s_f22d08b6c8b199::t_216dc38a9ae047 1-248
+port/android/gradlew.bat
+  s_f22d08b6c8b199::t_2fff06bbf0f5c0 1-82
+port/android/guest/guest.ld
+  s_f22d08b6c8b199::t_5cb940c41b677c 1-29
+port/android/guest/libc/arch/arm64_32/atomic_arch.h
+  s_f22d08b6c8b199::t_1a6ed1e6754b7a 1-77
+port/android/guest/libc/arch/arm64_32/bits/alltypes.h.in
+  s_f22d08b6c8b199::t_28cb6b8f49ab36 1-31
+port/android/guest/libc/arch/arm64_32/bits/fcntl.h
+  s_f22d08b6c8b199::t_d72d31358ae875 1-38
+port/android/guest/libc/arch/arm64_32/bits/fenv.h
+  s_f22d08b6c8b199::t_de002dc4e266c6 1-19
+port/android/guest/libc/arch/arm64_32/bits/float.h
+  s_f22d08b6c8b199::t_167892dadf64c7 1-16
+port/android/guest/libc/arch/arm64_32/bits/hwcap.h
+  s_f22d08b6c8b199::t_aa0d0e26c86fd2 1-52
+port/android/guest/libc/arch/arm64_32/bits/limits.h
+  s_f22d08b6c8b199::t_84beeb648c3254 1-2
+port/android/guest/libc/arch/arm64_32/bits/mman.h
+  s_f22d08b6c8b199::t_f49f2e8f83cf1d 1-2
+port/android/guest/libc/arch/arm64_32/bits/posix.h
+  s_f22d08b6c8b199::t_6c52d7257bccde 1-2
+port/android/guest/libc/arch/arm64_32/bits/reg.h
+  s_f22d08b6c8b199::t_3766b763656aa0 1-2
+port/android/guest/libc/arch/arm64_32/bits/setjmp.h
+  s_f22d08b6c8b199::t_bb705ae6af5d2f 1
+port/android/guest/libc/arch/arm64_32/bits/signal.h
+  s_f22d08b6c8b199::t_f7c7d1ec2592a7 1-153
+port/android/guest/libc/arch/arm64_32/bits/stat.h
+  s_f22d08b6c8b199::t_1fd4158b0fa7f8 1-17
+port/android/guest/libc/arch/arm64_32/bits/stdint.h
+  s_f22d08b6c8b199::t_c8e1492b840c2f 1-20
+port/android/guest/libc/arch/arm64_32/bits/syscall.h.in
+  s_f22d08b6c8b199::t_2da3891e4cd03f 1-307
+port/android/guest/libc/arch/arm64_32/bits/user.h
+  s_f22d08b6c8b199::t_74eb97db506e34 1-16
+port/android/guest/libc/arch/arm64_32/kstat.h
+  s_f22d08b6c8b199::t_0aa778d83b0898 1-23
+port/android/guest/libc/arch/arm64_32/pthread_arch.h
+  s_f22d08b6c8b199::t_9132f6fe2e07e3 1-11
+port/android/guest/libc/arch/arm64_32/reloc.h
+  s_f22d08b6c8b199::t_a3621685331275 1
+port/android/guest/libc/arch/arm64_32/syscall_arch.h
+  s_f22d08b6c8b199::t_b61b42cd48ea7f 1-48
+port/android/guest/libc/src_include/features.h
+  s_f22d08b6c8b199::t_aee6a6beb2570b 1-19
+port/android/guest/runtime/guest_host.h
+  s_f22d08b6c8b199::t_a152ab15913364 1-105
+port/android/guest/runtime/guest_memory_watch.c
+  s_f22d08b6c8b199::t_9583e2baf65fe2 1-41
+port/android/guest/runtime/guest_misc.c
+  s_f22d08b6c8b199::t_5c09ba1e249dd7 1-102
+port/android/guest/runtime/guest_sdl.c
+  s_f22d08b6c8b199::t_66f8789f18d782 1-215
+port/android/guest/runtime/guest_start.c
+  s_f22d08b6c8b199::t_2baffec5d06081 1-66
+port/android/guest/runtime/guest_syscall.c
+  s_f22d08b6c8b199::t_373ed63ca31c88 1-16
+port/android/guest/runtime/guest_thread.c
+  s_f22d08b6c8b199::t_242f564521355c 1-259
+port/android/host/host.h
+  s_f22d08b6c8b199::t_8644639e82a5e2 1-96
+port/android/host/host_debug.c
+  s_f22d08b6c8b199::t_0c7af52c069ce7 1-120
+port/android/host/host_gl.c
+  s_f22d08b6c8b199::t_2aaa64e21f3db1 1-125
+port/android/host/host_loader.c
+  s_f22d08b6c8b199::t_31baa8a346134b 1-116
+port/android/host/host_main.c
+  s_f22d08b6c8b199::t_8dea1793ae054c 1-315
+port/android/host/host_memory.c
+  s_f22d08b6c8b199::t_1061b6a1097e26 1-559
+port/android/host/host_sdl.c
+  s_f22d08b6c8b199::t_5ec5fb3ae3fae2 1-390
+port/android/host/host_syscall.c
+  s_f22d08b6c8b199::t_e5aeaf2c378f47 1-376
+port/android/host/host_thread.c
+  s_f22d08b6c8b199::t_c291ab271732b1 1-202
+port/android/host_imports.list
+  s_f22d08b6c8b199::t_85d52fd73b4cf2 1-51
+port/android/include/halo_android_abi.h
+  s_f22d08b6c8b199::t_5d1bc2557b380a 1-65
+port/android/include/halo_android_variadic_prototypes.h
+  s_f22d08b6c8b199::t_d8c70fcf318767 1-21
+port/android/settings.gradle
+  s_f22d08b6c8b199::t_752c666cb1ad05 1-18
+port/include/halo_math.h
+  s_f22d08b6c8b199::t_ca1a30a6e9cb6a 1-55
+port/include/xdk/README.md
+  s_f22d08b6c8b199::t_597f95e063c623 1-90
+port/include/xdk/d3d8perf.h
+  s_f22d08b6c8b199::t_4c75381dee0449 1-3
+port/include/xdk/pdb_names.txt
+  s_f22d08b6c8b199::t_190ed713b6c599 1-729
+port/include/xdk/winbase.h
+  s_f22d08b6c8b199::t_1296fdc394866d 1-3
+port/include/xdk/windef.h
+  s_f22d08b6c8b199::t_fac138edb7f5c2 1-3
+port/include/xdk/xbdm.h
+  s_f22d08b6c8b199::t_de15549ef24bd2 1-3
+port/include/xdk/xbox.h
+  s_f22d08b6c8b199::t_2b84ec8787555d 1-4
+port/include/xdk/xdk_d3d8.h
+  s_f22d08b6c8b199::t_de02c7e712cffd 1-1115
+port/include/xdk/xdk_d3d8perf.h
+  s_f22d08b6c8b199::t_82701774da96d3 1-20
+port/include/xdk/xdk_dsound.h
+  s_f22d08b6c8b199::t_045268b5fa0df4 1-164
+port/include/xdk/xdk_pdb.h
+  s_f22d08b6c8b199::t_0e9cb9e7dda345 1-1813
+port/include/xdk/xdk_win32.h
+  s_f22d08b6c8b199::t_950e43709184eb 1-230
+port/include/xdk/xdk_winsock.h
+  s_f22d08b6c8b199::t_a0e9862ac12d6b 1-214
+port/include/xdk/xdk_xbdm.h
+  s_f22d08b6c8b199::t_a0dcf3ca2b2185 1-67
+port/include/xdk/xdk_xbox.h
+  s_f22d08b6c8b199::t_ee0a6d97075dad 1-124
+port/include/xdk/xdk_xkbd.h
+  s_f22d08b6c8b199::t_11a79cab3f7d90 1-52
+port/include/xdk/xkbd.h
+  s_f22d08b6c8b199::t_2715d8b9b8884d 1-3
+port/include/xdk/xtl.h
+  s_f22d08b6c8b199::t_65c306fb969af2 1-12
+port/linux/NETCODE.md
+  s_f22d08b6c8b199::t_e997fc4d92e4c4 1-121
+port/linux/README.md
+  s_f22d08b6c8b199::t_aa2d00d17f58fe 1-483
+port/linux/game/msvc_comdat.c
+  s_f22d08b6c8b199::t_ff39aa82986bbc 1-49
+port/linux/game/network_damage.c
+  s_f22d08b6c8b199::t_4b8e23bf072c83 1-876
+port/linux/game/network_distributed.c
+  s_f22d08b6c8b199::t_801d0ba0ee29d5 1-935
+port/linux/game/network_distributed.h
+  s_f22d08b6c8b199::t_42973d60ac46e3 1-140
+port/linux/game/network_objects.c
+  s_f22d08b6c8b199::t_002d3b712eff11 1-1098
+port/linux/game/network_test.c
+  s_f22d08b6c8b199::t_1b02024ddfeb8a 1-629
+port/linux/game/render_interpolation.c
+  s_f22d08b6c8b199::t_3e482789662070 1-599
+port/linux/include/StdDef.h
+  s_f22d08b6c8b199::t_ccedeaa75e4911 1-4
+port/linux/include/direct.h
+  s_f22d08b6c8b199::t_ae3fed74652415 1-20
+port/linux/include/excpt.h
+  s_f22d08b6c8b199::t_62473a4be8e4d7 1-27
+port/linux/include/fcntl.h
+  s_f22d08b6c8b199::t_82284735d8cce8 1-30
+port/linux/include/float.h
+  s_f22d08b6c8b199::t_e6a8dfd0f25305 1-45
+port/linux/include/halo_linux_prefix.h
+  s_f22d08b6c8b199::t_3d36eebbcc7188 1-99
+port/linux/include/halo_linux_source_fixups.h
+  s_f22d08b6c8b199::t_7446772b363927 1-50
+port/linux/include/halo_linux_winsock_names.h
+  s_f22d08b6c8b199::t_17320e288d1f09 1-68
+port/linux/include/halo_port_capacity.h
+  s_f22d08b6c8b199::t_01240be481fdb3 1-61
+port/linux/include/halo_port_limits.h
+  s_f22d08b6c8b199::t_d8866a0853906d 1-75
+port/linux/include/halo_ui_pointer.h
+  s_f22d08b6c8b199::t_8b3474634c3438 1-31
+port/linux/include/io.h
+  s_f22d08b6c8b199::t_c0cad8c52cc818 1-25
+port/linux/include/malloc.h
+  s_f22d08b6c8b199::t_c6c8b6c606a4bf 1-17
+port/linux/include/math.h
+  s_f22d08b6c8b199::t_a964b58df331e1 1-36
+port/linux/include/memory.h
+  s_f22d08b6c8b199::t_10e4355e05d2a2 1-2
+port/linux/include/stdio.h
+  s_f22d08b6c8b199::t_574656e4d4f9ad 1-64
+port/linux/include/stdlib.h
+  s_f22d08b6c8b199::t_c8559054f49481 1-29
+port/linux/include/string.h
+  s_f22d08b6c8b199::t_992c5ca7fb83a5 1-24
+port/linux/include/sys/stat.h
+  s_f22d08b6c8b199::t_3731134180a56d 1-57
+port/linux/include/wchar.h
+  s_f22d08b6c8b199::t_2486a45eef17b4 1-190
+port/linux/include/wctype.h
+  s_f22d08b6c8b199::t_9ff05ff1e77eb7 1-2
+port/linux/port.json
+  s_f22d08b6c8b199::t_417927b7fefe33 1-16
+port/linux/src/bink_null.c
+  s_f22d08b6c8b199::t_43d8b7e803a6b9 1-68
+port/linux/src/d3d8_gl.c
+  s_f22d08b6c8b199::t_548901a1905892 1-4093
+port/linux/src/d3d8_resources.c
+  s_f22d08b6c8b199::t_68f31bfdc0d7cb 1-502
+port/linux/src/dsound_sdl.c
+  s_f22d08b6c8b199::t_07e1ac510d4989 1-1063
+port/linux/src/gl.h
+  s_f22d08b6c8b199::t_291e640c617172 1-460
+port/linux/src/gl_functions.c
+  s_f22d08b6c8b199::t_071875b33fccf3 1-42
+port/linux/src/halo_linker_common.c
+  s_f22d08b6c8b199::t_724d6c153eee3b 1-182
+port/linux/src/memory_watch.c
+  s_f22d08b6c8b199::t_a60eecf49588e3 1-243
+port/linux/src/msvc_crt.c
+  s_f22d08b6c8b199::t_677aab3b9d4e42 1-743
+port/linux/src/msvc_wide.c
+  s_f22d08b6c8b199::t_286016dd01c473 1-1036
+port/linux/src/nv2a_psh.c
+  s_f22d08b6c8b199::t_965af4eacdb513 1-662
+port/linux/src/nv2a_vsh.c
+  s_f22d08b6c8b199::t_9d20a65ae17fb6 1-380
+port/linux/src/p2p.c
+  s_f22d08b6c8b199::t_30f94e51fedd1c 1-1914
+port/linux/src/p2p.h
+  s_f22d08b6c8b199::t_29e8d349afb2f3 1-53
+port/linux/src/p2p_crypto.c
+  s_f22d08b6c8b199::t_773e8f3424b1bb 1-400
+port/linux/src/p2p_discord.c
+  s_f22d08b6c8b199::t_ec6497301d20b4 1-288
+port/linux/src/p2p_internal.h
+  s_f22d08b6c8b199::t_38b5d736f98095 1-105
+port/linux/src/p2p_signal.c
+  s_f22d08b6c8b199::t_801d131be915da 1-796
+port/linux/src/platform.h
+  s_f22d08b6c8b199::t_36b155bbe06d2e 1-153
+port/linux/src/port_config.c
+  s_f22d08b6c8b199::t_f445f55d0de5d5 1-868
+port/linux/src/port_config.h
+  s_f22d08b6c8b199::t_79804696bc09a6 1-25
+port/linux/src/posix.h
+  s_f22d08b6c8b199::t_83f83c2e1739cf 1-142
+port/linux/src/posix_files.c
+  s_f22d08b6c8b199::t_b45b04aeb274e3 1-233
+port/linux/src/posix_net.c
+  s_f22d08b6c8b199::t_a3d6b1d825dca3 1-751
+port/linux/src/posix_update.c
+  s_f22d08b6c8b199::t_a9e39ae825ba10 1-583
+port/linux/src/sdl_platform.c
+  s_f22d08b6c8b199::t_f27e5726d261a1 1-952
+port/linux/src/sdl_platform.h
+  s_f22d08b6c8b199::t_1669bd5690d20d 1-76
+port/linux/src/update.h
+  s_f22d08b6c8b199::t_358cbc46e992b3 1-44
+port/linux/src/updater.c
+  s_f22d08b6c8b199::t_28867cfdcc85d5 1-619
+port/linux/src/xbdm.c
+  s_f22d08b6c8b199::t_8a2fd6b693281e 1-30
+port/linux/src/xbox_files.c
+  s_f22d08b6c8b199::t_c0374b565e09ff 1-984
+port/linux/src/xbox_kernel.c
+  s_f22d08b6c8b199::t_0800d7b88d6331 1-862
+port/linux/src/xbox_memory.c
+  s_f22d08b6c8b199::t_a3a41eea46e95c 1-281
+port/linux/src/xbox_textures.c
+  s_f22d08b6c8b199::t_b0d1ad66086f33 1-925
+port/linux/src/xbox_xapi.c
+  s_f22d08b6c8b199::t_ea2a6d7caedca0 1-458
+port/linux/src/xgpu.h
+  s_f22d08b6c8b199::t_d436698b69442f 1-171
+port/linux/src/xgpu_text.c
+  s_f22d08b6c8b199::t_5e9cd5a4cefd80 1-32
+port/linux/src/xinput_sdl.c
+  s_f22d08b6c8b199::t_d4d4a7642e81e6 1-579
+port/linux/src/xiso.c
+  s_f22d08b6c8b199::t_8cf32e3cb35698 1-391
+port/linux/src/xiso.h
+  s_f22d08b6c8b199::t_a4c46134971dff 1-21
+port/linux/src/xnet.c
+  s_f22d08b6c8b199::t_44186d9a619d62 1-891
+port/third_party/extract-xiso/LICENSE.TXT
+  s_f22d08b6c8b199::t_788baba02fedf6 1-75
+port/third_party/extract-xiso/README.md
+  s_f22d08b6c8b199::t_e2b9f59fb90627 1-16
+port/third_party/kcp/LICENSE
+  s_f22d08b6c8b199::t_6e1551e32d34c5 1-21
+port/third_party/kcp/README.md
+  s_f22d08b6c8b199::t_c47d973bf139ed 1-12
+port/third_party/kcp/ikcp.c
+  s_f22d08b6c8b199::t_1c76af755b7b51 1-1423
+port/third_party/kcp/ikcp.h
+  s_f22d08b6c8b199::t_a0a8f615f0f080 1-452
+port/third_party/mbedtls/LICENSE
+  s_f22d08b6c8b199::t_8cb6b98b4a2d7d 1-553
+port/third_party/mbedtls/README.md
+  s_f22d08b6c8b199::t_7b3314df3abdce 1-17
+port/third_party/mbedtls/include/.gitignore
+  s_f22d08b6c8b199::t_17ddee69f0c396 1-4
+port/third_party/mbedtls/include/CMakeLists.txt
+  s_f22d08b6c8b199::t_3998d34cbb42e1 1-22
+port/third_party/mbedtls/include/mbedtls/aes.h
+  s_f22d08b6c8b199::t_134248d25d9bda 1-631
+port/third_party/mbedtls/include/mbedtls/aria.h
+  s_f22d08b6c8b199::t_b6e9ce1a6ab83e 1-343
+port/third_party/mbedtls/include/mbedtls/asn1.h
+  s_f22d08b6c8b199::t_7de89e058da5b7 1-642
+port/third_party/mbedtls/include/mbedtls/asn1write.h
+  s_f22d08b6c8b199::t_a7e3768fcf92a5 1-390
+port/third_party/mbedtls/include/mbedtls/base64.h
+  s_f22d08b6c8b199::t_2c678520f88504 1-82
+port/third_party/mbedtls/include/mbedtls/bignum.h
+  s_f22d08b6c8b199::t_97ea3849306fba 1-1088
+port/third_party/mbedtls/include/mbedtls/block_cipher.h
+  s_f22d08b6c8b199::t_cca04c51c81d9a 1-76
+port/third_party/mbedtls/include/mbedtls/build_info.h
+  s_f22d08b6c8b199::t_4fe23d50cc9262 1-194
+port/third_party/mbedtls/include/mbedtls/camellia.h
+  s_f22d08b6c8b199::t_435ee857b55edb 1-305
+port/third_party/mbedtls/include/mbedtls/ccm.h
+  s_f22d08b6c8b199::t_2726f9a101c525 1-526
+port/third_party/mbedtls/include/mbedtls/chacha20.h
+  s_f22d08b6c8b199::t_d7fba48d626a28 1-209
+port/third_party/mbedtls/include/mbedtls/chachapoly.h
+  s_f22d08b6c8b199::t_cfa36b5902d0d3 1-351
+port/third_party/mbedtls/include/mbedtls/check_config.h
+  s_f22d08b6c8b199::t_7d73f71935be6f 1-1149
+port/third_party/mbedtls/include/mbedtls/cipher.h
+  s_f22d08b6c8b199::t_eb3214ddbc1a66 1-1250
+port/third_party/mbedtls/include/mbedtls/cmac.h
+  s_f22d08b6c8b199::t_9c7e5a5a17a25f 1-246
+port/third_party/mbedtls/include/mbedtls/compat-2.x.h
+  s_f22d08b6c8b199::t_740277a966d98a 1-46
+port/third_party/mbedtls/include/mbedtls/config_adjust_legacy_crypto.h
+  s_f22d08b6c8b199::t_4e8ea5802f227e 1-578
+port/third_party/mbedtls/include/mbedtls/config_adjust_legacy_from_psa.h
+  s_f22d08b6c8b199::t_a5333fbaaf9a42 1-873
+port/third_party/mbedtls/include/mbedtls/config_adjust_psa_from_legacy.h
+  s_f22d08b6c8b199::t_7e439892a75bae 1-359
+port/third_party/mbedtls/include/mbedtls/config_adjust_psa_superset_legacy.h
+  s_f22d08b6c8b199::t_06ff4bd4ab2de1 1-145
+port/third_party/mbedtls/include/mbedtls/config_adjust_ssl.h
+  s_f22d08b6c8b199::t_cbd264d56a3d25 1-91
+port/third_party/mbedtls/include/mbedtls/config_adjust_x509.h
+  s_f22d08b6c8b199::t_b085251480925d 1-35
+port/third_party/mbedtls/include/mbedtls/config_psa.h
+  s_f22d08b6c8b199::t_abf5e1a28d3a81 1-61
+port/third_party/mbedtls/include/mbedtls/constant_time.h
+  s_f22d08b6c8b199::t_c6b7b98afe835e 1-36
+port/third_party/mbedtls/include/mbedtls/ctr_drbg.h
+  s_f22d08b6c8b199::t_aea78c72dcb643 1-596
+port/third_party/mbedtls/include/mbedtls/debug.h
+  s_f22d08b6c8b199::t_f553be51df3940 1-156
+port/third_party/mbedtls/include/mbedtls/des.h
+  s_f22d08b6c8b199::t_71570ddb2d9efe 1-385
+port/third_party/mbedtls/include/mbedtls/dhm.h
+  s_f22d08b6c8b199::t_d82def93964593 1-972
+port/third_party/mbedtls/include/mbedtls/ecdh.h
+  s_f22d08b6c8b199::t_b9a342ab37d411 1-455
+port/third_party/mbedtls/include/mbedtls/ecdsa.h
+  s_f22d08b6c8b199::t_3edeb6414f6c1a 1-674
+port/third_party/mbedtls/include/mbedtls/ecjpake.h
+  s_f22d08b6c8b199::t_6cc81325649836 1-298
+port/third_party/mbedtls/include/mbedtls/ecp.h
+  s_f22d08b6c8b199::t_5624ec71250cc5 1-1517
+port/third_party/mbedtls/include/mbedtls/entropy.h
+  s_f22d08b6c8b199::t_2179347da23294 1-274
+port/third_party/mbedtls/include/mbedtls/error.h
+  s_f22d08b6c8b199::t_819af5b1aa2ba3 1-201
+port/third_party/mbedtls/include/mbedtls/gcm.h
+  s_f22d08b6c8b199::t_002b6dd8538868 1-387
+port/third_party/mbedtls/include/mbedtls/hkdf.h
+  s_f22d08b6c8b199::t_7981c3084466b9 1-124
+port/third_party/mbedtls/include/mbedtls/hmac_drbg.h
+  s_f22d08b6c8b199::t_9d733e53f432f0 1-434
+port/third_party/mbedtls/include/mbedtls/lms.h
+  s_f22d08b6c8b199::t_439b8e4e6e9741 1-440
+port/third_party/mbedtls/include/mbedtls/mbedtls_config.h
+  s_f22d08b6c8b199::t_2e89b0b63db2d8 1-4446
+port/third_party/mbedtls/include/mbedtls/md.h
+  s_f22d08b6c8b199::t_62b3974b3760da 1-526
+port/third_party/mbedtls/include/mbedtls/md5.h
+  s_f22d08b6c8b199::t_1d470df419c584 1-190
+port/third_party/mbedtls/include/mbedtls/memory_buffer_alloc.h
+  s_f22d08b6c8b199::t_f853c13210354a 1-142
+port/third_party/mbedtls/include/mbedtls/net_sockets.h
+  s_f22d08b6c8b199::t_f93dd382d2f1c8 1-299
+port/third_party/mbedtls/include/mbedtls/nist_kw.h
+  s_f22d08b6c8b199::t_938cc236948a45 1-166
+port/third_party/mbedtls/include/mbedtls/oid.h
+  s_f22d08b6c8b199::t_fd09abe8afe0ff 1-727
+port/third_party/mbedtls/include/mbedtls/pem.h
+  s_f22d08b6c8b199::t_447bd50969a23b 1-160
+port/third_party/mbedtls/include/mbedtls/pk.h
+  s_f22d08b6c8b199::t_2ac727cbfac987 1-1303
+port/third_party/mbedtls/include/mbedtls/pkcs12.h
+  s_f22d08b6c8b199::t_c84d76f2c6a19a 1-186
+port/third_party/mbedtls/include/mbedtls/pkcs5.h
+  s_f22d08b6c8b199::t_c3ad980d9ed66c 1-198
+port/third_party/mbedtls/include/mbedtls/pkcs7.h
+  s_f22d08b6c8b199::t_714157e6fcf10c 1-252
+port/third_party/mbedtls/include/mbedtls/platform.h
+  s_f22d08b6c8b199::t_989eec6780b69c 1-516
+port/third_party/mbedtls/include/mbedtls/platform_time.h
+  s_f22d08b6c8b199::t_89f4e95a615ffd 1-79
+port/third_party/mbedtls/include/mbedtls/platform_util.h
+  s_f22d08b6c8b199::t_f47be71d71d923 1-247
+port/third_party/mbedtls/include/mbedtls/poly1305.h
+  s_f22d08b6c8b199::t_6a5dc06216ae86 1-168
+port/third_party/mbedtls/include/mbedtls/private_access.h
+  s_f22d08b6c8b199::t_86ea4896569c9c 1-20
+port/third_party/mbedtls/include/mbedtls/psa_util.h
+  s_f22d08b6c8b199::t_7ef97474b0facb 1-207
+port/third_party/mbedtls/include/mbedtls/ripemd160.h
+  s_f22d08b6c8b199::t_1d43f0eac6a702 1-136
+port/third_party/mbedtls/include/mbedtls/rsa.h
+  s_f22d08b6c8b199::t_e8a5f128d3a344 1-1170
+port/third_party/mbedtls/include/mbedtls/sha1.h
+  s_f22d08b6c8b199::t_6d94420ec67042 1-219
+port/third_party/mbedtls/include/mbedtls/sha256.h
+  s_f22d08b6c8b199::t_d3a07104a31128 1-200
+port/third_party/mbedtls/include/mbedtls/sha3.h
+  s_f22d08b6c8b199::t_71b97c7f1c44d3 1-172
+port/third_party/mbedtls/include/mbedtls/sha512.h
+  s_f22d08b6c8b199::t_731f1ca81a6f4b 1-208
+port/third_party/mbedtls/include/mbedtls/ssl.h
+  s_f22d08b6c8b199::t_fe6a972a904cee 1-5887
+port/third_party/mbedtls/include/mbedtls/ssl_cache.h
+  s_f22d08b6c8b199::t_cd9da61e094c10 1-187
+port/third_party/mbedtls/include/mbedtls/ssl_ciphersuites.h
+  s_f22d08b6c8b199::t_a5753fb0b9e371 1-482
+port/third_party/mbedtls/include/mbedtls/ssl_cookie.h
+  s_f22d08b6c8b199::t_53c458c3763db9 1-106
+port/third_party/mbedtls/include/mbedtls/ssl_ticket.h
+  s_f22d08b6c8b199::t_b116cd18bc4ff8 1-199
+port/third_party/mbedtls/include/mbedtls/threading.h
+  s_f22d08b6c8b199::t_160f4d77f6162d 1-167
+port/third_party/mbedtls/include/mbedtls/timing.h
+  s_f22d08b6c8b199::t_9504fecfab25ee 1-94
+port/third_party/mbedtls/include/mbedtls/version.h
+  s_f22d08b6c8b199::t_de7516e4fd9a91 1-78
+port/third_party/mbedtls/include/mbedtls/x509.h
+  s_f22d08b6c8b199::t_36ddc5f899aa27 1-500
+port/third_party/mbedtls/include/mbedtls/x509_crl.h
+  s_f22d08b6c8b199::t_792a2f58397a09 1-184
+port/third_party/mbedtls/include/mbedtls/x509_crt.h
+  s_f22d08b6c8b199::t_f5f295e7cc92b9 1-1208
+port/third_party/mbedtls/include/mbedtls/x509_csr.h
+  s_f22d08b6c8b199::t_56264d036e66d3 1-382
+port/third_party/mbedtls/include/psa/build_info.h
+  s_f22d08b6c8b199::t_ef283575252d64 1-20
+port/third_party/mbedtls/include/psa/crypto.h
+  s_f22d08b6c8b199::t_4f549334c051ee 1-4998
+port/third_party/mbedtls/include/psa/crypto_adjust_auto_enabled.h
+  s_f22d08b6c8b199::t_10f1a2eda07bc6 1-31
+port/third_party/mbedtls/include/psa/crypto_adjust_config_dependencies.h
+  s_f22d08b6c8b199::t_871fd511efe23d 1-51
+port/third_party/mbedtls/include/psa/crypto_adjust_config_key_pair_types.h
+  s_f22d08b6c8b199::t_b54f8f07a5a3cf 1-101
+port/third_party/mbedtls/include/psa/crypto_adjust_config_synonyms.h
+  s_f22d08b6c8b199::t_cda1fdd81f210d 1-49
+port/third_party/mbedtls/include/psa/crypto_builtin_composites.h
+  s_f22d08b6c8b199::t_c565e7c02a2de6 1-214
+port/third_party/mbedtls/include/psa/crypto_builtin_key_derivation.h
+  s_f22d08b6c8b199::t_de2af0cac89d72 1-118
+port/third_party/mbedtls/include/psa/crypto_builtin_primitives.h
+  s_f22d08b6c8b199::t_5d8adfc768a310 1-114
+port/third_party/mbedtls/include/psa/crypto_compat.h
+  s_f22d08b6c8b199::t_a7212115a62dea 1-230
+port/third_party/mbedtls/include/psa/crypto_config.h
+  s_f22d08b6c8b199::t_e55eb67918e982 1-145
+port/third_party/mbedtls/include/psa/crypto_driver_common.h
+  s_f22d08b6c8b199::t_58c1179851d0cb 1-44
+port/third_party/mbedtls/include/psa/crypto_driver_contexts_composites.h
+  s_f22d08b6c8b199::t_6fad94c10e7a8b 1-151
+port/third_party/mbedtls/include/psa/crypto_driver_contexts_key_derivation.h
+  s_f22d08b6c8b199::t_dc772c57fab66e 1-52
+port/third_party/mbedtls/include/psa/crypto_driver_contexts_primitives.h
+  s_f22d08b6c8b199::t_fcf78a5636155e 1-105
+port/third_party/mbedtls/include/psa/crypto_extra.h
+  s_f22d08b6c8b199::t_b13d3a9d8c502a 1-2145
+port/third_party/mbedtls/include/psa/crypto_legacy.h
+  s_f22d08b6c8b199::t_eda656ddb278db 1-88
+port/third_party/mbedtls/include/psa/crypto_platform.h
+  s_f22d08b6c8b199::t_a9a717be5bed25 1-102
+port/third_party/mbedtls/include/psa/crypto_se_driver.h
+  s_f22d08b6c8b199::t_1694a9a8607e12 1-1383
+port/third_party/mbedtls/include/psa/crypto_sizes.h
+  s_f22d08b6c8b199::t_4b2ec3f6a58150 1-1319
+port/third_party/mbedtls/include/psa/crypto_struct.h
+  s_f22d08b6c8b199::t_3f30fc76d26bba 1-527
+port/third_party/mbedtls/include/psa/crypto_types.h
+  s_f22d08b6c8b199::t_f37121450bc1ab 1-508
+port/third_party/mbedtls/include/psa/crypto_values.h
+  s_f22d08b6c8b199::t_8639de99ad6c52 1-2782
+port/third_party/mbedtls/library/aes.c
+  s_f22d08b6c8b199::t_ca645163c305cf 1-2294
+port/third_party/mbedtls/library/aesce.c
+  s_f22d08b6c8b199::t_e6a7a7cdf34ce7 1-624
+port/third_party/mbedtls/library/aesce.h
+  s_f22d08b6c8b199::t_8e55a3ea51aac3 1-136
+port/third_party/mbedtls/library/aesni.c
+  s_f22d08b6c8b199::t_d4fd972a7bdf6a 1-846
+port/third_party/mbedtls/library/aesni.h
+  s_f22d08b6c8b199::t_18777f75858ead 1-162
+port/third_party/mbedtls/library/alignment.h
+  s_f22d08b6c8b199::t_479f2368b80577 1-704
+port/third_party/mbedtls/library/aria.c
+  s_f22d08b6c8b199::t_26d145f29f3be6 1-969
+port/third_party/mbedtls/library/asn1parse.c
+  s_f22d08b6c8b199::t_5eabd4fc68bdcf 1-468
+port/third_party/mbedtls/library/asn1write.c
+  s_f22d08b6c8b199::t_bb3f75c0ee3381 1-440
+port/third_party/mbedtls/library/base64.c
+  s_f22d08b6c8b199::t_08a7b435b12de3 1-322
+port/third_party/mbedtls/library/base64_internal.h
+  s_f22d08b6c8b199::t_4db8acb41c4b67 1-45
+port/third_party/mbedtls/library/bignum.c
+  s_f22d08b6c8b199::t_ce13e38ff2a45a 1-2583
+port/third_party/mbedtls/library/bignum_core.c
+  s_f22d08b6c8b199::t_09afd41b81591b 1-1240
+port/third_party/mbedtls/library/bignum_core.h
+  s_f22d08b6c8b199::t_a3a544aa86fe6f 1-872
+port/third_party/mbedtls/library/bignum_core_invasive.h
+  s_f22d08b6c8b199::t_78ee5f8dfa8e6d 1-38
+port/third_party/mbedtls/library/bignum_internal.h
+  s_f22d08b6c8b199::t_20b7ec0e06792e 1-122
+port/third_party/mbedtls/library/bignum_mod.c
+  s_f22d08b6c8b199::t_3d215b432983b2 1-394
+port/third_party/mbedtls/library/bignum_mod.h
+  s_f22d08b6c8b199::t_215e2e4e89134a 1-452
+port/third_party/mbedtls/library/bignum_mod_raw.c
+  s_f22d08b6c8b199::t_91f901f804b15b 1-276
+port/third_party/mbedtls/library/bignum_mod_raw.h
+  s_f22d08b6c8b199::t_ed422237857cc2 1-416
+port/third_party/mbedtls/library/bignum_mod_raw_invasive.h
+  s_f22d08b6c8b199::t_df514421cb19dc 1-34
+port/third_party/mbedtls/library/block_cipher.c
+  s_f22d08b6c8b199::t_88301c45a13046 1-207
+port/third_party/mbedtls/library/block_cipher_internal.h
+  s_f22d08b6c8b199::t_18642ca5ba9ffe 1-99
+port/third_party/mbedtls/library/bn_mul.h
+  s_f22d08b6c8b199::t_ffc126c7972881 1-1094
+port/third_party/mbedtls/library/camellia.c
+  s_f22d08b6c8b199::t_b25ff0ae933b8f 1-1058
+port/third_party/mbedtls/library/ccm.c
+  s_f22d08b6c8b199::t_6754556c7368a5 1-777
+port/third_party/mbedtls/library/chacha20.c
+  s_f22d08b6c8b199::t_ed08f1028ba329 1-563
+port/third_party/mbedtls/library/chacha20_internal.h
+  s_f22d08b6c8b199::t_96e968c7fab9a2 1-23
+port/third_party/mbedtls/library/chachapoly.c
+  s_f22d08b6c8b199::t_990117b46356d4 1-487
+port/third_party/mbedtls/library/check_crypto_config.h
+  s_f22d08b6c8b199::t_bfad412681b162 1-136
+port/third_party/mbedtls/library/cipher.c
+  s_f22d08b6c8b199::t_2833b8c0c1ebd5 1-1712
+port/third_party/mbedtls/library/cipher_invasive.h
+  s_f22d08b6c8b199::t_f92db614c647f9 1-28
+port/third_party/mbedtls/library/cipher_wrap.c
+  s_f22d08b6c8b199::t_630803eff67e88 1-2482
+port/third_party/mbedtls/library/cipher_wrap.h
+  s_f22d08b6c8b199::t_2df5c59fff43fa 1-178
+port/third_party/mbedtls/library/cmac.c
+  s_f22d08b6c8b199::t_3f714893c663ee 1-1067
+port/third_party/mbedtls/library/common.h
+  s_f22d08b6c8b199::t_62bf77aefacab8 1-487
+port/third_party/mbedtls/library/constant_time.c
+  s_f22d08b6c8b199::t_9858b9ef9fe4e3 1-247
+port/third_party/mbedtls/library/constant_time_impl.h
+  s_f22d08b6c8b199::t_a12fc8bdc8cd19 1-541
+port/third_party/mbedtls/library/constant_time_internal.h
+  s_f22d08b6c8b199::t_eb8fa8ce1e0e5b 1-579
+port/third_party/mbedtls/library/ctr.h
+  s_f22d08b6c8b199::t_27f51cff58af49 1-35
+port/third_party/mbedtls/library/ctr_drbg.c
+  s_f22d08b6c8b199::t_bee9cdd58aef49 1-1016
+port/third_party/mbedtls/library/debug.c
+  s_f22d08b6c8b199::t_9af7d9005c93c2 1-475
+port/third_party/mbedtls/library/debug_internal.h
+  s_f22d08b6c8b199::t_0b99ddb9756144 1-185
+port/third_party/mbedtls/library/des.c
+  s_f22d08b6c8b199::t_c2048e337ebec2 1-1042
+port/third_party/mbedtls/library/dhm.c
+  s_f22d08b6c8b199::t_47b5ce016d001d 1-700
+port/third_party/mbedtls/library/ecdh.c
+  s_f22d08b6c8b199::t_59698c16077a9b 1-696
+port/third_party/mbedtls/library/ecdsa.c
+  s_f22d08b6c8b199::t_f26f0920d8ce0c 1-858
+port/third_party/mbedtls/library/ecjpake.c
+  s_f22d08b6c8b199::t_efb84b90cab801 1-1216
+port/third_party/mbedtls/library/ecp.c
+  s_f22d08b6c8b199::t_4aa49461263b6c 1-3674
+port/third_party/mbedtls/library/ecp_curves.c
+  s_f22d08b6c8b199::t_e29341af419c03 1-6125
+port/third_party/mbedtls/library/ecp_curves_new.c
+  s_f22d08b6c8b199::t_d992b5485f5d99 1-9
+port/third_party/mbedtls/library/ecp_internal_alt.h
+  s_f22d08b6c8b199::t_ec00464c0de498 1-287
+port/third_party/mbedtls/library/ecp_invasive.h
+  s_f22d08b6c8b199::t_d1b60ed0a4da97 1-305
+port/third_party/mbedtls/library/entropy.c
+  s_f22d08b6c8b199::t_a7e2e4d2fdfb85 1-680
+port/third_party/mbedtls/library/entropy_poll.c
+  s_f22d08b6c8b199::t_148eebfc0e7dab 1-233
+port/third_party/mbedtls/library/entropy_poll.h
+  s_f22d08b6c8b199::t_461140cf2e4de8 1-64
+port/third_party/mbedtls/library/error.c
+  s_f22d08b6c8b199::t_51231cc01c25bd 1-878
+port/third_party/mbedtls/library/gcm.c
+  s_f22d08b6c8b199::t_d06827c3f7928e 1-1330
+port/third_party/mbedtls/library/hkdf.c
+  s_f22d08b6c8b199::t_f04d3d56dc566b 1-161
+port/third_party/mbedtls/library/hmac_drbg.c
+  s_f22d08b6c8b199::t_33bbdbda90bad5 1-633
+port/third_party/mbedtls/library/lmots.c
+  s_f22d08b6c8b199::t_55e08ec6bcf805 1-789
+port/third_party/mbedtls/library/lmots.h
+  s_f22d08b6c8b199::t_17ed6fb2577c01 1-288
+port/third_party/mbedtls/library/lms.c
+  s_f22d08b6c8b199::t_36fd08647328d0 1-778
+port/third_party/mbedtls/library/md.c
+  s_f22d08b6c8b199::t_b0f9f3a0637eb4 1-1108
+port/third_party/mbedtls/library/md5.c
+  s_f22d08b6c8b199::t_954659a64eda2f 1-426
+port/third_party/mbedtls/library/md_psa.h
+  s_f22d08b6c8b199::t_e63f9285d1cfc1 1-26
+port/third_party/mbedtls/library/md_wrap.h
+  s_f22d08b6c8b199::t_d441f41186cb27 1-46
+port/third_party/mbedtls/library/memory_buffer_alloc.c
+  s_f22d08b6c8b199::t_79b88b08f2ad11 1-751
+port/third_party/mbedtls/library/mps_common.h
+  s_f22d08b6c8b199::t_44ffde49938d0c 1-181
+port/third_party/mbedtls/library/mps_error.h
+  s_f22d08b6c8b199::t_301a27a62a97bf 1-89
+port/third_party/mbedtls/library/mps_reader.c
+  s_f22d08b6c8b199::t_7f4c57f9a5b0ad 1-538
+port/third_party/mbedtls/library/mps_reader.h
+  s_f22d08b6c8b199::t_a04fbfe21a70d0 1-366
+port/third_party/mbedtls/library/mps_trace.c
+  s_f22d08b6c8b199::t_ca132150e577b1 1-112
+port/third_party/mbedtls/library/mps_trace.h
+  s_f22d08b6c8b199::t_ac669e93b10afe 1-154
+port/third_party/mbedtls/library/net_sockets.c
+  s_f22d08b6c8b199::t_1bd24d8e686c72 1-694
+port/third_party/mbedtls/library/nist_kw.c
+  s_f22d08b6c8b199::t_1fdbed5bb229b8 1-729
+port/third_party/mbedtls/library/oid.c
+  s_f22d08b6c8b199::t_eccef27b83cee4 1-1166
+port/third_party/mbedtls/library/padlock.c
+  s_f22d08b6c8b199::t_1b097431d9a5cf 1-157
+port/third_party/mbedtls/library/padlock.h
+  s_f22d08b6c8b199::t_9bcb89eed113c8 1-111
+port/third_party/mbedtls/library/pem.c
+  s_f22d08b6c8b199::t_5a0725d6217228 1-554
+port/third_party/mbedtls/library/pk.c
+  s_f22d08b6c8b199::t_729af73a95394e 1-1602
+port/third_party/mbedtls/library/pk_ecc.c
+  s_f22d08b6c8b199::t_1583e233b5edfb 1-261
+port/third_party/mbedtls/library/pk_internal.h
+  s_f22d08b6c8b199::t_ae455a0cff1298 1-241
+port/third_party/mbedtls/library/pk_wrap.c
+  s_f22d08b6c8b199::t_5733a6028c1bcd 1-1618
+port/third_party/mbedtls/library/pk_wrap.h
+  s_f22d08b6c8b199::t_c35cf3098d92f0 1-138
+port/third_party/mbedtls/library/pkcs12.c
+  s_f22d08b6c8b199::t_5e3c32ca7b5e4c 1-437
+port/third_party/mbedtls/library/pkcs5.c
+  s_f22d08b6c8b199::t_e6e43730721701 1-500
+port/third_party/mbedtls/library/pkcs7.c
+  s_f22d08b6c8b199::t_eedb7d8f1a4e53 1-787
+port/third_party/mbedtls/library/pkparse.c
+  s_f22d08b6c8b199::t_ed45113402ca5c 1-1392
+port/third_party/mbedtls/library/pkwrite.c
+  s_f22d08b6c8b199::t_04a4e5dbe970a0 1-631
+port/third_party/mbedtls/library/pkwrite.h
+  s_f22d08b6c8b199::t_89549b9cd4452f 1-121
+port/third_party/mbedtls/library/platform.c
+  s_f22d08b6c8b199::t_a9a1e328d3e328 1-402
+port/third_party/mbedtls/library/platform_util.c
+  s_f22d08b6c8b199::t_6a1f3afc8c420c 1-258
+port/third_party/mbedtls/library/poly1305.c
+  s_f22d08b6c8b199::t_13b915fd5570f7 1-492
+port/third_party/mbedtls/library/psa_crypto.c
+  s_f22d08b6c8b199::t_9c5594ca7e0faf 1-9532
+port/third_party/mbedtls/library/psa_crypto_aead.c
+  s_f22d08b6c8b199::t_4311b2b5d99a02 1-646
+port/third_party/mbedtls/library/psa_crypto_aead.h
+  s_f22d08b6c8b199::t_783d92c1812d26 1-499
+port/third_party/mbedtls/library/psa_crypto_cipher.c
+  s_f22d08b6c8b199::t_5108549a4c1169 1-747
+port/third_party/mbedtls/library/psa_crypto_cipher.h
+  s_f22d08b6c8b199::t_43d9bc55588d21 1-316
+port/third_party/mbedtls/library/psa_crypto_client.c
+  s_f22d08b6c8b199::t_3ff76dd65fa1a4 1-22
+port/third_party/mbedtls/library/psa_crypto_core.h
+  s_f22d08b6c8b199::t_43299665c21b5e 1-983
+port/third_party/mbedtls/library/psa_crypto_core_common.h
+  s_f22d08b6c8b199::t_cb3b020723ed13 1-52
+port/third_party/mbedtls/library/psa_crypto_driver_wrappers.h
+  s_f22d08b6c8b199::t_9be4af52bfd865 1-2896
+port/third_party/mbedtls/library/psa_crypto_driver_wrappers_no_static.c
+  s_f22d08b6c8b199::t_1840ba32799ea5 1-256
+port/third_party/mbedtls/library/psa_crypto_driver_wrappers_no_static.h
+  s_f22d08b6c8b199::t_1da2078f15d637 1-31
+port/third_party/mbedtls/library/psa_crypto_ecp.c
+  s_f22d08b6c8b199::t_3b153ddf16eefa 1-594
+port/third_party/mbedtls/library/psa_crypto_ecp.h
+  s_f22d08b6c8b199::t_12debea7ff63f2 1-267
+port/third_party/mbedtls/library/psa_crypto_ffdh.c
+  s_f22d08b6c8b199::t_75f4e7cdc7f820 1-361
+port/third_party/mbedtls/library/psa_crypto_ffdh.h
+  s_f22d08b6c8b199::t_0df76ef198d9c8 1-131
+port/third_party/mbedtls/library/psa_crypto_hash.c
+  s_f22d08b6c8b199::t_7b465c4e41d741 1-470
+port/third_party/mbedtls/library/psa_crypto_hash.h
+  s_f22d08b6c8b199::t_cbaf4b64e68bd7 1-211
+port/third_party/mbedtls/library/psa_crypto_invasive.h
+  s_f22d08b6c8b199::t_bc37e047529845 1-92
+port/third_party/mbedtls/library/psa_crypto_its.h
+  s_f22d08b6c8b199::t_963aedc844a0a8 1-131
+port/third_party/mbedtls/library/psa_crypto_mac.c
+  s_f22d08b6c8b199::t_4be4d61d55dd31 1-505
+port/third_party/mbedtls/library/psa_crypto_mac.h
+  s_f22d08b6c8b199::t_04da7abcdc8c6f 1-264
+port/third_party/mbedtls/library/psa_crypto_pake.c
+  s_f22d08b6c8b199::t_e9252d71639856 1-571
+port/third_party/mbedtls/library/psa_crypto_pake.h
+  s_f22d08b6c8b199::t_303a9b222724e2 1-159
+port/third_party/mbedtls/library/psa_crypto_random.c
+  s_f22d08b6c8b199::t_e539c30fe59cc6 1-181
+port/third_party/mbedtls/library/psa_crypto_random.h
+  s_f22d08b6c8b199::t_33167ebc2ee063 1-72
+port/third_party/mbedtls/library/psa_crypto_random_impl.h
+  s_f22d08b6c8b199::t_2561bee1e34625 1-200
+port/third_party/mbedtls/library/psa_crypto_rsa.c
+  s_f22d08b6c8b199::t_1c4f826cbd80db 1-714
+port/third_party/mbedtls/library/psa_crypto_rsa.h
+  s_f22d08b6c8b199::t_c6df5ceaa997ee 1-321
+port/third_party/mbedtls/library/psa_crypto_se.c
+  s_f22d08b6c8b199::t_a5966c03b57897 1-373
+port/third_party/mbedtls/library/psa_crypto_se.h
+  s_f22d08b6c8b199::t_e6192e9da08e69 1-192
+port/third_party/mbedtls/library/psa_crypto_slot_management.c
+  s_f22d08b6c8b199::t_9c158fe4691441 1-1137
+port/third_party/mbedtls/library/psa_crypto_slot_management.h
+  s_f22d08b6c8b199::t_6068dfce1e2115 1-344
+port/third_party/mbedtls/library/psa_crypto_storage.c
+  s_f22d08b6c8b199::t_60ff083075eba3 1-481
+port/third_party/mbedtls/library/psa_crypto_storage.h
+  s_f22d08b6c8b199::t_41d92d30fc329c 1-392
+port/third_party/mbedtls/library/psa_its_file.c
+  s_f22d08b6c8b199::t_050cc49686694b 1-254
+port/third_party/mbedtls/library/psa_util.c
+  s_f22d08b6c8b199::t_9cd084e3a255d4 1-614
+port/third_party/mbedtls/library/psa_util_internal.h
+  s_f22d08b6c8b199::t_30239c9e47de77 1-100
+port/third_party/mbedtls/library/ripemd160.c
+  s_f22d08b6c8b199::t_2519f2ea68defb 1-490
+port/third_party/mbedtls/library/rsa.c
+  s_f22d08b6c8b199::t_ef33f7fad4bbe4 1-3121
+port/third_party/mbedtls/library/rsa_alt_helpers.c
+  s_f22d08b6c8b199::t_ece4e4886ebd03 1-455
+port/third_party/mbedtls/library/rsa_alt_helpers.h
+  s_f22d08b6c8b199::t_a981116a8cad15 1-209
+port/third_party/mbedtls/library/rsa_internal.h
+  s_f22d08b6c8b199::t_2dd8ffe61ecae0 1-188
+port/third_party/mbedtls/library/sha1.c
+  s_f22d08b6c8b199::t_9d022bd5128ad3 1-480
+port/third_party/mbedtls/library/sha256.c
+  s_f22d08b6c8b199::t_b43e419d7ac93b 1-983
+port/third_party/mbedtls/library/sha3.c
+  s_f22d08b6c8b199::t_2d82b5cb8afc42 1-721
+port/third_party/mbedtls/library/sha512.c
+  s_f22d08b6c8b199::t_5af96013a08504 1-1115
+port/third_party/mbedtls/library/ssl_cache.c
+  s_f22d08b6c8b199::t_653033f1e0565c 1-410
+port/third_party/mbedtls/library/ssl_ciphersuites.c
+  s_f22d08b6c8b199::t_6850511ae59c29 1-2050
+port/third_party/mbedtls/library/ssl_ciphersuites_internal.h
+  s_f22d08b6c8b199::t_4814b276ba9655 1-154
+port/third_party/mbedtls/library/ssl_client.c
+  s_f22d08b6c8b199::t_61568d407a76e5 1-1023
+port/third_party/mbedtls/library/ssl_client.h
+  s_f22d08b6c8b199::t_86c522642ab95b 1-22
+port/third_party/mbedtls/library/ssl_cookie.c
+  s_f22d08b6c8b199::t_4fbd69b58e3b53 1-384
+port/third_party/mbedtls/library/ssl_debug_helpers.h
+  s_f22d08b6c8b199::t_f3eb2e14779cf4 1-85
+port/third_party/mbedtls/library/ssl_debug_helpers_generated.c
+  s_f22d08b6c8b199::t_44b1139e954123 1-251
+port/third_party/mbedtls/library/ssl_misc.h
+  s_f22d08b6c8b199::t_b77dab5856660d 1-3198
+port/third_party/mbedtls/library/ssl_msg.c
+  s_f22d08b6c8b199::t_b3e875c488cba7 1-6619
+port/third_party/mbedtls/library/ssl_ticket.c
+  s_f22d08b6c8b199::t_411fe9def60ede 1-556
+port/third_party/mbedtls/library/ssl_tls.c
+  s_f22d08b6c8b199::t_7816bfe720e4f6 1-10234
+port/third_party/mbedtls/library/ssl_tls12_client.c
+  s_f22d08b6c8b199::t_3e39346296c9fa 1-3688
+port/third_party/mbedtls/library/ssl_tls12_server.c
+  s_f22d08b6c8b199::t_fe17d7ef8274f5 1-4311
+port/third_party/mbedtls/library/ssl_tls13_client.c
+  s_f22d08b6c8b199::t_9b7bcbe78e11f1 1-3208
+port/third_party/mbedtls/library/ssl_tls13_generic.c
+  s_f22d08b6c8b199::t_84fa5bf9af3104 1-1793
+port/third_party/mbedtls/library/ssl_tls13_invasive.h
+  s_f22d08b6c8b199::t_01bdee8435b5eb 1-23
+port/third_party/mbedtls/library/ssl_tls13_keys.c
+  s_f22d08b6c8b199::t_9f8dc4ec0a583e 1-1918
+port/third_party/mbedtls/library/ssl_tls13_keys.h
+  s_f22d08b6c8b199::t_c2d7f6f8dbf2b1 1-668
+port/third_party/mbedtls/library/ssl_tls13_server.c
+  s_f22d08b6c8b199::t_bf53f62eb38108 1-3624
+port/third_party/mbedtls/library/threading.c
+  s_f22d08b6c8b199::t_6e2150452189c9 1-193
+port/third_party/mbedtls/library/threading_internal.h
+  s_f22d08b6c8b199::t_4bc1995514f8b7 1-28
+port/third_party/mbedtls/library/timing.c
+  s_f22d08b6c8b199::t_88cd0044ae88ca 1-152
+port/third_party/mbedtls/library/version.c
+  s_f22d08b6c8b199::t_83d42e46a6470a 1-32
+port/third_party/mbedtls/library/version_features.c
+  s_f22d08b6c8b199::t_a3e298ba6f6c7a 1-856
+port/third_party/mbedtls/library/x509.c
+  s_f22d08b6c8b199::t_54cc4a763f175d 1-1776
+port/third_party/mbedtls/library/x509_create.c
+  s_f22d08b6c8b199::t_529bfda5af6fd3 1-570
+port/third_party/mbedtls/library/x509_crl.c
+  s_f22d08b6c8b199::t_9f9834e828b037 1-708
+port/third_party/mbedtls/library/x509_crt.c
+  s_f22d08b6c8b199::t_0dacf025b994ca 1-3311
+port/third_party/mbedtls/library/x509_csr.c
+  s_f22d08b6c8b199::t_4dd657805739da 1-648
+port/third_party/mbedtls/library/x509_internal.h
+  s_f22d08b6c8b199::t_dc96868dc8132a 1-101
+port/third_party/mbedtls/library/x509write.c
+  s_f22d08b6c8b199::t_6c28acebd18730 1-174
+port/third_party/mbedtls/library/x509write_crt.c
+  s_f22d08b6c8b199::t_b54797b9dbd47a 1-688
+port/third_party/mbedtls/library/x509write_csr.c
+  s_f22d08b6c8b199::t_84a109bbb6121a 1-336
+port/third_party/musl-math/COPYRIGHT
+  s_f22d08b6c8b199::t_f4253c45ac08bf 1-193
+port/third_party/musl-math/README.md
+  s_f22d08b6c8b199::t_9722ad35187669 1-25
+port/third_party/musl-math/include/features.h
+  s_f22d08b6c8b199::t_cd113f0debbfda 1-21
+port/third_party/musl-math/include/libm.h
+  s_f22d08b6c8b199::t_b8fc28f430a194 1-159
+port/third_party/musl-math/include/math.h
+  s_f22d08b6c8b199::t_4529a037e1b3ce 1-38
+port/third_party/musl-math/src/__cos.c
+  s_f22d08b6c8b199::t_4715a806d8231e 1-71
+port/third_party/musl-math/src/__math_divzero.c
+  s_f22d08b6c8b199::t_96897acc256353 1-6
+port/third_party/musl-math/src/__math_invalid.c
+  s_f22d08b6c8b199::t_eee9710bfc43f0 1-6
+port/third_party/musl-math/src/__math_oflow.c
+  s_f22d08b6c8b199::t_0a14d73ab012d6 1-6
+port/third_party/musl-math/src/__math_uflow.c
+  s_f22d08b6c8b199::t_978af37c65293b 1-6
+port/third_party/musl-math/src/__math_xflow.c
+  s_f22d08b6c8b199::t_fbfc8f9b20ea25 1-6
+port/third_party/musl-math/src/__rem_pio2.c
+  s_f22d08b6c8b199::t_c14a98748272e7 1-190
+port/third_party/musl-math/src/__rem_pio2_large.c
+  s_f22d08b6c8b199::t_6919c42a60966f 1-442
+port/third_party/musl-math/src/__sin.c
+  s_f22d08b6c8b199::t_ae94c464a819e0 1-64
+port/third_party/musl-math/src/__tan.c
+  s_f22d08b6c8b199::t_33543460529b9d 1-110
+port/third_party/musl-math/src/acos.c
+  s_f22d08b6c8b199::t_71ef4de07ff6f1 1-101
+port/third_party/musl-math/src/asin.c
+  s_f22d08b6c8b199::t_1bc7aff66a3e45 1-107
+port/third_party/musl-math/src/atan.c
+  s_f22d08b6c8b199::t_697c17dbc6ba07 1-116
+port/third_party/musl-math/src/atan2.c
+  s_f22d08b6c8b199::t_0d275f12344b95 1-107
+port/third_party/musl-math/src/cos.c
+  s_f22d08b6c8b199::t_2172b28310608d 1-77
+port/third_party/musl-math/src/exp.c
+  s_f22d08b6c8b199::t_a3d4789d1de849 1-134
+port/third_party/musl-math/src/exp_data.c
+  s_f22d08b6c8b199::t_08c815a6418041 1-182
+port/third_party/musl-math/src/exp_data.h
+  s_f22d08b6c8b199::t_806dc26332f9dc 1-26
+port/third_party/musl-math/src/log.c
+  s_f22d08b6c8b199::t_43844552b6fb44 1-112
+port/third_party/musl-math/src/log10.c
+  s_f22d08b6c8b199::t_31ca0a85c33719 1-101
+port/third_party/musl-math/src/log2.c
+  s_f22d08b6c8b199::t_6cc92a304c5c0b 1-122
+port/third_party/musl-math/src/log2_data.c
+  s_f22d08b6c8b199::t_b9e4e6c253ce1f 1-201
+port/third_party/musl-math/src/log2_data.h
+  s_f22d08b6c8b199::t_a803661067f700 1-28
+port/third_party/musl-math/src/log_data.c
+  s_f22d08b6c8b199::t_27bed4acf20065 1-328
+port/third_party/musl-math/src/log_data.h
+  s_f22d08b6c8b199::t_86ad998bad746c 1-28
+port/third_party/musl-math/src/pow.c
+  s_f22d08b6c8b199::t_ced10b9499b916 1-343
+port/third_party/musl-math/src/pow_data.c
+  s_f22d08b6c8b199::t_7601f77e1b3004 1-180
+port/third_party/musl-math/src/pow_data.h
+  s_f22d08b6c8b199::t_1ce2341e1d838c 1-22
+port/third_party/musl-math/src/sin.c
+  s_f22d08b6c8b199::t_ec0b9e45727fbf 1-78
+port/third_party/musl-math/src/tan.c
+  s_f22d08b6c8b199::t_aee04acd9b2eb3 1-70
+port/third_party/tomlc17/LICENSE
+  s_f22d08b6c8b199::t_30e0e5e77adbad 1-21
+port/third_party/tomlc17/README.md
+  s_f22d08b6c8b199::t_cf77db2cb8c3a3 1-11
+port/third_party/tomlc17/tomlc17.c
+  s_f22d08b6c8b199::t_9c91dff29153c9 1-3250
+port/third_party/tomlc17/tomlc17.h
+  s_f22d08b6c8b199::t_a21814316589bc 1-285
+port/web/library_web_transport.js
+  s_f22d08b6c8b199::t_f9d9fbaa3937f7 1-637
+port/web/online_client.js
+  s_f22d08b6c8b199::t_04f62f6e130636 1-1804
+port/web/shell.html
+  s_f22d08b6c8b199::t_e63b32026c539a 1-2007
+port/web/src/web_loopback_net.c
+  s_f22d08b6c8b199::t_e605d6be803419 1-1823
+port/web/src/web_loopback_net.h
+  s_f22d08b6c8b199::t_9f69a2ca096e8b 1-56
+port/web/src/web_online_ui.c
+  s_f22d08b6c8b199::t_2e35a254a55df1 1-579
+port/web/src/web_online_ui.h
+  s_f22d08b6c8b199::t_2c17055bc22df6 1-108
+port/web/src/web_platform.c
+  s_f22d08b6c8b199::t_db3cb290a4df6f 1-123
+port/web/tests/library_web_transport_test.js
+  s_f22d08b6c8b199::t_f669c6d3755218 1-148
+port/web/tests/online_client_host_setup_test.js
+  s_f22d08b6c8b199::t_333e51ac2003a0 1-418
+port/web/tests/shell_loading_input_test.js
+  s_f22d08b6c8b199::t_2184fb14017ffd 1-93
+port/web/tests/web_loopback_net_test.c
+  s_f22d08b6c8b199::t_c07f0f149df194 1-236
+port/windows/README.md
+  s_f22d08b6c8b199::t_9b836e8e6c68c1 1-116
+port/windows/include/crt/direct.h
+  s_f22d08b6c8b199::t_1368d73055378d 1-6
+port/windows/include/crt/fcntl.h
+  s_f22d08b6c8b199::t_e73ca5c7bcf1ae 1-15
+port/windows/include/crt/halo_windows_file_names.h
+  s_f22d08b6c8b199::t_da800d0742a48c 1-46
+port/windows/include/crt/io.h
+  s_f22d08b6c8b199::t_4f2750b9290ab9 1-6
+port/windows/include/crt/limits.h
+  s_f22d08b6c8b199::t_2938bbaa5ec471 1-25
+port/windows/include/crt/math.h
+  s_f22d08b6c8b199::t_75c518b62f3bcf 1-15
+port/windows/include/crt/stdio.h
+  s_f22d08b6c8b199::t_c2753b2b0b8c83 1-6
+port/windows/include/crt/stdlib.h
+  s_f22d08b6c8b199::t_a457200cc30aff 1-21
+port/windows/include/crt/string.h
+  s_f22d08b6c8b199::t_df573575d7e7ee 1-13
+port/windows/include/halo_windows_api_names.h
+  s_f22d08b6c8b199::t_0e347b18fc4f37 1-74
+port/windows/include/halo_windows_prefix.h
+  s_f22d08b6c8b199::t_539d3bfee0ff47 1-84
+port/windows/include/posix/pthread.h
+  s_f22d08b6c8b199::t_d00269e49c9c3b 1-83
+port/windows/include/posix/sched.h
+  s_f22d08b6c8b199::t_efd1f6afcd517b 1-8
+port/windows/include/posix/sys/mman.h
+  s_f22d08b6c8b199::t_079f9ae2b89cae 1-34
+port/windows/include/posix/sys/select.h
+  s_f22d08b6c8b199::t_fafb1f838a3d1f 1-3
+port/windows/include/posix/sys/time.h
+  s_f22d08b6c8b199::t_8e0bda539bd8c2 1-3
+port/windows/include/posix/time.h
+  s_f22d08b6c8b199::t_d53b6b188f2f42 1-25
+port/windows/include/posix/unistd.h
+  s_f22d08b6c8b199::t_757512923a33c9 1-44
+port/windows/pgo/halo_profile_runtime.c
+  s_f22d08b6c8b199::t_2af0cdc75bb3c2 1-24
+port/windows/port.json
+  s_f22d08b6c8b199::t_3f4188c66016d0 1-20
+port/windows/src/win32_files.c
+  s_f22d08b6c8b199::t_a9d227350520e5 1-313
+port/windows/src/win32_memory_watch.c
+  s_f22d08b6c8b199::t_4b80d356f0459e 1-202
+port/windows/src/win32_net.c
+  s_f22d08b6c8b199::t_b80f2cb3db24a9 1-345
+port/windows/src/win32_p2p.c
+  s_f22d08b6c8b199::t_6a789c3478d1cb 1-153
+port/windows/src/win32_posix.c
+  s_f22d08b6c8b199::t_7c527ac2a7a8aa 1-549
+port/windows/src/win32_update.c
+  s_f22d08b6c8b199::t_908783a72a0fa1 1-232
+port/windows/src/windows_crt.c
+  s_f22d08b6c8b199::t_e6827cc148b0f8 1-97
+services/signaling/.gitignore
+  s_f22d08b6c8b199::t_a4f9ef327d4a4e 1-6
+services/signaling/README.md
+  s_f22d08b6c8b199::t_567c567a5ce56f 1-444
+services/signaling/package-lock.json
+  s_f22d08b6c8b199::t_a20a089d9b419e 1-3442
+services/signaling/package.json
+  s_f22d08b6c8b199::t_dc9ec2f344d61a 1-26
+services/signaling/src/abuse.ts
+  s_f22d08b6c8b199::t_fa16b0d65a52ab 1-159
+services/signaling/src/crypto.ts
+  s_f22d08b6c8b199::t_b9caeab01ce829 1-107
+services/signaling/src/env.ts
+  s_f22d08b6c8b199::t_742a01c2508fbb 1-19
+services/signaling/src/index.ts
+  s_f22d08b6c8b199::t_e19b8d1203bb68 1-762
+services/signaling/src/protocol.ts
+  s_f22d08b6c8b199::t_d3fd508956c5b1 1-420
+services/signaling/src/room.ts
+  s_f22d08b6c8b199::t_8c85b5dfcec6d3 1-901
+services/signaling/src/turn.ts
+  s_f22d08b6c8b199::t_58ed8555ea0630 1-167
+services/signaling/src/turn_cap.ts
+  s_f22d08b6c8b199::t_6dc9cdda422af1 1-147
+services/signaling/src/turnstile.ts
+  s_f22d08b6c8b199::t_3e7be10eef42e0 1-77
+services/signaling/test/env.d.ts
+  s_f22d08b6c8b199::t_72dd49224faf47 1-3
+services/signaling/test/signaling.spec.ts
+  s_f22d08b6c8b199::t_242fb45e94e7a9 1-480
+services/signaling/test/turn.spec.ts
+  s_f22d08b6c8b199::t_027bd07604c28f 1-80
+services/signaling/test/turnstile.spec.ts
+  s_f22d08b6c8b199::t_9f6a21b153feec 1-85
+services/signaling/tsconfig.json
+  s_f22d08b6c8b199::t_5482680c334cad 1-21
+services/signaling/vitest.config.ts
+  s_f22d08b6c8b199::t_5d0c9705ee6012 1-19
+services/signaling/worker-configuration.d.ts
+  s_f22d08b6c8b199::t_90316e4cdd7184 1-16079
+services/signaling/wrangler.jsonc
+  s_f22d08b6c8b199::t_5a3a716d5187d6 1-91
+services/web/.gitignore
+  s_f22d08b6c8b199::t_543c8ded8329f4 1-2
+services/web/README.md
+  s_f22d08b6c8b199::t_649565375ac0cb 1-60
+services/web/package-lock.json
+  s_f22d08b6c8b199::t_b1dcb608653899 1-1544
+services/web/package.json
+  s_f22d08b6c8b199::t_6e3830a99509a6 1-13
+services/web/src/index.js
+  s_f22d08b6c8b199::t_c927eaceac156c 1-284
+services/web/wrangler.jsonc
+  s_f22d08b6c8b199::t_cfe258f3301b99 1-36
+source/.editorconfig
+  s_f22d08b6c8b199::t_5a4c4df111abbd 1-62
+source/ai/action_alert.c
+  s_f22d08b6c8b199::t_3792540035b1d4 1-489
+source/ai/action_avoid.c
+  s_f22d08b6c8b199::t_f111c425a5842b 1-142
+source/ai/action_charge.c
+  s_f22d08b6c8b199::t_7b2d006b6f7687 1-1081
+source/ai/action_converse.c
+  s_f22d08b6c8b199::t_de18c9c5a305f8 1-276
+source/ai/action_converse.h
+  s_f22d08b6c8b199::t_699027991db75a 1-26
+source/ai/action_fight.c
+  s_f22d08b6c8b199::t_0cde3de5d65d8f 1-309
+source/ai/action_flee.c
+  s_f22d08b6c8b199::t_b3cf412f5013ab 1-767
+source/ai/action_guard.c
+  s_f22d08b6c8b199::t_ff69ef9687d26a 1-953
+source/ai/action_obey.c
+  s_f22d08b6c8b199::t_7518e59a497272 1-2888
+source/ai/action_search.c
+  s_f22d08b6c8b199::t_d81c9142fdce20 1-501
+source/ai/action_sleep.c
+  s_f22d08b6c8b199::t_7ff47e084e0fd6 1-37
+source/ai/action_uncover.c
+  s_f22d08b6c8b199::t_4a72a33d0ae2e9 1-489
+source/ai/action_vehicle.c
+  s_f22d08b6c8b199::t_57bdb7b4e59d8d 1-1027
+source/ai/action_wait.c
+  s_f22d08b6c8b199::t_d719339e22cdbb 1-215
+source/ai/actions.c
+  s_f22d08b6c8b199::t_5c8d5308853558 1-5062
+source/ai/actions.h
+  s_f22d08b6c8b199::t_5f88a7d38c9f09 1-625
+source/ai/actor_activation.h
+  s_f22d08b6c8b199::t_7b2f78ad64af48 1-8
+source/ai/actor_combat.c
+  s_f22d08b6c8b199::t_25d8da45c11db4 1-2438
+source/ai/actor_definitions.c
+  s_f22d08b6c8b199::t_2ae335096e3124 1-5
+source/ai/actor_definitions.h
+  s_f22d08b6c8b199::t_e0dcdd61e73653 1-426
+source/ai/actor_firing_position.c
+  s_f22d08b6c8b199::t_c523af5d286a0c 1-2789
+source/ai/actor_iterators.h
+  s_f22d08b6c8b199::t_dd177a479453b2 1-13
+source/ai/actor_looking.c
+  s_f22d08b6c8b199::t_5f9ce53527098b 1-1995
+source/ai/actor_looking.h
+  s_f22d08b6c8b199::t_da24df8cffb96e 1-15
+source/ai/actor_moving.c
+  s_f22d08b6c8b199::t_ee3e0b8c52207e 1-3600
+source/ai/actor_perception.c
+  s_f22d08b6c8b199::t_49bb4d55ac4f65 1-7176
+source/ai/actor_perception.h
+  s_f22d08b6c8b199::t_c5cd8d9ff9a72c 1-45
+source/ai/actor_placement.h
+  s_f22d08b6c8b199::t_14377326873beb 1-17
+source/ai/actor_stimulus.c
+  s_f22d08b6c8b199::t_c94bbc3e74670e 1-1174
+source/ai/actor_type_carrier.c
+  s_f22d08b6c8b199::t_05c9d572a6119d 1-116
+source/ai/actor_type_crew.c
+  s_f22d08b6c8b199::t_157587b980311f 1-134
+source/ai/actor_type_definitions.h
+  s_f22d08b6c8b199::t_a69b942a5db72c 1-23
+source/ai/actor_type_elite.c
+  s_f22d08b6c8b199::t_582336cbd9be6c 1-166
+source/ai/actor_type_engineer.c
+  s_f22d08b6c8b199::t_762fe00ec0ce1d 1-137
+source/ai/actor_type_flood.c
+  s_f22d08b6c8b199::t_c9fcdceda4b587 1-416
+source/ai/actor_type_grunt.c
+  s_f22d08b6c8b199::t_e57c44f43362b8 1-155
+source/ai/actor_type_hunter.c
+  s_f22d08b6c8b199::t_c115ce2f7a7c50 1-115
+source/ai/actor_type_infection.c
+  s_f22d08b6c8b199::t_15b67ffb7e6f0e 1-1024
+source/ai/actor_type_jackal.c
+  s_f22d08b6c8b199::t_8ff678737370d4 1-163
+source/ai/actor_type_marine.c
+  s_f22d08b6c8b199::t_0d4936c5e66524 1-143
+source/ai/actor_type_mounted_weapon.c
+  s_f22d08b6c8b199::t_d00ceafd89baba 1-92
+source/ai/actor_type_sentinel.c
+  s_f22d08b6c8b199::t_4af6d65cbd8883 1-132
+source/ai/actor_types.c
+  s_f22d08b6c8b199::t_1259e12c1fcbd4 1-270
+source/ai/actor_types.h
+  s_f22d08b6c8b199::t_5258985f6ac4b0 1-123
+source/ai/actors.c
+  s_f22d08b6c8b199::t_c5d256ab85e40f 1-4259
+source/ai/actors.h
+  s_f22d08b6c8b199::t_e896fc4bb5b5b7 1-1508
+source/ai/ai.c
+  s_f22d08b6c8b199::t_bd12c1e99d41dd 1-3105
+source/ai/ai.h
+  s_f22d08b6c8b199::t_bfaff26d1aaf6d 1-208
+source/ai/ai_communication.c
+  s_f22d08b6c8b199::t_b72f7b70751ab7 1-7343
+source/ai/ai_communication.h
+  s_f22d08b6c8b199::t_7f4f7bb1f02567 1-199
+source/ai/ai_constants.h
+  s_f22d08b6c8b199::t_29cc7f123af0c8 1-23
+source/ai/ai_debug.c
+  s_f22d08b6c8b199::t_cf61ac1730837d 1-6236
+source/ai/ai_debug.h
+  s_f22d08b6c8b199::t_4d388caab3fec8 1-621
+source/ai/ai_debug_scripting.h
+  s_f22d08b6c8b199::t_152df6c43a7d0b 1-23
+source/ai/ai_globals.h
+  s_f22d08b6c8b199::t_fc6be0c4b30bf5 1-23
+source/ai/ai_profile.c
+  s_f22d08b6c8b199::t_957c4e578746fa 1-599
+source/ai/ai_profile.h
+  s_f22d08b6c8b199::t_d5e169fe237b0b 1-110
+source/ai/ai_runtime.h
+  s_f22d08b6c8b199::t_2953ccf91fe48b 1-64
+source/ai/ai_scenario_definitions.c
+  s_f22d08b6c8b199::t_08fc4c0c79a701 1-194
+source/ai/ai_scenario_definitions.h
+  s_f22d08b6c8b199::t_1ae05b94fcfc94 1-461
+source/ai/ai_script.c
+  s_f22d08b6c8b199::t_27f48efe3918f3 1-4810
+source/ai/ai_script.h
+  s_f22d08b6c8b199::t_c27c7fcfee672e 1-255
+source/ai/encounters.c
+  s_f22d08b6c8b199::t_0057b69985078b 1-3974
+source/ai/encounters.h
+  s_f22d08b6c8b199::t_0d90d618dc842b 1-283
+source/ai/path.c
+  s_f22d08b6c8b199::t_85df6f6e13207a 1-1813
+source/ai/path.h
+  s_f22d08b6c8b199::t_2849340a143c98 1-498
+source/ai/path_obstacle_avoidance.c
+  s_f22d08b6c8b199::t_6291198ab179f6 1-1112
+source/ai/path_obstacles.c
+  s_f22d08b6c8b199::t_baf407cb6cff23 1-631
+source/ai/path_smoothing.c
+  s_f22d08b6c8b199::t_d8b50b344f172f 1-614
+source/ai/path_structure_bsp.c
+  s_f22d08b6c8b199::t_a3de06434781e5 1-670
+source/ai/path_structure_bsp.h
+  s_f22d08b6c8b199::t_af60399a800455 1-84
+source/ai/props.c
+  s_f22d08b6c8b199::t_937a4ff327c49b 1-696
+source/ai/props.h
+  s_f22d08b6c8b199::t_64d2a32d94b06e 1-202
+source/bink/bink_playback.c
+  s_f22d08b6c8b199::t_95108ce7db435f 1-1054
+source/bink/bink_playback.h
+  s_f22d08b6c8b199::t_8835f5f338d643 1-46
+source/bitmaps/bitmap_color_conversion.h
+  s_f22d08b6c8b199::t_8f44cf51282982 1-19
+source/bitmaps/bitmap_compress.c
+  s_f22d08b6c8b199::t_15a9b0a448b9df 1-5
+source/bitmaps/bitmap_drawing.c
+  s_f22d08b6c8b199::t_97a230bbb102ed 1-1219
+source/bitmaps/bitmap_drawing.h
+  s_f22d08b6c8b199::t_28b49ba11e7008 1-64
+source/bitmaps/bitmap_extract.c
+  s_f22d08b6c8b199::t_c5b6111c9c13f6 1-2742
+source/bitmaps/bitmap_group.c
+  s_f22d08b6c8b199::t_9d93e94e4baf8c 1-1234
+source/bitmaps/bitmap_group.h
+  s_f22d08b6c8b199::t_5aabe4b8d72e4d 1-108
+source/bitmaps/bitmap_group_internal.h
+  s_f22d08b6c8b199::t_ec51fceeed67a8 1-26
+source/bitmaps/bitmap_group_lookup.h
+  s_f22d08b6c8b199::t_f8f9abbf178a42 1-21
+source/bitmaps/bitmap_group_runtime.h
+  s_f22d08b6c8b199::t_f2a5663f2cec4c 1-17
+source/bitmaps/bitmap_macros.h
+  s_f22d08b6c8b199::t_5e65f319fb4af7 1-23
+source/bitmaps/bitmap_strings_internal.h
+  s_f22d08b6c8b199::t_db9c501427d06e 1-16
+source/bitmaps/bitmap_utilities.c
+  s_f22d08b6c8b199::t_561e01e9aa8644 1-2796
+source/bitmaps/bitmap_utilities.h
+  s_f22d08b6c8b199::t_3712024abc8bc7 1-106
+source/bitmaps/bitmaps.c
+  s_f22d08b6c8b199::t_59eb02f547bc21 1-1431
+source/bitmaps/bitmaps.h
+  s_f22d08b6c8b199::t_6065ca331cec31 1-80
+source/bitmaps/bitmaps_inlines.h
+  s_f22d08b6c8b199::t_af51007a9d858b 1-228
+source/bitmaps/bitmaps_internal.h
+  s_f22d08b6c8b199::t_42e7d4590c097f 1-79
+source/bitmaps/bitmaps_mipmap.h
+  s_f22d08b6c8b199::t_138089d863f3af 1-47
+source/bitmaps/bitmaps_quantitize.c
+  s_f22d08b6c8b199::t_e3b44e550c4eb0 1-202
+source/bitmaps/bitmaps_quantitize_internal.h
+  s_f22d08b6c8b199::t_56eb4b80a509d9 1-15
+source/bitmaps/bitmaps_sampling.h
+  s_f22d08b6c8b199::t_732d7b003f25f9 1-28
+source/bitmaps/color_table_group.c
+  s_f22d08b6c8b199::t_696e4db9d31218 1-5
+source/bitmaps/color_table_group.h
+  s_f22d08b6c8b199::t_06145e632cf1ca 1-51
+source/bitmaps/libtiff/.editorconfig
+  s_f22d08b6c8b199::t_adea6e2778082a 1
+source/bitmaps/libtiff/Makefile
+  s_f22d08b6c8b199::t_8279a2d8a9e396 1-167
+source/bitmaps/libtiff/Makefile.DEC
+  s_f22d08b6c8b199::t_4437b9cb633310 1-162
+source/bitmaps/libtiff/Makefile.aix
+  s_f22d08b6c8b199::t_29185364871d36 1-233
+source/bitmaps/libtiff/Makefile.apollo
+  s_f22d08b6c8b199::t_caa3c3a909395f 1-171
+source/bitmaps/libtiff/Makefile.hpux
+  s_f22d08b6c8b199::t_11c95befc8ebd4 1-166
+source/bitmaps/libtiff/Makefile.mips
+  s_f22d08b6c8b199::t_4e857483e983f3 1-167
+source/bitmaps/libtiff/Makefile.next
+  s_f22d08b6c8b199::t_ecd8771feced21 1-169
+source/bitmaps/libtiff/Makefile.sgi
+  s_f22d08b6c8b199::t_04c7336e527160 1-167
+source/bitmaps/libtiff/Makefile.sun
+  s_f22d08b6c8b199::t_1e53e251e18c25 1-167
+source/bitmaps/libtiff/Makefile.tahoe
+  s_f22d08b6c8b199::t_2caee64b52dccb 1-169
+source/bitmaps/libtiff/Makefile.vax
+  s_f22d08b6c8b199::t_6c6e43c35850c2 1-169
+source/bitmaps/libtiff/README
+  s_f22d08b6c8b199::t_e0f10478da5546 1-163
+source/bitmaps/libtiff/g3states.h
+  s_f22d08b6c8b199::t_91108ab2f15298 1-11169
+source/bitmaps/libtiff/machdep.h
+  s_f22d08b6c8b199::t_91f5f2aa258a59 1-258
+source/bitmaps/libtiff/mkg3states.c
+  s_f22d08b6c8b199::t_8eb14e0f021b8c 1-786
+source/bitmaps/libtiff/mkspans.c
+  s_f22d08b6c8b199::t_258141ae4723a0 1-50
+source/bitmaps/libtiff/prototypes.h
+  s_f22d08b6c8b199::t_6011a7a4aa43d9 1-60
+source/bitmaps/libtiff/t4.h
+  s_f22d08b6c8b199::t_7e3151c241b871 1-298
+source/bitmaps/libtiff/tif_aux.c
+  s_f22d08b6c8b199::t_945b1e94fe21d7 1-181
+source/bitmaps/libtiff/tif_ccittrle.c
+  s_f22d08b6c8b199::t_44fac87cc0265d 1-76
+source/bitmaps/libtiff/tif_close.c
+  s_f22d08b6c8b199::t_ad8b7e46391550 1-62
+source/bitmaps/libtiff/tif_compat.c
+  s_f22d08b6c8b199::t_97c884c920c885 1-233
+source/bitmaps/libtiff/tif_compress.c
+  s_f22d08b6c8b199::t_131f4481c6b59e 1-227
+source/bitmaps/libtiff/tif_dir.c
+  s_f22d08b6c8b199::t_916326f8e3b1a0 1-977
+source/bitmaps/libtiff/tif_dirinfo.c
+  s_f22d08b6c8b199::t_afae829e3a60bb 1-299
+source/bitmaps/libtiff/tif_dirread.c
+  s_f22d08b6c8b199::t_0b325e20fda491 1-1202
+source/bitmaps/libtiff/tif_dirwrite.c
+  s_f22d08b6c8b199::t_a1cf91f4445fca 1-895
+source/bitmaps/libtiff/tif_dumpmode.c
+  s_f22d08b6c8b199::t_ddf566aedc84f4 1-156
+source/bitmaps/libtiff/tif_error.c
+  s_f22d08b6c8b199::t_be48bd46e32d91 1-72
+source/bitmaps/libtiff/tif_fax3.c
+  s_f22d08b6c8b199::t_cbe358bc9bf68a 1-1163
+source/bitmaps/libtiff/tif_fax3.h
+  s_f22d08b6c8b199::t_d91e0328366075 1-79
+source/bitmaps/libtiff/tif_fax4.c
+  s_f22d08b6c8b199::t_e6d9cac3be0d3d 1-128
+source/bitmaps/libtiff/tif_flush.c
+  s_f22d08b6c8b199::t_76729650af86e4 1-62
+source/bitmaps/libtiff/tif_getimage.c
+  s_f22d08b6c8b199::t_d6fd3348b939fd 1-1226
+source/bitmaps/libtiff/tif_jpeg.c
+  s_f22d08b6c8b199::t_b8c62c1786f9f4 1-40
+source/bitmaps/libtiff/tif_lzw.c
+  s_f22d08b6c8b199::t_c43b720d86d3aa 1-962
+source/bitmaps/libtiff/tif_machdep.c
+  s_f22d08b6c8b199::t_8eda79bb9d6b95 1-190
+source/bitmaps/libtiff/tif_next.c
+  s_f22d08b6c8b199::t_c323f5cf2818dc 1-151
+source/bitmaps/libtiff/tif_open.c
+  s_f22d08b6c8b199::t_3065638193d453 1-405
+source/bitmaps/libtiff/tif_packbits.c
+  s_f22d08b6c8b199::t_3eae531f07f468 1-247
+source/bitmaps/libtiff/tif_print.c
+  s_f22d08b6c8b199::t_e17e7afc14d847 1-571
+source/bitmaps/libtiff/tif_read.c
+  s_f22d08b6c8b199::t_7e2a64cd18c23b 1-603
+source/bitmaps/libtiff/tif_strip.c
+  s_f22d08b6c8b199::t_4946f95daaf08c 1-119
+source/bitmaps/libtiff/tif_swab.c
+  s_f22d08b6c8b199::t_88fafea0bb644f 1-198
+source/bitmaps/libtiff/tif_thunder.c
+  s_f22d08b6c8b199::t_049882b05c9267 1-155
+source/bitmaps/libtiff/tif_tile.c
+  s_f22d08b6c8b199::t_9aa1163461c4c9 1-201
+source/bitmaps/libtiff/tif_version.c
+  s_f22d08b6c8b199::t_7148d186b32d0f 1-30
+source/bitmaps/libtiff/tif_warning.c
+  s_f22d08b6c8b199::t_197c00492c2328 1-73
+source/bitmaps/libtiff/tif_write.c
+  s_f22d08b6c8b199::t_e4d09750249fbf 1-596
+source/bitmaps/libtiff/tiff.h
+  s_f22d08b6c8b199::t_a265cbb697db1e 1-259
+source/bitmaps/libtiff/tiffcompat.h
+  s_f22d08b6c8b199::t_f1cf4d0121dab6 1-222
+source/bitmaps/libtiff/tiffio.h
+  s_f22d08b6c8b199::t_d2059f88de8aa6 1-217
+source/bitmaps/libtiff/tiffioP.h
+  s_f22d08b6c8b199::t_b6c4fa767317e4 1-334
+source/bitmaps/s3tc/s3tc.c
+  s_f22d08b6c8b199::t_4446046d25c22f 1-1015
+source/bitmaps/s3tc/s3tc.h
+  s_f22d08b6c8b199::t_b5f227027d2c36 1-109
+source/bitmaps/targa_file.c
+  s_f22d08b6c8b199::t_b4b5214a758c3e 1-119
+source/bitmaps/tiff_file.c
+  s_f22d08b6c8b199::t_1ebee5e5ede786 1-477
+source/bitmaps/tiff_file.h
+  s_f22d08b6c8b199::t_67c7ba11292a71 1-16
+source/bungie_net/common/64bit_math.c
+  s_f22d08b6c8b199::t_1d1c5a429dd399 1-186
+source/bungie_net/common/64bit_math.h
+  s_f22d08b6c8b199::t_8dcdc70c498e89 1-50
+source/bungie_net/common/key_agreement.c
+  s_f22d08b6c8b199::t_a6f2162ee26691 1-447
+source/bungie_net/common/key_agreement.h
+  s_f22d08b6c8b199::t_6ecb9487a25941 1-39
+source/bungie_net/common/memory_manager.h
+  s_f22d08b6c8b199::t_80aebb99df4166 1-23
+source/bungie_net/common/message_encryption.c
+  s_f22d08b6c8b199::t_46acedca9ff55e 1-250
+source/bungie_net/common/message_encryption.h
+  s_f22d08b6c8b199::t_d313e3fef60f1a 1-43
+source/bungie_net/common/message_header.c
+  s_f22d08b6c8b199::t_3a5668f75f5a5c 1-122
+source/bungie_net/common/message_header.h
+  s_f22d08b6c8b199::t_e3905ebee110f6 1-53
+source/bungie_net/common/prime_numbers.c
+  s_f22d08b6c8b199::t_e3aaae5c4e8193 1-190
+source/bungie_net/common/prime_numbers.h
+  s_f22d08b6c8b199::t_10d2f8fd4c4e4d 1-35
+source/bungie_net/common/public_key_crypt.c
+  s_f22d08b6c8b199::t_ca333b1c1265f4 1-221
+source/bungie_net/common/public_key_crypt.h
+  s_f22d08b6c8b199::t_cc609b81bc18c8 1-43
+source/bungie_net/common/random_numbers.c
+  s_f22d08b6c8b199::t_6368582647c937 1-74
+source/bungie_net/common/random_numbers.h
+  s_f22d08b6c8b199::t_a8b443afbba445 1-31
+source/bungie_net/common/thread.h
+  s_f22d08b6c8b199::t_2045b56543f160 1-45
+source/bungie_net/common/thread_win32.c
+  s_f22d08b6c8b199::t_deca3fa44826b2 1-299
+source/bungie_net/network/transport.h
+  s_f22d08b6c8b199::t_c671bad1844682 1-110
+source/bungie_net/network/transport_address.c
+  s_f22d08b6c8b199::t_207b56602a4462 1-268
+source/bungie_net/network/transport_address_constants.h
+  s_f22d08b6c8b199::t_306c42a8a56cfd 1-18
+source/bungie_net/network/transport_dns_winsock.c
+  s_f22d08b6c8b199::t_f5a3a40383722b 1-5
+source/bungie_net/network/transport_endpoint.h
+  s_f22d08b6c8b199::t_957d42e7e45df7 1-125
+source/bungie_net/network/transport_endpoint_set_winsock.c
+  s_f22d08b6c8b199::t_0ba849132323b8 1-786
+source/bungie_net/network/transport_endpoint_winsock.c
+  s_f22d08b6c8b199::t_aa70b5ceb75a59 1-1769
+source/bungie_net/network/transport_endpoint_winsock.h
+  s_f22d08b6c8b199::t_2d1e186263c696 1-47
+source/cache/cache_file_precaching.h
+  s_f22d08b6c8b199::t_3a7763c5791e14 1-14
+source/cache/cache_files.c
+  s_f22d08b6c8b199::t_5ddb0f25653ac6 1-843
+source/cache/cache_files.h
+  s_f22d08b6c8b199::t_cdc7e212dfeef3 1-172
+source/cache/cache_files_decompress_windows.c
+  s_f22d08b6c8b199::t_0c10c9de652811 1-1807
+source/cache/cache_files_decompress_windows.h
+  s_f22d08b6c8b199::t_0997a2eff68825 1-60
+source/cache/cache_files_windows.c
+  s_f22d08b6c8b199::t_e8b3353a1ec84e 1-1629
+source/cache/physical_memory_map.c
+  s_f22d08b6c8b199::t_972cffcd7056b4 1-167
+source/cache/physical_memory_map.h
+  s_f22d08b6c8b199::t_c18ee30f512b09 1-32
+source/cache/predicted_resources.c
+  s_f22d08b6c8b199::t_e9472002a1b034 1-112
+source/cache/predicted_resources.h
+  s_f22d08b6c8b199::t_e721ac47dcf2c5 1-38
+source/cache/sound_cache.h
+  s_f22d08b6c8b199::t_5bf9544b752e18 1-60
+source/cache/texture_cache.h
+  s_f22d08b6c8b199::t_981ec5135c139d 1-46
+source/cache/xbox_sound_cache.c
+  s_f22d08b6c8b199::t_f4b3206ee3d729 1-728
+source/cache/xbox_texture_cache.c
+  s_f22d08b6c8b199::t_4bb30145946ed5 1-999
+source/cache/xbox_texture_cache.h
+  s_f22d08b6c8b199::t_5a86642d28362b 1-27
+source/camera/bored_camera.c
+  s_f22d08b6c8b199::t_ffd7a003a676ce 1-236
+source/camera/bored_camera.h
+  s_f22d08b6c8b199::t_33635d6893dbe1 1-50
+source/camera/camera_scripting.c
+  s_f22d08b6c8b199::t_9baeda6810b4f0 1-562
+source/camera/camera_scripting.h
+  s_f22d08b6c8b199::t_3728d1f975e244 1-47
+source/camera/camera_track_definitions.c
+  s_f22d08b6c8b199::t_8a96964bb875e7 1-5
+source/camera/camera_track_definitions.h
+  s_f22d08b6c8b199::t_57e34e2ba864b3 1-23
+source/camera/dead_camera.c
+  s_f22d08b6c8b199::t_a2541f043ad192 1-313
+source/camera/dead_camera.h
+  s_f22d08b6c8b199::t_bdbceb759cb5e6 1-56
+source/camera/director.c
+  s_f22d08b6c8b199::t_a8cd7dc21e3013 1-1076
+source/camera/director.h
+  s_f22d08b6c8b199::t_c6a24d08868961 1-179
+source/camera/editor_flying_camera.c
+  s_f22d08b6c8b199::t_9befc1a9fbc788 1-915
+source/camera/editor_flying_camera.h
+  s_f22d08b6c8b199::t_c7be60ec99e50a 1-80
+source/camera/first_person_camera.c
+  s_f22d08b6c8b199::t_4ef0c5ddd037f4 1-273
+source/camera/first_person_camera.h
+  s_f22d08b6c8b199::t_dc1dea8b8387c4 1-51
+source/camera/flying_camera.c
+  s_f22d08b6c8b199::t_667d7e92043716 1-166
+source/camera/flying_camera.h
+  s_f22d08b6c8b199::t_bb7b3345999aa1 1-59
+source/camera/following_camera.c
+  s_f22d08b6c8b199::t_e81f210d6e0c97 1-447
+source/camera/following_camera.h
+  s_f22d08b6c8b199::t_d5c910762964b4 1-57
+source/camera/observer.c
+  s_f22d08b6c8b199::t_37e52dfe1cb52a 1-1342
+source/camera/observer.h
+  s_f22d08b6c8b199::t_c787e64e3df1b6 1-122
+source/camera/orbiting_camera.c
+  s_f22d08b6c8b199::t_a3061f15957a31 1-162
+source/camera/orbiting_camera.h
+  s_f22d08b6c8b199::t_c7ee363e9bc502 1-46
+source/camera/static_camera.c
+  s_f22d08b6c8b199::t_cf0cd1d3fecf9b 1-113
+source/camera/static_camera.h
+  s_f22d08b6c8b199::t_ef10174a944bfc 1-67
+source/cseries/build_number.h
+  s_f22d08b6c8b199::t_ac4b470cbff4bf 1-23
+source/cseries/cseries.c
+  s_f22d08b6c8b199::t_100c85b8ea467f 1-658
+source/cseries/cseries.h
+  s_f22d08b6c8b199::t_2277198f39d6d7 1-344
+source/cseries/cseries_windows.c
+  s_f22d08b6c8b199::t_1f9b4b6cfac77a 1-348
+source/cseries/cseries_windows.h
+  s_f22d08b6c8b199::t_924e1671d190cc 1-75
+source/cseries/debug_memory.c
+  s_f22d08b6c8b199::t_9dd566ef2ef4b8 1-802
+source/cseries/errors.c
+  s_f22d08b6c8b199::t_1f9a03792ce745 1-408
+source/cseries/errors.h
+  s_f22d08b6c8b199::t_9b8f12a67abb2a 1-72
+source/cseries/headers.c
+  s_f22d08b6c8b199::t_875fa6c67be22d 1-26
+source/cseries/headers.h
+  s_f22d08b6c8b199::t_0eb19bae9f42ac 1-23
+source/cseries/platform.h
+  s_f22d08b6c8b199::t_1629f7db2ce4b3 1-23
+source/cseries/profile.c
+  s_f22d08b6c8b199::t_88549a6eb7a062 1-1795
+source/cseries/profile.h
+  s_f22d08b6c8b199::t_2e57469b5996f5 1-202
+source/cseries/profile_rasterizer.h
+  s_f22d08b6c8b199::t_c78cd57796c2ce 1-21
+source/cseries/progress.c
+  s_f22d08b6c8b199::t_41a892077739c7 1-74
+source/cseries/progress.h
+  s_f22d08b6c8b199::t_fe69f1544c408f 1-43
+source/cseries/sort.c
+  s_f22d08b6c8b199::t_356602046319e7 1-305
+source/cseries/sort.h
+  s_f22d08b6c8b199::t_34f6e3524a9054 1-20
+source/cseries/stack_walk_windows.c
+  s_f22d08b6c8b199::t_ed0af7c4334cce 1-866
+source/cutscene/cinematics.c
+  s_f22d08b6c8b199::t_73f740bdadec8a 1-585
+source/cutscene/cinematics.h
+  s_f22d08b6c8b199::t_d9ba46dbd32374 1-88
+source/cutscene/recorded_animation_definitions.c
+  s_f22d08b6c8b199::t_fca4d453613e10 1-138
+source/cutscene/recorded_animation_definitions.h
+  s_f22d08b6c8b199::t_d582e57c2f5bd5 1-45
+source/cutscene/recorded_animation_initialize.c
+  s_f22d08b6c8b199::t_dc328adf4e92eb 1-188
+source/cutscene/recorded_animation_playback.c
+  s_f22d08b6c8b199::t_b4f048acb99807 1-722
+source/cutscene/recorded_animation_playback.h
+  s_f22d08b6c8b199::t_7dbd0310c23d70 1-40
+source/cutscene/recorded_animation_playback_v1.c
+  s_f22d08b6c8b199::t_588753f514af12 1-642
+source/cutscene/recorded_animation_playback_v1.h
+  s_f22d08b6c8b199::t_a0951c67fc98b4 1-40
+source/cutscene/recorded_animations.c
+  s_f22d08b6c8b199::t_1a5fc4a629f2c0 1-750
+source/cutscene/recorded_animations.h
+  s_f22d08b6c8b199::t_a70da3e9051188 1-47
+source/devices/device_controls.c
+  s_f22d08b6c8b199::t_0f3d996e864015 1-225
+source/devices/device_controls.h
+  s_f22d08b6c8b199::t_3aebffbd27bdf9 1-104
+source/devices/device_definitions.c
+  s_f22d08b6c8b199::t_b3feccf53c5bf1 1-5
+source/devices/device_definitions.h
+  s_f22d08b6c8b199::t_24f96ac5db8bd6 1-114
+source/devices/device_light_fixtures.c
+  s_f22d08b6c8b199::t_d6cf2fd4b0ab25 1-108
+source/devices/device_light_fixtures.h
+  s_f22d08b6c8b199::t_8adc25e712f2cd 1-67
+source/devices/device_machines.c
+  s_f22d08b6c8b199::t_a577755722cfb6 1-362
+source/devices/device_machines.h
+  s_f22d08b6c8b199::t_12c3cf26357a1f 1-55
+source/devices/devices.c
+  s_f22d08b6c8b199::t_cf16b321229642 1-1084
+source/devices/devices.h
+  s_f22d08b6c8b199::t_eefedd7bcd303f 1-144
+source/dialogs/button_control.c
+  s_f22d08b6c8b199::t_d947b3fdc7d3e8 1-5
+source/dialogs/dialog_controls.c
+  s_f22d08b6c8b199::t_53c322d04fca2e 1-5
+source/dialogs/dialog_templates.c
+  s_f22d08b6c8b199::t_ee7c1a2015fe17 1-5
+source/dialogs/dialogs.c
+  s_f22d08b6c8b199::t_2b1921bd678a67 1-5
+source/dialogs/dialogs.h
+  s_f22d08b6c8b199::t_3828ffaec2119d 1-23
+source/dialogs/edit_text.c
+  s_f22d08b6c8b199::t_e3d87e769fde67 1-249
+source/dialogs/edit_text.h
+  s_f22d08b6c8b199::t_df5470e2598440 1-39
+source/dialogs/edit_text_control.c
+  s_f22d08b6c8b199::t_2d3f95a31d65e7 1-5
+source/dialogs/list_control.c
+  s_f22d08b6c8b199::t_ce3eeb7d73bddb 1-5
+source/dialogs/picture_control.c
+  s_f22d08b6c8b199::t_076c0f1f945a0a 1-5
+source/dialogs/static_text_control.c
+  s_f22d08b6c8b199::t_a1e0b182f00f41 1-5
+source/dialogs/value_control.c
+  s_f22d08b6c8b199::t_0111efa3b62bd1 1-5
+source/editor/editor_stubs.c
+  s_f22d08b6c8b199::t_f41ca580caa8f5 1-65
+source/editor/editor_stubs.h
+  s_f22d08b6c8b199::t_a7a6dc15715721 1-24
+source/effects/contrail_definitions.c
+  s_f22d08b6c8b199::t_8e8e218a2a2169 1-33
+source/effects/contrail_definitions.h
+  s_f22d08b6c8b199::t_5a265c0f75634a 1-120
+source/effects/contrails.c
+  s_f22d08b6c8b199::t_3b2beacf4aadec 1-958
+source/effects/contrails.h
+  s_f22d08b6c8b199::t_9bd849ca287bd2 1-109
+source/effects/decal_definitions.c
+  s_f22d08b6c8b199::t_5a541ad4b7111c 1-5
+source/effects/decal_definitions.h
+  s_f22d08b6c8b199::t_37da8ccbd90f18 1-59
+source/effects/decals.c
+  s_f22d08b6c8b199::t_24cc187ac1cb35 1-2558
+source/effects/decals.h
+  s_f22d08b6c8b199::t_db4057f7dfd9ff 1-88
+source/effects/effect_definitions.c
+  s_f22d08b6c8b199::t_cce7200d568041 1-34
+source/effects/effect_definitions.h
+  s_f22d08b6c8b199::t_dbb097b4a0e761 1-33
+source/effects/effects.c
+  s_f22d08b6c8b199::t_9d3200775f4457 1-2836
+source/effects/effects.h
+  s_f22d08b6c8b199::t_9994aab60b5afe 1-109
+source/effects/glass_definitions.c
+  s_f22d08b6c8b199::t_c6e75ce51ce8ac 1-5
+source/effects/material_effect_definitions.c
+  s_f22d08b6c8b199::t_6675f00d3ee7c6 1-5
+source/effects/material_effect_definitions.h
+  s_f22d08b6c8b199::t_18c56577eccb5a 1-98
+source/effects/material_effects.c
+  s_f22d08b6c8b199::t_6f033c44f303e9 1-203
+source/effects/material_effects.h
+  s_f22d08b6c8b199::t_b32f59bdc134b9 1-48
+source/effects/particle_definitions.c
+  s_f22d08b6c8b199::t_6b09d2ea506eff 1-5
+source/effects/particle_definitions.h
+  s_f22d08b6c8b199::t_0e51a2e2467e68 1-23
+source/effects/particle_system_definitions.c
+  s_f22d08b6c8b199::t_9f8b6619c395c8 1-5
+source/effects/particle_system_definitions.h
+  s_f22d08b6c8b199::t_9c5b10fa8adf91 1-263
+source/effects/particle_systems.c
+  s_f22d08b6c8b199::t_a1bd53b010aa43 1-1660
+source/effects/particle_systems.h
+  s_f22d08b6c8b199::t_5205b502e62ee8 1-209
+source/effects/particles.c
+  s_f22d08b6c8b199::t_7c94eee08b3270 1-1082
+source/effects/particles.h
+  s_f22d08b6c8b199::t_6bf31c82d4de5e 1-192
+source/effects/player_effects.c
+  s_f22d08b6c8b199::t_3c2edc25988e2c 1-1305
+source/effects/player_effects.h
+  s_f22d08b6c8b199::t_a4369aaaf00fd6 1-102
+source/effects/spheroid_definitions.c
+  s_f22d08b6c8b199::t_886623d132426d 1-5
+source/effects/spheroids.c
+  s_f22d08b6c8b199::t_3595e5852c0c1d 1-5
+source/effects/weather_particle_definitions.c
+  s_f22d08b6c8b199::t_5292bdb2239f4b 1-5
+source/effects/weather_particle_definitions.h
+  s_f22d08b6c8b199::t_85513a85827525 1-45
+source/effects/weather_particle_systems.c
+  s_f22d08b6c8b199::t_f67b1f9edd6099 1-1010
+source/effects/weather_particle_systems.h
+  s_f22d08b6c8b199::t_0335e1a7a916e2 1-49
+source/game/aim_assist.c
+  s_f22d08b6c8b199::t_f5ebeadae80cba 1-713
+source/game/aim_assist.h
+  s_f22d08b6c8b199::t_f234d480620dcb 1-77
+source/game/cheats.c
+  s_f22d08b6c8b199::t_ca393d3caa4871 1-390
+source/game/cheats.h
+  s_f22d08b6c8b199::t_b072825ebeb248 1-50
+source/game/game.c
+  s_f22d08b6c8b199::t_4426707a4b45d4 1-1088
+source/game/game.h
+  s_f22d08b6c8b199::t_5b87bd9120c0c9 1-197
+source/game/game_allegiance.c
+  s_f22d08b6c8b199::t_a7e577be958784 1-635
+source/game/game_allegiance.h
+  s_f22d08b6c8b199::t_22c330ce5f8505 1-63
+source/game/game_engine.c
+  s_f22d08b6c8b199::t_e5b04b96bf37b7 1-8190
+source/game/game_engine.h
+  s_f22d08b6c8b199::t_aefb0f7d541d0a 1-543
+source/game/game_engine_bomb.c
+  s_f22d08b6c8b199::t_c46f90f7e477f8 1-5
+source/game/game_engine_ctf.c
+  s_f22d08b6c8b199::t_b6934e1111dc7b 1-1429
+source/game/game_engine_defend.c
+  s_f22d08b6c8b199::t_868fc03b275d28 1-5
+source/game/game_engine_king.c
+  s_f22d08b6c8b199::t_4cefc574289624 1-1171
+source/game/game_engine_king.h
+  s_f22d08b6c8b199::t_16f8c216682744 1-173
+source/game/game_engine_list.c
+  s_f22d08b6c8b199::t_402d0d9a8ac86b 1-47
+source/game/game_engine_list.h
+  s_f22d08b6c8b199::t_b06516d378362d 1-27
+source/game/game_engine_multiplayer_sounds.c
+  s_f22d08b6c8b199::t_098adb183414a7 1-282
+source/game/game_engine_oddball.c
+  s_f22d08b6c8b199::t_2060a0202cce4d 1-1361
+source/game/game_engine_place.h
+  s_f22d08b6c8b199::t_b68cf6a9a08be0 1-38
+source/game/game_engine_playlist.h
+  s_f22d08b6c8b199::t_542b44b1ebefa0 1-73
+source/game/game_engine_race.c
+  s_f22d08b6c8b199::t_0d21948c56c8a3 1-1510
+source/game/game_engine_race.h
+  s_f22d08b6c8b199::t_422408eea10116 1-113
+source/game/game_engine_runtime.h
+  s_f22d08b6c8b199::t_5b2312d05fee81 1-44
+source/game/game_engine_slayer.c
+  s_f22d08b6c8b199::t_57f3f770a4d483 1-734
+source/game/game_engine_slayer.h
+  s_f22d08b6c8b199::t_ff1d815a8d2f83 1-23
+source/game/game_engine_stub.c
+  s_f22d08b6c8b199::t_8c5a1abeed016f 1-215
+source/game/game_engine_terminator.c
+  s_f22d08b6c8b199::t_2be8cdf947fc1d 1-5
+source/game/game_globals.c
+  s_f22d08b6c8b199::t_7c5a3b374c8d3b 1-225
+source/game/game_globals.h
+  s_f22d08b6c8b199::t_6036d615f235b2 1-270
+source/game/game_statistics.c
+  s_f22d08b6c8b199::t_753c3918696df0 1-228
+source/game/game_statistics_internal.h
+  s_f22d08b6c8b199::t_e829ec94df2a89 1-24
+source/game/game_time.c
+  s_f22d08b6c8b199::t_c9e0e084720dd7 1-663
+source/game/local_players.h
+  s_f22d08b6c8b199::t_f74f8bf6839041 1-15
+source/game/player_control.c
+  s_f22d08b6c8b199::t_2cc8a1b7faeb38 1-1975
+source/game/player_control.h
+  s_f22d08b6c8b199::t_cf8502be4e79bf 1-221
+source/game/player_control_runtime.h
+  s_f22d08b6c8b199::t_846b284878b8be 1-18
+source/game/player_queues_new.c
+  s_f22d08b6c8b199::t_2982e18d7d264b 1-1005
+source/game/player_queues_new.h
+  s_f22d08b6c8b199::t_e277cbc297365c 1-66
+source/game/player_rumble.c
+  s_f22d08b6c8b199::t_c97592a53a38c3 1-391
+source/game/player_rumble.h
+  s_f22d08b6c8b199::t_a65c86103afe2b 1-70
+source/game/player_rumble_definition.c
+  s_f22d08b6c8b199::t_afa72496ad7011 1-5
+source/game/players.c
+  s_f22d08b6c8b199::t_a444dbf76ef6d5 1-3911
+source/game/players.h
+  s_f22d08b6c8b199::t_818368ad66fe50 1-266
+source/game/players_runtime.h
+  s_f22d08b6c8b199::t_00e6ab9a3e5819 1-21
+source/hs/hs.c
+  s_f22d08b6c8b199::t_160f481f22007e 1-14907
+source/hs/hs.h
+  s_f22d08b6c8b199::t_1a458c3acd12ee 1-257
+source/hs/hs_compile.c
+  s_f22d08b6c8b199::t_c4ced6afd6598e 1-3393
+source/hs/hs_enum.h
+  s_f22d08b6c8b199::t_53c0413e8ccc66 1-23
+source/hs/hs_function.h
+  s_f22d08b6c8b199::t_ef5bdbd9a17ede 1-23
+source/hs/hs_globals_external.c
+  s_f22d08b6c8b199::t_f0848a5f55a17f 1-2418
+source/hs/hs_glue.h
+  s_f22d08b6c8b199::t_b8dc166e4e0165 1-23
+source/hs/hs_library_external.c
+  s_f22d08b6c8b199::t_55bcd9cafb5899 1-1059
+source/hs/hs_library_external.h
+  s_f22d08b6c8b199::t_37d56b255c28c7 1-26
+source/hs/hs_library_internal.h
+  s_f22d08b6c8b199::t_ce6439c75a8cd1 1-23
+source/hs/hs_library_internal_compile.h
+  s_f22d08b6c8b199::t_2929b9073875b8 1-83
+source/hs/hs_library_internal_runtime.h
+  s_f22d08b6c8b199::t_b031c8e31b9d0b 1-33
+source/hs/hs_runtime.c
+  s_f22d08b6c8b199::t_346f83298ede01 1-3211
+source/hs/hs_scenario_definitions.c
+  s_f22d08b6c8b199::t_f4e36db1d0ee5f 1-316
+source/hs/hs_scenario_definitions.h
+  s_f22d08b6c8b199::t_075d4ad205d9b2 1-95
+source/hs/object_lists.c
+  s_f22d08b6c8b199::t_90bf0892fe5ca1 1-255
+source/hs/object_lists.h
+  s_f22d08b6c8b199::t_4716b35b83b678 1-58
+source/input/HaloAutoTest.c
+  s_f22d08b6c8b199::t_d81e49eed8b7d0 1-144
+source/input/HaloAutoTest.h
+  s_f22d08b6c8b199::t_7f77f045209cc3 1-15
+source/input/input.h
+  s_f22d08b6c8b199::t_1396e2e4ddceab 1-233
+source/input/input_abstraction.c
+  s_f22d08b6c8b199::t_0faf96d3d6bd05 1-703
+source/input/input_abstraction.h
+  s_f22d08b6c8b199::t_42ed8a81de6e45 1-59
+source/input/input_device_defaults.h
+  s_f22d08b6c8b199::t_e12aa1923e4a43 1-23
+source/input/input_windows.c
+  s_f22d08b6c8b199::t_25c0fe81271bc5 1-5
+source/input/input_windows.h
+  s_f22d08b6c8b199::t_670c3dfab2674c 1-23
+source/input/input_xbox.c
+  s_f22d08b6c8b199::t_0eac4726ab0485 1-1251
+source/interface/attract_mode.c
+  s_f22d08b6c8b199::t_8b5bf91bb28289 1-235
+source/interface/attract_mode.h
+  s_f22d08b6c8b199::t_d597a0a4c1c5d0 1-41
+source/interface/event_manager.c
+  s_f22d08b6c8b199::t_1fe3b27e86c795 1-385
+source/interface/event_manager.h
+  s_f22d08b6c8b199::t_b7fed32cfbf716 1-71
+source/interface/first_person_weapons.c
+  s_f22d08b6c8b199::t_9edbb49011e708 1-2272
+source/interface/first_person_weapons.h
+  s_f22d08b6c8b199::t_04c2c5b3620f4a 1-83
+source/interface/hud.c
+  s_f22d08b6c8b199::t_00ceb30002f7cc 1-1208
+source/interface/hud.h
+  s_f22d08b6c8b199::t_54fc7a41531a3d 1-92
+source/interface/hud_definitions.c
+  s_f22d08b6c8b199::t_b672e7a70dd71e 1-43
+source/interface/hud_definitions.h
+  s_f22d08b6c8b199::t_84afa020ecc389 1-171
+source/interface/hud_draw.c
+  s_f22d08b6c8b199::t_4ac60c319e988c 1-2100
+source/interface/hud_draw.h
+  s_f22d08b6c8b199::t_a066e9f6a5bc6d 1-155
+source/interface/hud_messaging.c
+  s_f22d08b6c8b199::t_5e9f9e113e8d4a 1-1870
+source/interface/hud_messaging.h
+  s_f22d08b6c8b199::t_ec4e2d9e3fbf8c 1-86
+source/interface/hud_messaging_definitions.c
+  s_f22d08b6c8b199::t_399b5a9d47b4cb 1-5
+source/interface/hud_messaging_definitions.h
+  s_f22d08b6c8b199::t_2e0a738623a3fe 1-23
+source/interface/hud_nav_points.c
+  s_f22d08b6c8b199::t_d56c7cb372ce8c 1-1116
+source/interface/hud_sounds.c
+  s_f22d08b6c8b199::t_98eeab62685b97 1-116
+source/interface/hud_unit.c
+  s_f22d08b6c8b199::t_9512355c85b806 1-1328
+source/interface/hud_unit.h
+  s_f22d08b6c8b199::t_64c7a3450512e7 1-47
+source/interface/hud_weapon.c
+  s_f22d08b6c8b199::t_14a8356b369ed0 1-1997
+source/interface/hud_weapon.h
+  s_f22d08b6c8b199::t_03bc83d6792208 1-29
+source/interface/interface.c
+  s_f22d08b6c8b199::t_6cf1b7c8352ae6 1-1354
+source/interface/interface.h
+  s_f22d08b6c8b199::t_d6cc0c6aec0e2e 1-93
+source/interface/interface_panels.c
+  s_f22d08b6c8b199::t_ced44851236ad4 1-5
+source/interface/interface_panels.h
+  s_f22d08b6c8b199::t_21c0ad2e5c20da 1-23
+source/interface/inventory_displays.c
+  s_f22d08b6c8b199::t_f7a764df667486 1-5
+source/interface/inventory_displays.h
+  s_f22d08b6c8b199::t_9571c70151bec3 1-23
+source/interface/marketing_and_strategic_business_development.c
+  s_f22d08b6c8b199::t_b20c81318b6669 1-127
+source/interface/marketing_and_strategic_business_development.h
+  s_f22d08b6c8b199::t_5d614768ddcc21 1-15
+source/interface/meter_definitions.c
+  s_f22d08b6c8b199::t_92fdbd46d50b15 1-5
+source/interface/meter_definitions.h
+  s_f22d08b6c8b199::t_fbfb64a80eb7cc 1-23
+source/interface/meters.c
+  s_f22d08b6c8b199::t_36512e13a69ce7 1-5
+source/interface/motion_sensor.c
+  s_f22d08b6c8b199::t_cfcdc54c69391b 1-1166
+source/interface/motion_sensor.h
+  s_f22d08b6c8b199::t_8497777d71b9b3 1-36
+source/interface/overhead_map.c
+  s_f22d08b6c8b199::t_15c45756c987f0 1-116
+source/interface/player_ui.c
+  s_f22d08b6c8b199::t_a63e9c2bb65667 1-1248
+source/interface/player_ui.h
+  s_f22d08b6c8b199::t_44e60b42ec697b 1-115
+source/interface/progress_bar.c
+  s_f22d08b6c8b199::t_aa39064e10d127 1-2317
+source/interface/progress_bar.h
+  s_f22d08b6c8b199::t_1e166ff313871e 1-45
+source/interface/progress_bar_internal.h
+  s_f22d08b6c8b199::t_31ab52ef4df9f3 1-22
+source/interface/terminal.c
+  s_f22d08b6c8b199::t_10a601dfb7c5d0 1-511
+source/interface/terminal.h
+  s_f22d08b6c8b199::t_d327a98b62352d 1-63
+source/interface/ui_widget.c
+  s_f22d08b6c8b199::t_7c2694317cce91 1-7156
+source/interface/ui_widget.h
+  s_f22d08b6c8b199::t_1f03c194189e39 1-230
+source/interface/ui_widget_definitions.h
+  s_f22d08b6c8b199::t_d4b766d446e22b 1-50
+source/interface/ui_widget_event_handler_functions.c
+  s_f22d08b6c8b199::t_81727ecbc24c2c 1-5888
+source/interface/ui_widget_event_handler_functions.h
+  s_f22d08b6c8b199::t_3bd9c58c7e38de 1-35
+source/interface/ui_widget_game_data_input_functions.c
+  s_f22d08b6c8b199::t_8f78fd3e0d9835 1-4326
+source/interface/ui_widget_game_data_input_functions.h
+  s_f22d08b6c8b199::t_9d40c4b6afe380 1-114
+source/interface/ui_widget_group.c
+  s_f22d08b6c8b199::t_b080c55158ec31 1-157
+source/interface/ui_widget_group.h
+  s_f22d08b6c8b199::t_89a9f7f10a3112 1-23
+source/interface/ui_widget_text_search_and_replace_functions.c
+  s_f22d08b6c8b199::t_80522c4917be04 1-112
+source/interface/ui_widget_text_search_and_replace_functions.h
+  s_f22d08b6c8b199::t_2ca8aa60ec2f13 1-25
+source/interface/unit_hud_interface_definition.c
+  s_f22d08b6c8b199::t_4bd796df6bbdd1 1-5
+source/interface/unit_hud_interface_definition.h
+  s_f22d08b6c8b199::t_10f1ad1d814a4c 1-198
+source/interface/virtual_keyboard.c
+  s_f22d08b6c8b199::t_4ce0171c0008fb 1-1315
+source/interface/virtual_keyboard.h
+  s_f22d08b6c8b199::t_82acc497c3f3c7 1-46
+source/interface/weapon_hud_interface_definition.c
+  s_f22d08b6c8b199::t_bbcb1087e86ead 1-5
+source/interface/weapon_hud_interface_definition.h
+  s_f22d08b6c8b199::t_63ed591c6a7fb9 1-23
+source/items/equipment.c
+  s_f22d08b6c8b199::t_ca806511f68c1b 1-81
+source/items/equipment.h
+  s_f22d08b6c8b199::t_2dcc8e9aea2b25 1-51
+source/items/equipment_definitions.c
+  s_f22d08b6c8b199::t_afd95f066a1563 1-5
+source/items/equipment_definitions.h
+  s_f22d08b6c8b199::t_47109bb4b9457e 1-59
+source/items/garbage.c
+  s_f22d08b6c8b199::t_5f8323d89d5f29 1-60
+source/items/garbage.h
+  s_f22d08b6c8b199::t_f9f286ee842322 1-40
+source/items/garbage_definitions.c
+  s_f22d08b6c8b199::t_440a53d174e02a 1-5
+source/items/garbage_definitions.h
+  s_f22d08b6c8b199::t_12792698e1c4c6 1-23
+source/items/item_definitions.c
+  s_f22d08b6c8b199::t_a5fe4d58325bdf 1-5
+source/items/item_definitions.h
+  s_f22d08b6c8b199::t_d9233f191e84d9 1-79
+source/items/items.c
+  s_f22d08b6c8b199::t_b8cb43d7c6744a 1-941
+source/items/items.h
+  s_f22d08b6c8b199::t_abd94e9ad7ea34 1-94
+source/items/projectile_definitions.c
+  s_f22d08b6c8b199::t_31858cf8affe9a 1-55
+source/items/projectile_definitions.h
+  s_f22d08b6c8b199::t_7f33a1020504f0 1-121
+source/items/projectiles.c
+  s_f22d08b6c8b199::t_0c4aedd1e4e00a 1-2161
+source/items/projectiles.h
+  s_f22d08b6c8b199::t_36c2901fbeabd0 1-123
+source/items/projectiles_callbacks.h
+  s_f22d08b6c8b199::t_1a7273bcb683b0 1-27
+source/items/weapon_datum_flags.h
+  s_f22d08b6c8b199::t_8160772e5d3d35 1-23
+source/items/weapon_definitions.c
+  s_f22d08b6c8b199::t_f16edec7f493e8 1-61
+source/items/weapon_definitions.h
+  s_f22d08b6c8b199::t_3ebd0246f45e69 1-244
+source/items/weapon_export_function_mode.h
+  s_f22d08b6c8b199::t_69929f5564e5ea 1-33
+source/items/weapon_interface_definitions.h
+  s_f22d08b6c8b199::t_2c6c63c6bde2ba 1-23
+source/items/weapon_interfaces.c
+  s_f22d08b6c8b199::t_7a5d7b8b589001 1-5
+source/items/weapons.c
+  s_f22d08b6c8b199::t_16d441918e6568 1-3216
+source/items/weapons.h
+  s_f22d08b6c8b199::t_6accd7068ace5d 1-308
+source/main/console.c
+  s_f22d08b6c8b199::t_db05ade5e8cef6 1-440
+source/main/console.h
+  s_f22d08b6c8b199::t_e90935fffc88d8 1-36
+source/main/d3d_intimacy.cpp
+  s_f22d08b6c8b199::t_cd3ab27c854399 1-85
+source/main/d3d_intimacy.h
+  s_f22d08b6c8b199::t_df12e035a9d338 1-13
+source/main/d3d_private.h
+  s_f22d08b6c8b199::t_599b3d12467c60 1-41
+source/main/debug_keys.c
+  s_f22d08b6c8b199::t_fb9943b45d4ac7 1-232
+source/main/debug_keys.h
+  s_f22d08b6c8b199::t_c422e7b1e6c595 1-46
+source/main/main.c
+  s_f22d08b6c8b199::t_c5fc4028e4bb6f 1-3405
+source/main/main.h
+  s_f22d08b6c8b199::t_ec3b4c595623d4 1-197
+source/main/main_internal.h
+  s_f22d08b6c8b199::t_f31b5ef3d6447e 1-17
+source/main/main_runtime.h
+  s_f22d08b6c8b199::t_1aaf74dbaec6b1 1-28
+source/main/restricted_beta.c
+  s_f22d08b6c8b199::t_7677f588977c83 1-5
+source/math/geometry.c
+  s_f22d08b6c8b199::t_020384bff0503a 1-2070
+source/math/geometry.h
+  s_f22d08b6c8b199::t_c7ac60cce0bc00 1-205
+source/math/integer_math.c
+  s_f22d08b6c8b199::t_37f4d36a07ed5f 1-421
+source/math/integer_math.h
+  s_f22d08b6c8b199::t_65a72c6abab3ce 1-82
+source/math/matrix_math.c
+  s_f22d08b6c8b199::t_b4d8c3754ccdc9 1-1098
+source/math/matrix_math.h
+  s_f22d08b6c8b199::t_5f16d0f0cfca8f 1-21
+source/math/periodic_functions.c
+  s_f22d08b6c8b199::t_1aca80deb12a79 1-548
+source/math/periodic_functions.h
+  s_f22d08b6c8b199::t_72cb5158ebaddf 1-49
+source/math/probability.c
+  s_f22d08b6c8b199::t_20e162b521e0bc 1-190
+source/math/random_math.c
+  s_f22d08b6c8b199::t_945ddc9be2a56d 1-307
+source/math/random_math.h
+  s_f22d08b6c8b199::t_8217ebfa88c912 1-21
+source/math/real_math.c
+  s_f22d08b6c8b199::t_80f4ed3bd405a7 1-3202
+source/math/real_math.h
+  s_f22d08b6c8b199::t_89a77b15a69360 1-1944
+source/math/real_math_cones.h
+  s_f22d08b6c8b199::t_8e8b103fd788c8 1-14
+source/math/real_math_declarations.h
+  s_f22d08b6c8b199::t_8f5127db1d8deb 1-37
+source/math/real_math_planes.h
+  s_f22d08b6c8b199::t_782b7ddad92d89 1-22
+source/math/trig_math.c
+  s_f22d08b6c8b199::t_7ea25b759fb5b7 1-5
+source/math/vector_tree.c
+  s_f22d08b6c8b199::t_7b30be10d5902a 1-157
+source/math/vector_tree.h
+  s_f22d08b6c8b199::t_07c9d078450cb4 1-23
+source/memory/array.c
+  s_f22d08b6c8b199::t_cae86ae2c784ca 1-483
+source/memory/array.h
+  s_f22d08b6c8b199::t_3084ece0a4aa0d 1-76
+source/memory/byte_swapping.c
+  s_f22d08b6c8b199::t_0a5013be8ecaba 1-440
+source/memory/byte_swapping.h
+  s_f22d08b6c8b199::t_9da0d817091f1a 1-48
+source/memory/circular_queue.c
+  s_f22d08b6c8b199::t_51c0bca727ea0a 1-224
+source/memory/circular_queue.h
+  s_f22d08b6c8b199::t_342bd547c107fc 1-54
+source/memory/crc.c
+  s_f22d08b6c8b199::t_1391123a944224 1-123
+source/memory/crc.h
+  s_f22d08b6c8b199::t_82afa35c0142de 1-30
+source/memory/data.c
+  s_f22d08b6c8b199::t_fb31c25f6c7fd5 1-548
+source/memory/data.h
+  s_f22d08b6c8b199::t_23202a00d71ad5 1-79
+source/memory/data_compress.c
+  s_f22d08b6c8b199::t_e303bbce04d2a6 1-102
+source/memory/data_compress.h
+  s_f22d08b6c8b199::t_e80ad081660a21 1-38
+source/memory/data_encoding.c
+  s_f22d08b6c8b199::t_b78aa8d5e0b1ed 1-574
+source/memory/data_encoding.h
+  s_f22d08b6c8b199::t_9fcf33a688b195 1-110
+source/memory/data_packet_groups.c
+  s_f22d08b6c8b199::t_77524b22533bc3 1-304
+source/memory/data_packet_groups.h
+  s_f22d08b6c8b199::t_795b39887d6730 1-91
+source/memory/data_packets.c
+  s_f22d08b6c8b199::t_cfb35b97f25516 1-562
+source/memory/data_packets.h
+  s_f22d08b6c8b199::t_7d69751e4c9e47 1-44
+source/memory/fibonacci_heap.c
+  s_f22d08b6c8b199::t_c75c33ae10ed7f 1-5
+source/memory/hashtable.c
+  s_f22d08b6c8b199::t_af83c7a397ada4 1-439
+source/memory/hashtable.h
+  s_f22d08b6c8b199::t_0dcc244a3906c9 1-82
+source/memory/lra_cache.c
+  s_f22d08b6c8b199::t_acb2a39e8fadf4 1-399
+source/memory/lra_cache.h
+  s_f22d08b6c8b199::t_e52d6393cbff08 1-92
+source/memory/lrar_cache.c
+  s_f22d08b6c8b199::t_deddc5203bf835 1-500
+source/memory/lrar_cache.h
+  s_f22d08b6c8b199::t_0c5d37d2b1bc32 1-55
+source/memory/lru_cache.c
+  s_f22d08b6c8b199::t_cb11e197ee504d 1-421
+source/memory/lru_cache.h
+  s_f22d08b6c8b199::t_a9618570518685 1-58
+source/memory/lruv_cache.c
+  s_f22d08b6c8b199::t_1f9652ecebc87c 1-835
+source/memory/lruv_cache.h
+  s_f22d08b6c8b199::t_ba1b08dc99350c 1-143
+source/memory/memory_pool.c
+  s_f22d08b6c8b199::t_0296024edeb22b 1-385
+source/memory/memory_pool.h
+  s_f22d08b6c8b199::t_c9b0f307d5421b 1-75
+source/memory/sl_list.c
+  s_f22d08b6c8b199::t_ecc2d2501e7446 1-5
+source/memory/sl_list.h
+  s_f22d08b6c8b199::t_017d5ab5f24177 1-23
+source/memory/stack_memory_pool.c
+  s_f22d08b6c8b199::t_3ed32f411781d3 1-1195
+source/memory/stack_memory_pool.h
+  s_f22d08b6c8b199::t_e7f698fd25ac7b 1-42
+source/memory/texture_page.c
+  s_f22d08b6c8b199::t_8cd3b20c4397b7 1-447
+source/memory/texture_page.h
+  s_f22d08b6c8b199::t_e08203b4c2e579 1-92
+source/memory/zlib/.editorconfig
+  s_f22d08b6c8b199::t_bfd23e94952d0f 1
+source/memory/zlib/ChangeLog
+  s_f22d08b6c8b199::t_875e87dc02d492 1-471
+source/memory/zlib/FAQ
+  s_f22d08b6c8b199::t_53e06ba2286419 1-72
+source/memory/zlib/INDEX
+  s_f22d08b6c8b199::t_093409d0006f1f 1-86
+source/memory/zlib/Make_vms.com
+  s_f22d08b6c8b199::t_7961365eaa866d 1-115
+source/memory/zlib/Makefile
+  s_f22d08b6c8b199::t_0583b03df2e249 1-174
+source/memory/zlib/Makefile.in
+  s_f22d08b6c8b199::t_d92b42030861dd 1-174
+source/memory/zlib/Makefile.riscos
+  s_f22d08b6c8b199::t_6ba8a8d9326888 1-151
+source/memory/zlib/README
+  s_f22d08b6c8b199::t_b5db4af28f75f5 1-148
+source/memory/zlib/adler32.c
+  s_f22d08b6c8b199::t_1e684847c5f579 1-48
+source/memory/zlib/algorithm.txt
+  s_f22d08b6c8b199::t_e0855ea5785ea9 1-213
+source/memory/zlib/amiga/Makefile.pup
+  s_f22d08b6c8b199::t_9f49e31b2c7df8 1-66
+source/memory/zlib/amiga/Makefile.sas
+  s_f22d08b6c8b199::t_9edf6f648cd8cf 1-64
+source/memory/zlib/compress.c
+  s_f22d08b6c8b199::t_c5961c12a3ac21 1-68
+source/memory/zlib/configure
+  s_f22d08b6c8b199::t_abf6029475eea6 1-212
+source/memory/zlib/contrib/README.contrib
+  s_f22d08b6c8b199::t_b62cc953b6be10 1-34
+source/memory/zlib/contrib/asm386/gvmat32.asm
+  s_f22d08b6c8b199::t_d7d7f2b0932125 1-559
+source/memory/zlib/contrib/asm386/gvmat32c.c
+  s_f22d08b6c8b199::t_001f003490a507 1-200
+source/memory/zlib/contrib/asm386/mkgvmt32.bat
+  s_f22d08b6c8b199::t_835d2b201c25f3 1
+source/memory/zlib/contrib/asm386/zlibvc.def
+  s_f22d08b6c8b199::t_a58f44538b49f4 1-74
+source/memory/zlib/contrib/asm386/zlibvc.dsp
+  s_f22d08b6c8b199::t_32687b1236b0bc 1-651
+source/memory/zlib/contrib/asm386/zlibvc.dsw
+  s_f22d08b6c8b199::t_46478224142e04 1-41
+source/memory/zlib/contrib/asm586/README.586
+  s_f22d08b6c8b199::t_0863c3705b25d1 1-43
+source/memory/zlib/contrib/asm586/match.S
+  s_f22d08b6c8b199::t_370c6251e04b98 1-354
+source/memory/zlib/contrib/asm686/README.686
+  s_f22d08b6c8b199::t_7888ae4250392b 1-34
+source/memory/zlib/contrib/asm686/match.S
+  s_f22d08b6c8b199::t_71323aae3c9991 1-327
+source/memory/zlib/contrib/delphi/zlib.mak
+  s_f22d08b6c8b199::t_c2af4f85186ee5 1-36
+source/memory/zlib/contrib/delphi/zlibdef.pas
+  s_f22d08b6c8b199::t_b22a7ad39fe0c9 1-169
+source/memory/zlib/contrib/delphi2/d_zlib.bpr
+  s_f22d08b6c8b199::t_092c527a0de7d7 1-224
+source/memory/zlib/contrib/delphi2/d_zlib.cpp
+  s_f22d08b6c8b199::t_39e6416ede1a97 1-17
+source/memory/zlib/contrib/delphi2/readme.txt
+  s_f22d08b6c8b199::t_bd942fc3a1b9f8 1-17
+source/memory/zlib/contrib/delphi2/zlib.bpg
+  s_f22d08b6c8b199::t_7032711c8049a8 1-26
+source/memory/zlib/contrib/delphi2/zlib.bpr
+  s_f22d08b6c8b199::t_d7c0230f471ff9 1-225
+source/memory/zlib/contrib/delphi2/zlib.cpp
+  s_f22d08b6c8b199::t_11d7e47a15e7e0 1-22
+source/memory/zlib/contrib/delphi2/zlib.pas
+  s_f22d08b6c8b199::t_6903eac58d9ae5 1-534
+source/memory/zlib/contrib/delphi2/zlib32.bpr
+  s_f22d08b6c8b199::t_d4640937711534 1-174
+source/memory/zlib/contrib/delphi2/zlib32.cpp
+  s_f22d08b6c8b199::t_465062b9018ed9 1-42
+source/memory/zlib/contrib/iostream/test.cpp
+  s_f22d08b6c8b199::t_3bd9f9a6f5b0f3 1-24
+source/memory/zlib/contrib/iostream/zfstream.cpp
+  s_f22d08b6c8b199::t_0708f75cd216a0 1-329
+source/memory/zlib/contrib/iostream/zfstream.h
+  s_f22d08b6c8b199::t_b16f8e7db3d0f7 1-142
+source/memory/zlib/contrib/iostream2/zstream.h
+  s_f22d08b6c8b199::t_cf0620e4129df4 1-307
+source/memory/zlib/contrib/iostream2/zstream_test.cpp
+  s_f22d08b6c8b199::t_d8b1bbf70c150e 1-25
+source/memory/zlib/contrib/minizip/ChangeLogUnzip
+  s_f22d08b6c8b199::t_5d1beb50bd243c 1-38
+source/memory/zlib/contrib/minizip/Makefile
+  s_f22d08b6c8b199::t_ea81e165ef4895 1-25
+source/memory/zlib/contrib/minizip/miniunz.c
+  s_f22d08b6c8b199::t_811a5e834f09e9 1-508
+source/memory/zlib/contrib/minizip/minizip.c
+  s_f22d08b6c8b199::t_1d88f3aa65ca1f 1-302
+source/memory/zlib/contrib/minizip/readme.txt
+  s_f22d08b6c8b199::t_06d127ef1e4729 1-37
+source/memory/zlib/contrib/minizip/unzip.c
+  s_f22d08b6c8b199::t_067c156eb4a866 1-1294
+source/memory/zlib/contrib/minizip/unzip.def
+  s_f22d08b6c8b199::t_7506e07c2fc696 1-15
+source/memory/zlib/contrib/minizip/unzip.h
+  s_f22d08b6c8b199::t_7bf3942e99ead7 1-275
+source/memory/zlib/contrib/minizip/zip.c
+  s_f22d08b6c8b199::t_fcf52a2de9614d 1-718
+source/memory/zlib/contrib/minizip/zip.def
+  s_f22d08b6c8b199::t_bebfbf783429a9 1-5
+source/memory/zlib/contrib/minizip/zip.h
+  s_f22d08b6c8b199::t_9cfbd8fd91f65d 1-150
+source/memory/zlib/contrib/minizip/zlibvc.def
+  s_f22d08b6c8b199::t_5683e6633a46c0 1-74
+source/memory/zlib/contrib/minizip/zlibvc.dsp
+  s_f22d08b6c8b199::t_900482e7b7375b 1-651
+source/memory/zlib/contrib/minizip/zlibvc.dsw
+  s_f22d08b6c8b199::t_8e98379bf80b2f 1-41
+source/memory/zlib/contrib/untgz/Makefile
+  s_f22d08b6c8b199::t_8342302eb3706c 1-14
+source/memory/zlib/contrib/untgz/makefile.w32
+  s_f22d08b6c8b199::t_36a96d0c9e9aa5 1-63
+source/memory/zlib/contrib/untgz/untgz.c
+  s_f22d08b6c8b199::t_5773209a417cef 1-522
+source/memory/zlib/contrib/visual-basic.txt
+  s_f22d08b6c8b199::t_cac5abca1f4108 1-69
+source/memory/zlib/crc32.c
+  s_f22d08b6c8b199::t_2607ae29a98b65 1-167
+source/memory/zlib/deflate.c
+  s_f22d08b6c8b199::t_64d26a1f272b9d 1-1362
+source/memory/zlib/deflate.h
+  s_f22d08b6c8b199::t_7358775260cbde 1-325
+source/memory/zlib/descrip.mms
+  s_f22d08b6c8b199::t_ba2db9d35cdf30 1-48
+source/memory/zlib/example.c
+  s_f22d08b6c8b199::t_85ddd6d3a764d7 1-556
+source/memory/zlib/gzio.c
+  s_f22d08b6c8b199::t_80588084b532c8 1-879
+source/memory/zlib/infblock.c
+  s_f22d08b6c8b199::t_8c6e9dca5f8830 1-398
+source/memory/zlib/infblock.h
+  s_f22d08b6c8b199::t_d1ab14054dd85d 1-39
+source/memory/zlib/infcodes.c
+  s_f22d08b6c8b199::t_76695268f896a8 1-257
+source/memory/zlib/infcodes.h
+  s_f22d08b6c8b199::t_d7dffd6d70a760 1-27
+source/memory/zlib/inffast.c
+  s_f22d08b6c8b199::t_b202fa0b9e38a5 1-170
+source/memory/zlib/inffast.h
+  s_f22d08b6c8b199::t_f3c5b48b39e990 1-17
+source/memory/zlib/inffixed.h
+  s_f22d08b6c8b199::t_bb34cba1f8485f 1-151
+source/memory/zlib/inflate.c
+  s_f22d08b6c8b199::t_fc7588ff38cb10 1-367
+source/memory/zlib/inftrees.c
+  s_f22d08b6c8b199::t_8aee47218bf8d4 1-455
+source/memory/zlib/inftrees.h
+  s_f22d08b6c8b199::t_553ac8ac554b2c 1-58
+source/memory/zlib/infutil.c
+  s_f22d08b6c8b199::t_182de055d748c5 1-87
+source/memory/zlib/infutil.h
+  s_f22d08b6c8b199::t_66df67743ec771 1-98
+source/memory/zlib/maketree.c
+  s_f22d08b6c8b199::t_c2caf996034296 1-85
+source/memory/zlib/minigzip.c
+  s_f22d08b6c8b199::t_22741436ed68ee 1-320
+source/memory/zlib/msdos/Makefile.b32
+  s_f22d08b6c8b199::t_3d926e0f70fdc1 1-104
+source/memory/zlib/msdos/Makefile.bor
+  s_f22d08b6c8b199::t_ed0972feb7c490 1-125
+source/memory/zlib/msdos/Makefile.dj2
+  s_f22d08b6c8b199::t_931d63c4b15784 1-100
+source/memory/zlib/msdos/Makefile.emx
+  s_f22d08b6c8b199::t_c35df90a258976 1-69
+source/memory/zlib/msdos/Makefile.msc
+  s_f22d08b6c8b199::t_2ae31e861a2eb1 1-121
+source/memory/zlib/msdos/Makefile.tc
+  s_f22d08b6c8b199::t_9eb7f37660da35 1-108
+source/memory/zlib/msdos/Makefile.w32
+  s_f22d08b6c8b199::t_516937c683029c 1-97
+source/memory/zlib/msdos/Makefile.wat
+  s_f22d08b6c8b199::t_a4b46a89ef8790 1-103
+source/memory/zlib/msdos/zlib.def
+  s_f22d08b6c8b199::t_bcc8e21d942321 1-60
+source/memory/zlib/msdos/zlib.rc
+  s_f22d08b6c8b199::t_2af000451b4811 1-32
+source/memory/zlib/nt/Makefile.emx
+  s_f22d08b6c8b199::t_3b237bf6c538b6 1-138
+source/memory/zlib/nt/Makefile.gcc
+  s_f22d08b6c8b199::t_069bc13700df9d 1-87
+source/memory/zlib/nt/Makefile.nt
+  s_f22d08b6c8b199::t_6a7f35ecc1d963 1-88
+source/memory/zlib/nt/zlib.dnt
+  s_f22d08b6c8b199::t_3743f020db0820 1-47
+source/memory/zlib/os2/Makefile.os2
+  s_f22d08b6c8b199::t_38152605f048d8 1-136
+source/memory/zlib/os2/zlib.def
+  s_f22d08b6c8b199::t_2563272e5819f5 1-51
+source/memory/zlib/trees.c
+  s_f22d08b6c8b199::t_398362a834eb2c 1-1295
+source/memory/zlib/trees.h
+  s_f22d08b6c8b199::t_626a6b13c23a8a 1-147
+source/memory/zlib/uncompr.c
+  s_f22d08b6c8b199::t_e3f30c93de9eb4 1-58
+source/memory/zlib/zconf.h
+  s_f22d08b6c8b199::t_5b03ad43805680 1-279
+source/memory/zlib/zlib.3
+  s_f22d08b6c8b199::t_65ab919e6f5273 1-107
+source/memory/zlib/zlib.h
+  s_f22d08b6c8b199::t_f0ebe1e177d747 1-893
+source/memory/zlib/zutil.c
+  s_f22d08b6c8b199::t_2b4959c2966fc2 1-224
+source/memory/zlib/zutil.h
+  s_f22d08b6c8b199::t_8577adfc17c331 1-221
+source/models/model_animation_definitions.c
+  s_f22d08b6c8b199::t_6974d7b2dd3231 1-530
+source/models/model_animation_definitions.h
+  s_f22d08b6c8b199::t_eb5b94bff47903 1-318
+source/models/model_animations.c
+  s_f22d08b6c8b199::t_3bae52f99d574e 1-2264
+source/models/model_animations.h
+  s_f22d08b6c8b199::t_d217ba286d3681 1-28
+source/models/model_definitions.c
+  s_f22d08b6c8b199::t_183e437986ae88 1-5
+source/models/model_definitions.h
+  s_f22d08b6c8b199::t_ad2bdb5c37f1ba 1-126
+source/models/models.c
+  s_f22d08b6c8b199::t_4eb0f9a65ce5d6 1-1069
+source/models/models.h
+  s_f22d08b6c8b199::t_b2f1ea317bdd08 1-94
+source/networking/network_client_manager.c
+  s_f22d08b6c8b199::t_6b1cf98c529e5e 1-3078
+source/networking/network_client_manager.h
+  s_f22d08b6c8b199::t_f7d00b5c2b6ea1 1-162
+source/networking/network_client_message_handler.c
+  s_f22d08b6c8b199::t_502ff965927229 1-1581
+source/networking/network_client_message_handler.h
+  s_f22d08b6c8b199::t_1a19c84f99b65b 1-32
+source/networking/network_connection.c
+  s_f22d08b6c8b199::t_e1b772c33da228 1-1768
+source/networking/network_connection.h
+  s_f22d08b6c8b199::t_acc752e1ab9f61 1-102
+source/networking/network_game_globals.c
+  s_f22d08b6c8b199::t_de4b1f28f01813 1-838
+source/networking/network_game_globals.h
+  s_f22d08b6c8b199::t_f6cb67ddde605e 1-90
+source/networking/network_game_manager.c
+  s_f22d08b6c8b199::t_71b1c76318dfa5 1-741
+source/networking/network_game_manager.h
+  s_f22d08b6c8b199::t_a25d11ceaff978 1-74
+source/networking/network_game_preferences.c
+  s_f22d08b6c8b199::t_50bae5f8ec1a70 1-5
+source/networking/network_game_protocol.h
+  s_f22d08b6c8b199::t_0a0488ca470d8a 1-31
+source/networking/network_game_ui.c
+  s_f22d08b6c8b199::t_ffaf4c98813f81 1-51
+source/networking/network_game_ui.h
+  s_f22d08b6c8b199::t_8a04a6f9b2b12a 1-26
+source/networking/network_messages.c
+  s_f22d08b6c8b199::t_ad212e0bc143ad 1-884
+source/networking/network_messages.h
+  s_f22d08b6c8b199::t_e6daa1bb560096 1-89
+source/networking/network_server_manager.c
+  s_f22d08b6c8b199::t_72af6469f362eb 1-3663
+source/networking/network_server_manager.h
+  s_f22d08b6c8b199::t_38582d82ac0cc3 1-66
+source/networking/network_server_manager_internal.h
+  s_f22d08b6c8b199::t_cf6f1039bee044 1-105
+source/networking/network_server_message_handler.c
+  s_f22d08b6c8b199::t_3d6391016f399d 1-2502
+source/networking/network_server_message_handler.h
+  s_f22d08b6c8b199::t_0875a3ab2f8b90 1-67
+source/networking/telnet_console.c
+  s_f22d08b6c8b199::t_8c03d90065b65c 1-357
+source/networking/telnet_console.h
+  s_f22d08b6c8b199::t_75a69a0066c9c1 1-32
+source/objects/damage.c
+  s_f22d08b6c8b199::t_a8f5525cb0305e 1-2693
+source/objects/damage.h
+  s_f22d08b6c8b199::t_07a66356222a80 1-134
+source/objects/damage_effect_definitions.c
+  s_f22d08b6c8b199::t_4dd2a600e5228f 1-5
+source/objects/damage_effect_definitions.h
+  s_f22d08b6c8b199::t_7ea7d4fba2fbad 1-191
+source/objects/damage_resistances.h
+  s_f22d08b6c8b199::t_f6ba063b110607 1-95
+source/objects/index_resolution.h
+  s_f22d08b6c8b199::t_748cf2b5a9f071 1-23
+source/objects/light_definitions.c
+  s_f22d08b6c8b199::t_94b381fbca46ff 1-5
+source/objects/light_definitions.h
+  s_f22d08b6c8b199::t_bd3f65c7bcba69 1-29
+source/objects/object_definitions.c
+  s_f22d08b6c8b199::t_062681ad50bf21 1-5
+source/objects/object_definitions.h
+  s_f22d08b6c8b199::t_79458610111b76 1-174
+source/objects/object_deleted_procs.c
+  s_f22d08b6c8b199::t_71f9ea98ec7709 1-52
+source/objects/object_lights.c
+  s_f22d08b6c8b199::t_06510ea59a4d46 1-2384
+source/objects/object_lights.h
+  s_f22d08b6c8b199::t_84145a08a217de 1-65
+source/objects/object_lights_rendering.h
+  s_f22d08b6c8b199::t_6b9eafd5758c56 1-43
+source/objects/object_shadows.c
+  s_f22d08b6c8b199::t_0cf9fd82fae6e9 1-88
+source/objects/object_types.c
+  s_f22d08b6c8b199::t_c474b26e87663c 1-1472
+source/objects/object_types.h
+  s_f22d08b6c8b199::t_8eb498ac1bfc86 1-137
+source/objects/objects.c
+  s_f22d08b6c8b199::t_c5f87ba743db6d 1-5016
+source/objects/objects.h
+  s_f22d08b6c8b199::t_cec88fd9c4fa0c 1-551
+source/objects/placeholder_definitions.c
+  s_f22d08b6c8b199::t_0cb764ea413bc4 1-55
+source/objects/placeholder_definitions.h
+  s_f22d08b6c8b199::t_2a69d12eb2a4fe 1-31
+source/objects/reference_lists.h
+  s_f22d08b6c8b199::t_c6dbfb3d6614e1 1-104
+source/objects/scenery.c
+  s_f22d08b6c8b199::t_729b165c3cb1be 1-253
+source/objects/scenery.h
+  s_f22d08b6c8b199::t_d800d4d184b60e 1-70
+source/objects/scenery_group.c
+  s_f22d08b6c8b199::t_f37135cb5ca1cd 1-5
+source/objects/widgets/aleph.c
+  s_f22d08b6c8b199::t_3de87ab26b1f62 1-5
+source/objects/widgets/aleph.h
+  s_f22d08b6c8b199::t_5be0396926fbab 1-23
+source/objects/widgets/antenna.c
+  s_f22d08b6c8b199::t_b5d0eceda910ff 1-518
+source/objects/widgets/antenna.h
+  s_f22d08b6c8b199::t_b085ee9a241546 1-123
+source/objects/widgets/antenna_definitions.c
+  s_f22d08b6c8b199::t_0f08ee5c2065b8 1-5
+source/objects/widgets/antenna_definitions.h
+  s_f22d08b6c8b199::t_bf6aceee6218bf 1-23
+source/objects/widgets/cellular_automata.c
+  s_f22d08b6c8b199::t_24a5b537f1dbaf 1-5
+source/objects/widgets/cellular_automata.h
+  s_f22d08b6c8b199::t_94e88380b58e3a 1-23
+source/objects/widgets/cellular_automata2d.c
+  s_f22d08b6c8b199::t_0dbe18e1d73a29 1-5
+source/objects/widgets/cellular_automata2d.h
+  s_f22d08b6c8b199::t_ee9c11dba3f243 1-23
+source/objects/widgets/flag_definitions.c
+  s_f22d08b6c8b199::t_0b75d2e2ebb040 1-5
+source/objects/widgets/flag_definitions.h
+  s_f22d08b6c8b199::t_00635cc39fdb46 1-23
+source/objects/widgets/flags.c
+  s_f22d08b6c8b199::t_802344417302ac 1-1073
+source/objects/widgets/flags.h
+  s_f22d08b6c8b199::t_13c6f75d38d565 1-49
+source/objects/widgets/glow.c
+  s_f22d08b6c8b199::t_80a711f482674f 1-1457
+source/objects/widgets/glow.h
+  s_f22d08b6c8b199::t_91d2ec254c0b43 1-53
+source/objects/widgets/glow_definitions.c
+  s_f22d08b6c8b199::t_3cc9f4ca1085a9 1-5
+source/objects/widgets/glow_definitions.h
+  s_f22d08b6c8b199::t_3cae4623c1cff8 1-23
+source/objects/widgets/light_volume_definitions.c
+  s_f22d08b6c8b199::t_a4cdd274060ad3 1-5
+source/objects/widgets/light_volume_definitions.h
+  s_f22d08b6c8b199::t_1b45a5e12c2fad 1-23
+source/objects/widgets/light_volumes.c
+  s_f22d08b6c8b199::t_0affe41ee191bc 1-369
+source/objects/widgets/light_volumes.h
+  s_f22d08b6c8b199::t_7314c9c6bb12c5 1-144
+source/objects/widgets/lightning.c
+  s_f22d08b6c8b199::t_52247fb168f63e 1-557
+source/objects/widgets/lightning.h
+  s_f22d08b6c8b199::t_43a65542cdc1db 1-72
+source/objects/widgets/lightning_definitions.c
+  s_f22d08b6c8b199::t_faa2165176aec3 1-5
+source/objects/widgets/lightning_definitions.h
+  s_f22d08b6c8b199::t_3c5219fcc69d22 1-23
+source/objects/widgets/widget_types.h
+  s_f22d08b6c8b199::t_da35d0212c0e80 1-82
+source/objects/widgets/widgets.c
+  s_f22d08b6c8b199::t_6cb1e157da719c 1-411
+source/objects/widgets/widgets.h
+  s_f22d08b6c8b199::t_3d2a63d14ada03 1-71
+source/physics/breakable_surfaces.c
+  s_f22d08b6c8b199::t_dbdb12b6dd1639 1-572
+source/physics/breakable_surfaces.h
+  s_f22d08b6c8b199::t_69ec94163f993d 1-104
+source/physics/bsp2d.c
+  s_f22d08b6c8b199::t_8586d07240ee0a 1-41
+source/physics/bsp2d.h
+  s_f22d08b6c8b199::t_a03116747d20f6 1-41
+source/physics/bsp3d.c
+  s_f22d08b6c8b199::t_a02be56c88ba98 1-369
+source/physics/bsp3d.h
+  s_f22d08b6c8b199::t_fa8e6966fde522 1-65
+source/physics/collision_bsp.c
+  s_f22d08b6c8b199::t_b46b0b14ad2a40 1-2229
+source/physics/collision_bsp.h
+  s_f22d08b6c8b199::t_e7afce0808de4a 1-177
+source/physics/collision_bsp_definitions.c
+  s_f22d08b6c8b199::t_9bab4f3bc51208 1-255
+source/physics/collision_bsp_definitions.h
+  s_f22d08b6c8b199::t_58feb9f03428a0 1-106
+source/physics/collision_debug.c
+  s_f22d08b6c8b199::t_904f79f2f21009 1-587
+source/physics/collision_debug.h
+  s_f22d08b6c8b199::t_9e77a1103dca68 1-38
+source/physics/collision_features.c
+  s_f22d08b6c8b199::t_af1c2f3e724ab1 1-1108
+source/physics/collision_features.h
+  s_f22d08b6c8b199::t_2803c619241ba7 1-288
+source/physics/collision_model_definitions.c
+  s_f22d08b6c8b199::t_0adc68bfe4fcda 1-5
+source/physics/collision_model_definitions.h
+  s_f22d08b6c8b199::t_cfeb43f9284ca7 1-51
+source/physics/collision_models.c
+  s_f22d08b6c8b199::t_c760bf115ef2ac 1-386
+source/physics/collision_models.h
+  s_f22d08b6c8b199::t_3f71db5abda54b 1-68
+source/physics/collision_usage.c
+  s_f22d08b6c8b199::t_de3cf78c110bd3 1-655
+source/physics/collision_usage.h
+  s_f22d08b6c8b199::t_189e10a3de93fd 1-96
+source/physics/collisions.c
+  s_f22d08b6c8b199::t_1738b29b322ac8 1-1830
+source/physics/collisions.h
+  s_f22d08b6c8b199::t_23a9e784c672e3 1-200
+source/physics/friction_datum.h
+  s_f22d08b6c8b199::t_c12c6cfe32a6ac 1-22
+source/physics/mass_point_datum.h
+  s_f22d08b6c8b199::t_ef5a0d6693ef58 1-46
+source/physics/physics.c
+  s_f22d08b6c8b199::t_c96ea4566268e0 1-2197
+source/physics/physics.h
+  s_f22d08b6c8b199::t_a230fd08ec5475 1-84
+source/physics/physics_constants.h
+  s_f22d08b6c8b199::t_b5848990488ebd 1-23
+source/physics/physics_definitions.c
+  s_f22d08b6c8b199::t_98d57daee9b21c 1-5
+source/physics/physics_definitions.h
+  s_f22d08b6c8b199::t_ef8d226fa7b75f 1-92
+source/physics/physics_variables.c
+  s_f22d08b6c8b199::t_fc4e3070e6db0a 1-237
+source/physics/physics_variables.h
+  s_f22d08b6c8b199::t_ca7e156cb892be 1-74
+source/physics/point_physics.c
+  s_f22d08b6c8b199::t_7da080568caca0 1-278
+source/physics/point_physics.h
+  s_f22d08b6c8b199::t_2e096d77a56bae 1-112
+source/physics/powered_mass_point_datum.h
+  s_f22d08b6c8b199::t_e650b6ff73f729 1-33
+source/physics/terrain_definitions.c
+  s_f22d08b6c8b199::t_adc55afcb9680b 1-5
+source/physics/terrain_definitions.h
+  s_f22d08b6c8b199::t_321a8e52398222 1-23
+source/rasterizer/common/rasterizer_common.c
+  s_f22d08b6c8b199::t_ffdcb63df04ca8 1-73
+source/rasterizer/common/rasterizer_common.h
+  s_f22d08b6c8b199::t_9ee1e6ca421c51 1-23
+source/rasterizer/rasterizer.c
+  s_f22d08b6c8b199::t_16c54f2c22525c 1-2103
+source/rasterizer/rasterizer.h
+  s_f22d08b6c8b199::t_fece8ef59d337c 1-765
+source/rasterizer/rasterizer_active_camouflage.h
+  s_f22d08b6c8b199::t_2115e38d73622f 1-18
+source/rasterizer/rasterizer_cinematics.c
+  s_f22d08b6c8b199::t_bdc3c8477350e5 1-500
+source/rasterizer/rasterizer_cinematics.h
+  s_f22d08b6c8b199::t_0890d1dbc19cdc 1-94
+source/rasterizer/rasterizer_console_vars.h
+  s_f22d08b6c8b199::t_3dcc423b5ffa86 1-23
+source/rasterizer/rasterizer_debug.c
+  s_f22d08b6c8b199::t_8c77bd4fda14dd 1-703
+source/rasterizer/rasterizer_debug.h
+  s_f22d08b6c8b199::t_db3451b40210f3 1-44
+source/rasterizer/rasterizer_debug_options.h
+  s_f22d08b6c8b199::t_a78ce23dfe2d3f 1-105
+source/rasterizer/rasterizer_environment.h
+  s_f22d08b6c8b199::t_6213567458cd49 1-45
+source/rasterizer/rasterizer_frame_statistics.c
+  s_f22d08b6c8b199::t_fd0d1137071b7e 1-976
+source/rasterizer/rasterizer_frame_statistics.h
+  s_f22d08b6c8b199::t_55b4ef93f347bc 1-156
+source/rasterizer/rasterizer_geometry.c
+  s_f22d08b6c8b199::t_c355d8570b3966 1-552
+source/rasterizer/rasterizer_geometry.h
+  s_f22d08b6c8b199::t_ab23a4d98c3642 1-96
+source/rasterizer/rasterizer_geometry_compression.h
+  s_f22d08b6c8b199::t_f065182402d9ea 1-18
+source/rasterizer/rasterizer_geometry_environment.h
+  s_f22d08b6c8b199::t_27002377101979 1-38
+source/rasterizer/rasterizer_globals_internal.h
+  s_f22d08b6c8b199::t_a95d3d9ffcf0a8 1-23
+source/rasterizer/rasterizer_hardware_format_utilities.h
+  s_f22d08b6c8b199::t_06c7de3d5059e1 1-23
+source/rasterizer/rasterizer_lights.c
+  s_f22d08b6c8b199::t_cbfe8a14771a2b 1-1164
+source/rasterizer/rasterizer_lights.h
+  s_f22d08b6c8b199::t_61bfb12bcc9d02 1-50
+source/rasterizer/rasterizer_memory_pool.c
+  s_f22d08b6c8b199::t_a75b5b503abf4b 1-94
+source/rasterizer/rasterizer_memory_pool.h
+  s_f22d08b6c8b199::t_4af06836d80e06 1-15
+source/rasterizer/rasterizer_model_types.h
+  s_f22d08b6c8b199::t_284a1bd2cced72 1-86
+source/rasterizer/rasterizer_models.h
+  s_f22d08b6c8b199::t_ef6c79f781ea89 1-63
+source/rasterizer/rasterizer_swizzle.c
+  s_f22d08b6c8b199::t_3fd3c35cc3de78 1-694
+source/rasterizer/rasterizer_swizzle.h
+  s_f22d08b6c8b199::t_790af0cdd30030 1-85
+source/rasterizer/rasterizer_text.c
+  s_f22d08b6c8b199::t_6a4b798655909d 1-736
+source/rasterizer/rasterizer_text.h
+  s_f22d08b6c8b199::t_e95695e3a78323 1-50
+source/rasterizer/rasterizer_transparent_geometry.c
+  s_f22d08b6c8b199::t_494c444f4ab21b 1-616
+source/rasterizer/rasterizer_transparent_geometry.h
+  s_f22d08b6c8b199::t_43d8514c5cea3b 1-53
+source/rasterizer/rasterizer_widgets.h
+  s_f22d08b6c8b199::t_3f30ea0fa2d930 1-109
+source/rasterizer/xbox/rasterizer_xbox.c
+  s_f22d08b6c8b199::t_a14573fc29d3da 1-3720
+source/rasterizer/xbox/rasterizer_xbox.h
+  s_f22d08b6c8b199::t_0c05343a0cb8d2 1-169
+source/rasterizer/xbox/rasterizer_xbox_active_camouflage.c
+  s_f22d08b6c8b199::t_07f54b8baf6965 1-911
+source/rasterizer/xbox/rasterizer_xbox_debug.c
+  s_f22d08b6c8b199::t_849d5a52371fa8 1-551
+source/rasterizer/xbox/rasterizer_xbox_debug.h
+  s_f22d08b6c8b199::t_d76a6e4c2cc882 1-27
+source/rasterizer/xbox/rasterizer_xbox_decals.c
+  s_f22d08b6c8b199::t_8e03bbf2a47e23 1-919
+source/rasterizer/xbox/rasterizer_xbox_detail_objects.c
+  s_f22d08b6c8b199::t_1bc12dfd466073 1-921
+source/rasterizer/xbox/rasterizer_xbox_draw_primitives.c
+  s_f22d08b6c8b199::t_e3cf0406556f58 1-1927
+source/rasterizer/xbox/rasterizer_xbox_draw_primitives.h
+  s_f22d08b6c8b199::t_c23217ee840df4 1-86
+source/rasterizer/xbox/rasterizer_xbox_dynavobgeom.c
+  s_f22d08b6c8b199::t_f04c0a033a634e 1-854
+source/rasterizer/xbox/rasterizer_xbox_dynavobgeom.h
+  s_f22d08b6c8b199::t_3f26ea496f1d07 1-51
+source/rasterizer/xbox/rasterizer_xbox_environment.c
+  s_f22d08b6c8b199::t_aa88a34c922d96 1-3403
+source/rasterizer/xbox/rasterizer_xbox_environment_fog.c
+  s_f22d08b6c8b199::t_855bf0ab6ef7b9 1-1899
+source/rasterizer/xbox/rasterizer_xbox_errors.c
+  s_f22d08b6c8b199::t_3be68a5519c338 1-213
+source/rasterizer/xbox/rasterizer_xbox_hardware_bitmaps.c
+  s_f22d08b6c8b199::t_9ffb15ee2d5ac1 1-738
+source/rasterizer/xbox/rasterizer_xbox_hardware_bitmaps.h
+  s_f22d08b6c8b199::t_5c12da492266b0 1-22
+source/rasterizer/xbox/rasterizer_xbox_hardware_geometry.c
+  s_f22d08b6c8b199::t_2255a7409539f5 1-340
+source/rasterizer/xbox/rasterizer_xbox_internal.h
+  s_f22d08b6c8b199::t_16d8dea8ea0274 1-142
+source/rasterizer/xbox/rasterizer_xbox_lights.c
+  s_f22d08b6c8b199::t_fd8cf571778e83 1-1285
+source/rasterizer/xbox/rasterizer_xbox_models.c
+  s_f22d08b6c8b199::t_549a05e57c1f77 1-2801
+source/rasterizer/xbox/rasterizer_xbox_models.h
+  s_f22d08b6c8b199::t_1fa3ec9f26c455 1-50
+source/rasterizer/xbox/rasterizer_xbox_motion_sensor.c
+  s_f22d08b6c8b199::t_4308dbdb304a4c 1-645
+source/rasterizer/xbox/rasterizer_xbox_pixel_shader.h
+  s_f22d08b6c8b199::t_ecd6bddef6c3b7 1-33
+source/rasterizer/xbox/rasterizer_xbox_plasma_energy.c
+  s_f22d08b6c8b199::t_62b7738a94fa31 1-347
+source/rasterizer/xbox/rasterizer_xbox_plasma_energy.h
+  s_f22d08b6c8b199::t_ea7f56fd3b5b5f 1-14
+source/rasterizer/xbox/rasterizer_xbox_profile.c
+  s_f22d08b6c8b199::t_0b76cea71e00c6 1-717
+source/rasterizer/xbox/rasterizer_xbox_screen_effect.c
+  s_f22d08b6c8b199::t_b1255a9a45c39b 1-1432
+source/rasterizer/xbox/rasterizer_xbox_shadows.c
+  s_f22d08b6c8b199::t_bf1a3659b04e4f 1-1072
+source/rasterizer/xbox/rasterizer_xbox_state.h
+  s_f22d08b6c8b199::t_fb2e58d7253178 1-21
+source/rasterizer/xbox/rasterizer_xbox_text.c
+  s_f22d08b6c8b199::t_1640c424949406 1-510
+source/rasterizer/xbox/rasterizer_xbox_transparent_geometry.c
+  s_f22d08b6c8b199::t_8d8d22cb8d38b6 1-3551
+source/rasterizer/xbox/rasterizer_xbox_vertex_shaders.c
+  s_f22d08b6c8b199::t_6b22f77b979e80 1-111
+source/rasterizer/xbox/rasterizer_xbox_vertex_shaders.h
+  s_f22d08b6c8b199::t_c3a50065e26145 1-37
+source/rasterizer/xbox/rasterizer_xbox_vertex_shaders_data.inc
+  s_f22d08b6c8b199::t_175cca08048a6a 1-2170
+source/rasterizer/xbox/rasterizer_xbox_vertex_shaders_initialize.c
+  s_f22d08b6c8b199::t_45822e3482e06b 1-219
+source/rasterizer/xbox/rasterizer_xbox_vertex_shaders_runtime.c
+  s_f22d08b6c8b199::t_5852e54cbe1977 1-375
+source/rasterizer/xbox/rasterizer_xbox_water.c
+  s_f22d08b6c8b199::t_b30612a6de1721 1-1062
+source/rasterizer/xbox/rasterizer_xbox_water.h
+  s_f22d08b6c8b199::t_f1cd1a40594853 1-16
+source/rasterizer/xbox/rasterizer_xbox_widgets.c
+  s_f22d08b6c8b199::t_513012f83159db 1-1070
+source/rasterizer/xbox/shader_transparent_chicago_preprocessor.c
+  s_f22d08b6c8b199::t_b8da7cc0d003ba 1-195
+source/rasterizer/xbox/shader_transparent_chicago_preprocessor.h
+  s_f22d08b6c8b199::t_0891539d62a7ab 1-18
+source/rasterizer/xbox/shader_transparent_generic_preprocessor.c
+  s_f22d08b6c8b199::t_a88355fb873c3e 1-548
+source/render/render.c
+  s_f22d08b6c8b199::t_e69ca19d4ecccc 1-687
+source/render/render.h
+  s_f22d08b6c8b199::t_da752ed2c65e8e 1-147
+source/render/render_camera_projection.h
+  s_f22d08b6c8b199::t_7b1684c924e923 1-23
+source/render/render_cameras.c
+  s_f22d08b6c8b199::t_27b8d8ea391d0d 1-1577
+source/render/render_cameras.h
+  s_f22d08b6c8b199::t_46a159c2f1e24f 1-112
+source/render/render_cameras_internal.h
+  s_f22d08b6c8b199::t_f3adf273aa6436 1-79
+source/render/render_contrails.c
+  s_f22d08b6c8b199::t_17ba3f943dbcc0 1-505
+source/render/render_debug.c
+  s_f22d08b6c8b199::t_9a5316b3817ff4 1-2162
+source/render/render_debug.h
+  s_f22d08b6c8b199::t_840690a09cd042 1-110
+source/render/render_debug_geometry.h
+  s_f22d08b6c8b199::t_8e3fddb93c089e 1-71
+source/render/render_detail_objects.c
+  s_f22d08b6c8b199::t_7d29827599991e 1-11
+source/render/render_media.c
+  s_f22d08b6c8b199::t_59140739e32904 1-125
+source/render/render_objects.c
+  s_f22d08b6c8b199::t_bc43ab02e588d4 1-1264
+source/render/render_objects.h
+  s_f22d08b6c8b199::t_f5505e1edd684d 1-35
+source/render/render_particles.c
+  s_f22d08b6c8b199::t_2c664f817df71c 1-415
+source/render/render_particles.h
+  s_f22d08b6c8b199::t_06f8148450099d 1-24
+source/render/render_sky.c
+  s_f22d08b6c8b199::t_52c94cd5b4c54d 1-274
+source/render/render_sprite.c
+  s_f22d08b6c8b199::t_c9b7b579e2c431 1-905
+source/render/render_sprite.h
+  s_f22d08b6c8b199::t_309f719a6efa1c 1-122
+source/render/triangle_strips.c
+  s_f22d08b6c8b199::t_ff90622497696b 1-98
+source/render/triangle_strips.h
+  s_f22d08b6c8b199::t_bae251299a9cbd 1-50
+"source/saved films/saved_films.c"
+  s_f22d08b6c8b199::t_762762f8a6d8cc 1-5
+"source/saved films/saved_films.h"
+  s_f22d08b6c8b199::t_ec63c6a1333bc5 1-23
+"source/saved games/game_state.c"
+  s_f22d08b6c8b199::t_d2225fd9fb3959 1-667
+"source/saved games/game_state.h"
+  s_f22d08b6c8b199::t_bead6af3fe0092 1-134
+"source/saved games/game_state_procs.h"
+  s_f22d08b6c8b199::t_3ad9594a975a38 1-23
+"source/saved games/game_state_xbox.c"
+  s_f22d08b6c8b199::t_8458ec71aa806a 1-676
+"source/saved games/player_profile.c"
+  s_f22d08b6c8b199::t_20252043590982 1-923
+"source/saved games/player_profile.h"
+  s_f22d08b6c8b199::t_50597c94f23597 1-130
+"source/saved games/playlist_profile.c"
+  s_f22d08b6c8b199::t_ed8e4cb54d3142 1-790
+"source/saved games/playlist_profile.h"
+  s_f22d08b6c8b199::t_ead092dcfbbb39 1-57
+"source/saved games/saved_game_files.c"
+  s_f22d08b6c8b199::t_2f9be00ec21102 1-2594
+"source/saved games/saved_game_files.h"
+  s_f22d08b6c8b199::t_bbb8b49ddb6416 1-114
+source/scenario/fog_definitions.c
+  s_f22d08b6c8b199::t_b1a8aaa85ecc7d 1-5
+source/scenario/fog_definitions.h
+  s_f22d08b6c8b199::t_524014c238aad7 1-54
+source/scenario/multiplayer_scenario_description.c
+  s_f22d08b6c8b199::t_7699bb2df62c77 1-98
+source/scenario/multiplayer_scenario_description.h
+  s_f22d08b6c8b199::t_93fe35c2376c69 1-56
+source/scenario/scenario.c
+  s_f22d08b6c8b199::t_fd9db8ce51e5e3 1-1517
+source/scenario/scenario.h
+  s_f22d08b6c8b199::t_837447e3f19637 1-168
+source/scenario/scenario_definitions.c
+  s_f22d08b6c8b199::t_8d6522c1db424e 1-5
+source/scenario/scenario_definitions.h
+  s_f22d08b6c8b199::t_c795ecd6332b44 1-324
+source/scenario/scenario_placement.h
+  s_f22d08b6c8b199::t_d517b549380b87 1-23
+source/scenario/sky_definitions.c
+  s_f22d08b6c8b199::t_885ed110e71fb9 1-5
+source/scenario/sky_definitions.h
+  s_f22d08b6c8b199::t_dc522321517cab 1-56
+source/scenario/structure_bsp_procs.h
+  s_f22d08b6c8b199::t_e1a061d89234bb 1-23
+source/scenario/wind.c
+  s_f22d08b6c8b199::t_042aa29eea6fef 1-493
+source/scenario/wind.h
+  s_f22d08b6c8b199::t_1f5c5ffee96c67 1-47
+source/scenario/wind_definitions.c
+  s_f22d08b6c8b199::t_52ea984e517a08 1-5
+source/scenario/wind_definitions.h
+  s_f22d08b6c8b199::t_fbf2bf9fb3458d 1-48
+source/shaders/shader_definitions.c
+  s_f22d08b6c8b199::t_15cbd51c6b344d 1-89
+source/shaders/shader_definitions.h
+  s_f22d08b6c8b199::t_0aeccac12c4d7b 1-100
+source/shaders/shader_texture_animation.h
+  s_f22d08b6c8b199::t_dd2dc158613d94 1-42
+source/shaders/shaders.c
+  s_f22d08b6c8b199::t_00c0249bce06f1 1-826
+source/shaders/shaders.h
+  s_f22d08b6c8b199::t_f779ff1a414f4b 1-88
+source/shell/shell.c
+  s_f22d08b6c8b199::t_2e64532370e4fc 1-94
+source/shell/shell.h
+  s_f22d08b6c8b199::t_95fd26c000adea 1-37
+source/shell/shell_windows.c
+  s_f22d08b6c8b199::t_4379b7dbdea0d8 1-5
+source/shell/shell_windows.h
+  s_f22d08b6c8b199::t_52dfe629f4d6ff 1-23
+source/shell/shell_xbox.c
+  s_f22d08b6c8b199::t_c07914e8de056f 1-177
+source/shell/shell_xbox.h
+  s_f22d08b6c8b199::t_b07d8f8976453e 1-14
+source/sound/game_sound.c
+  s_f22d08b6c8b199::t_b28192c8d9fdf6 1-1326
+source/sound/game_sound.h
+  s_f22d08b6c8b199::t_cfbfd387eb652c 1-112
+source/sound/ima_adpcm.c
+  s_f22d08b6c8b199::t_9473e480fb1c6c 1-322
+source/sound/ima_adpcm.h
+  s_f22d08b6c8b199::t_4b73c67e35838e 1-57
+source/sound/platform_sound.h
+  s_f22d08b6c8b199::t_a83a1c37af223a 1-23
+source/sound/sound_classes.c
+  s_f22d08b6c8b199::t_1dc7a844b91308 1-438
+source/sound/sound_classes.h
+  s_f22d08b6c8b199::t_795c3417575db1 1-79
+source/sound/sound_definitions.c
+  s_f22d08b6c8b199::t_9aecb498300548 1-265
+source/sound/sound_definitions.h
+  s_f22d08b6c8b199::t_251a9332955034 1-225
+source/sound/sound_dsound.h
+  s_f22d08b6c8b199::t_d066822a0a525d 1-88
+source/sound/sound_dsound_xbox.c
+  s_f22d08b6c8b199::t_85ff47d72767a7 1-2892
+source/sound/sound_environment_definitions.c
+  s_f22d08b6c8b199::t_9e0a016c2e3e67 1-45
+source/sound/sound_environment_definitions.h
+  s_f22d08b6c8b199::t_240de909304cbd 1-62
+source/sound/sound_import/sound_aiff.c
+  s_f22d08b6c8b199::t_46468317931ef3 1-260
+source/sound/sound_import/sound_import.c
+  s_f22d08b6c8b199::t_63c5fa5fd7f54d 1-86
+source/sound/sound_import/sound_import.h
+  s_f22d08b6c8b199::t_5df43c59c7037a 1-39
+source/sound/sound_import/sound_wave.c
+  s_f22d08b6c8b199::t_3cb252ad455d95 1-282
+source/sound/sound_manager.c
+  s_f22d08b6c8b199::t_01e3bc39fab0f7 1-3859
+source/sound/sound_manager.h
+  s_f22d08b6c8b199::t_7098f08534eb69 1-91
+source/sound/sound_preferences.c
+  s_f22d08b6c8b199::t_f9926fe6285c08 1-49
+source/sound/sound_preferences.h
+  s_f22d08b6c8b199::t_22be5d65f97f64 1-38
+source/sound/sound_scenery.c
+  s_f22d08b6c8b199::t_9398855e3909c4 1-47
+source/sound/sound_scenery.h
+  s_f22d08b6c8b199::t_321d36f92f3480 1-29
+source/sound/sound_scenery_group.c
+  s_f22d08b6c8b199::t_2b00acb719db07 1-5
+source/strings/resource.h
+  s_f22d08b6c8b199::t_1838e882e7d669 1-23
+source/structures/cluster_partitions.c
+  s_f22d08b6c8b199::t_716b5ab94acef8 1-384
+source/structures/cluster_partitions.h
+  s_f22d08b6c8b199::t_464275da60f310 1-74
+source/structures/detail_object_definitions.c
+  s_f22d08b6c8b199::t_ab28c5cd440d89 1-5
+source/structures/detail_object_definitions.h
+  s_f22d08b6c8b199::t_4a17f326d40050 1-23
+source/structures/leaf_map.c
+  s_f22d08b6c8b199::t_797c3821826ed2 1-1432
+source/structures/leaf_map.h
+  s_f22d08b6c8b199::t_21befb4e23e6ea 1-88
+source/structures/radiosity/intermediate_radiosity.c
+  s_f22d08b6c8b199::t_acb3aacafeac24 1-5
+source/structures/radiosity/radiosity.c
+  s_f22d08b6c8b199::t_bfc912d50aa859 1-5
+source/structures/radiosity/radiosity.h
+  s_f22d08b6c8b199::t_a4774e16f8ebd3 1-23
+source/structures/radiosity/radiosity_io.c
+  s_f22d08b6c8b199::t_f81b3ea4165d11 1-5
+source/structures/radiosity/radiosity_io.h
+  s_f22d08b6c8b199::t_c07300741f0e38 1-23
+source/structures/structure_bsp_definitions.c
+  s_f22d08b6c8b199::t_6f108aa8316b43 1-185
+source/structures/structure_bsp_definitions.h
+  s_f22d08b6c8b199::t_73a4a87ee0533c 1-241
+source/structures/structure_detail_objects.c
+  s_f22d08b6c8b199::t_65afb4dd4657ef 1-630
+source/structures/structure_lens_flares.c
+  s_f22d08b6c8b199::t_cac8ef7d7d0510 1-710
+source/structures/structure_lens_flares.h
+  s_f22d08b6c8b199::t_7153aab2eb501c 1-30
+source/structures/structure_render.c
+  s_f22d08b6c8b199::t_f74539e1193cfd 1-1065
+source/structures/structure_render.h
+  s_f22d08b6c8b199::t_fd93c938d5e3ad 1-69
+source/structures/structure_render_lights.h
+  s_f22d08b6c8b199::t_8c5538ba2219b5 1-35
+source/structures/structure_runtime_decals.c
+  s_f22d08b6c8b199::t_ae4bd700fd72e3 1-214
+source/structures/structure_vector_tests.h
+  s_f22d08b6c8b199::t_acea112c9d3874 1-32
+source/structures/structure_visibility.c
+  s_f22d08b6c8b199::t_af64c765f8d483 1-1777
+source/structures/structure_visibility.h
+  s_f22d08b6c8b199::t_b6fd7c43c2eec5 1-64
+source/structures/structures.c
+  s_f22d08b6c8b199::t_9a929da28dbce7 1-1022
+source/structures/structures.h
+  s_f22d08b6c8b199::t_8fcc052ed4dde5 1-131
+source/tag_files/files.c
+  s_f22d08b6c8b199::t_63592533cf793d 1-459
+source/tag_files/files.h
+  s_f22d08b6c8b199::t_c504e033998b09 1-200
+source/tag_files/files_windows.c
+  s_f22d08b6c8b199::t_80fe85981bfafa 1-938
+source/tag_files/tag_files.c
+  s_f22d08b6c8b199::t_5b676804f0b04b 1-29
+source/tag_files/tag_files.h
+  s_f22d08b6c8b199::t_1d17584afdec62 1-35
+source/tag_files/tag_files_xbox.c
+  s_f22d08b6c8b199::t_c5fcf52b71ccf2 1-5
+source/tag_files/tag_groups.c
+  s_f22d08b6c8b199::t_4379fe1e3b0097 1-61
+source/tag_files/tag_groups.h
+  s_f22d08b6c8b199::t_b098ccc8c1c6e5 1-136
+source/text/draw_string.c
+  s_f22d08b6c8b199::t_19c547bdca091b 1-1525
+source/text/draw_string.h
+  s_f22d08b6c8b199::t_306145bfa7ed49 1-110
+source/text/draw_string_types.h
+  s_f22d08b6c8b199::t_02a6c88f8b245d 1-23
+source/text/font_group.c
+  s_f22d08b6c8b199::t_f281bc5070b264 1-54
+source/text/font_group.h
+  s_f22d08b6c8b199::t_88e57ba8aeff4c 1-59
+source/text/international_strings.c
+  s_f22d08b6c8b199::t_238df560c39e3c 1-263
+source/text/international_strings.h
+  s_f22d08b6c8b199::t_5c12e36557a437 1-54
+source/text/text_group.c
+  s_f22d08b6c8b199::t_978a3e526c4f20 1-277
+source/text/text_group.h
+  s_f22d08b6c8b199::t_b665c555e0fc81 1-59
+source/text/unicode.c
+  s_f22d08b6c8b199::t_70ffb06a0f80f2 1-1481
+source/text/unicode.h
+  s_f22d08b6c8b199::t_308d345fc4c54d 1-246
+source/tool/connected_geometry.c
+  s_f22d08b6c8b199::t_081fc2cd737f10 1-620
+source/tool/connected_geometry.h
+  s_f22d08b6c8b199::t_a27551b29b2e6d 1-62
+source/tool/error_geometry.c
+  s_f22d08b6c8b199::t_b3a7f94aafd815 1-857
+source/tool/error_geometry.h
+  s_f22d08b6c8b199::t_9aa85b0f6ee958 1-93
+source/tool/intermediate_geometry.h
+  s_f22d08b6c8b199::t_9dc62687b52c98 1-23
+source/units/biped_definitions.c
+  s_f22d08b6c8b199::t_99374c31c65931 1-5
+source/units/biped_definitions.h
+  s_f22d08b6c8b199::t_1ebdaf97148f24 1-127
+source/units/biped_limp_noodle.c
+  s_f22d08b6c8b199::t_84e0b71f7babf0 1-736
+source/units/biped_limp_noodle.h
+  s_f22d08b6c8b199::t_a501cffd8eaefe 1-39
+source/units/bipeds.c
+  s_f22d08b6c8b199::t_143547d7f6e4df 1-4352
+source/units/bipeds.h
+  s_f22d08b6c8b199::t_0cef2f2e95674f 1-175
+source/units/dialogue_definitions.c
+  s_f22d08b6c8b199::t_e8627c63a8304d 1-884
+source/units/dialogue_definitions.h
+  s_f22d08b6c8b199::t_ddd225a28654bd 1-49
+source/units/unit_control_data.h
+  s_f22d08b6c8b199::t_06b78a154fa7d5 1-42
+source/units/unit_definitions.c
+  s_f22d08b6c8b199::t_a00987b9929c45 1-65
+source/units/unit_definitions.h
+  s_f22d08b6c8b199::t_91c96d7fd5b6d0 1-195
+source/units/unit_dialogue.c
+  s_f22d08b6c8b199::t_1da9a4a448d546 1-1182
+source/units/unit_scripting_commands.c
+  s_f22d08b6c8b199::t_550fbf0c2cbb2a 1-273
+source/units/units.c
+  s_f22d08b6c8b199::t_44ab07615d7d32 1-11768
+source/units/units.h
+  s_f22d08b6c8b199::t_2eb395b3157549 1-942
+source/units/vehicle_datum.h
+  s_f22d08b6c8b199::t_5845059320299d 1-70
+source/units/vehicle_definitions.c
+  s_f22d08b6c8b199::t_410bf8de40ba85 1-5
+source/units/vehicle_definitions.h
+  s_f22d08b6c8b199::t_f1c06ea29ba5c8 1-42
+source/units/vehicle_scripting.h
+  s_f22d08b6c8b199::t_1018edd77580e6 1-11
+source/units/vehicles.c
+  s_f22d08b6c8b199::t_cd266f5c9a0fb0 1-2723
+source/units/vehicles.h
+  s_f22d08b6c8b199::t_26e5666563d6bd 1-69
+tools/access_width_scan.py
+  s_f22d08b6c8b199::t_e1f5cd7fc66416 1-172
+tools/android_abi_check.py
+  s_f22d08b6c8b199::t_ad667b76ea3404 1-128
+tools/android_asm_convert.py
+  s_f22d08b6c8b199::t_4e18a5bee15e03 1-264
+tools/android_build.py
+  s_f22d08b6c8b199::t_4a7a3d4e052002 1-547
+tools/android_gl_stubs.py
+  s_f22d08b6c8b199::t_ccd90b466c5dee 1-183
+tools/android_icon.py
+  s_f22d08b6c8b199::t_e09459969293b2 1-91
+tools/android_imports.py
+  s_f22d08b6c8b199::t_b54c35f577d254 1-91
+tools/android_posix_stubs.py
+  s_f22d08b6c8b199::t_84544f9f5b5574 1-63
+tools/audit/README.md
+  s_f22d08b6c8b199::t_c9c10e353b0619 1-37
+tools/audit/action_obey_callbacks_runtime_differential.py
+  s_f22d08b6c8b199::t_7233616cc415a1 1-946
+tools/audit/action_vehicle_control_runtime_differential.py
+  s_f22d08b6c8b199::t_1a9df221bae67c 1-817
+tools/audit/actor_aim_jump_runtime_differential.py
+  s_f22d08b6c8b199::t_7eac5270f22c21 1-888
+tools/audit/actor_looking_decoder_runtime.py
+  s_f22d08b6c8b199::t_7fe8c6637031b9 1-1853
+tools/audit/bitmaps_runtime_differential.py
+  s_f22d08b6c8b199::t_50777e61c11b51 1-1104
+tools/audit/compare_function_distance.py
+  s_f22d08b6c8b199::t_ce67cd1b01dce7 1-65
+tools/audit/compare_object_exact_sets_20260827.py
+  s_f22d08b6c8b199::t_546d70e96b6614 1-51
+tools/audit/disasm_action_uncover_candidate_20260826.py
+  s_f22d08b6c8b199::t_0e6536e12d0858 1-25
+tools/audit/disasm_coff_function_20260826.py
+  s_f22d08b6c8b199::t_2dc1176955e57c 1-22
+tools/audit/disasm_wind_candidate_20260826.py
+  s_f22d08b6c8b199::t_cdef3c0707c87b 1-21
+tools/audit/dump_coff_disasm.py
+  s_f22d08b6c8b199::t_93900d62ac97af 1-39
+tools/audit/effect_generate_part_particle_abi_runtime.py
+  s_f22d08b6c8b199::t_cb8c069bb9c4a3 1-874
+tools/audit/error_geometry_runtime_differential.py
+  s_f22d08b6c8b199::t_ed6cfeaadd74ac 1-844
+tools/audit/find_action_alert_distance_donors_20260826.py
+  s_f22d08b6c8b199::t_8399e9464bd58d 1-23
+tools/audit/find_decals_helper_donors_20260826.py
+  s_f22d08b6c8b199::t_21ffd7312e7fac 1-44
+tools/audit/find_distance_squared2d_evidence_20260826.py
+  s_f22d08b6c8b199::t_ea3f53779a75e0 1-36
+tools/audit/find_path_obstacles_helper_donors_20260826.py
+  s_f22d08b6c8b199::t_545e9d44394e33 1-33
+tools/audit/geometry_clean_pair_runtime_differential.py
+  s_f22d08b6c8b199::t_2fbe8d80de3f85 1-1235
+tools/audit/geometry_geosphere_runtime_differential.py
+  s_f22d08b6c8b199::t_bd8e957ba821fe 1-1219
+tools/audit/hud_get_return_eip_runtime.py
+  s_f22d08b6c8b199::t_61d2d3ff115f5d 1-237
+tools/audit/hud_weapon_crosshair_runtime.py
+  s_f22d08b6c8b199::t_c211aac24c0999 1-351
+tools/audit/list_small_absent_functions_20260827.py
+  s_f22d08b6c8b199::t_294c466d576a29 1-64
+tools/audit/particle_system_lifecycle_runtime.py
+  s_f22d08b6c8b199::t_3abc64938ff36e 1-1493
+tools/audit/particle_system_natural_init_runtime.py
+  s_f22d08b6c8b199::t_6976befa21c41b 1-1123
+tools/audit/path_3d_runtime.py
+  s_f22d08b6c8b199::t_ccf84a5ae3c242 1-308
+tools/audit/path_attractor_runtime.py
+  s_f22d08b6c8b199::t_29bc21b03434ef 1-255
+tools/audit/path_obstacles_add_disc_runtime.py
+  s_f22d08b6c8b199::t_d61de0a379a82f 1-257
+tools/audit/path_obstacles_test_circle_runtime.py
+  s_f22d08b6c8b199::t_e35c5e7cef3edb 1-822
+tools/audit/path_obstacles_test_pill_runtime.py
+  s_f22d08b6c8b199::t_12938544073fe6 1-1336
+tools/audit/progress_bar_base_layer_runtime.py
+  s_f22d08b6c8b199::t_668cf4ada6b0c7 1-248
+tools/audit/project_point2d_runtime.py
+  s_f22d08b6c8b199::t_5682d0abc837f8 1-118
+tools/audit/rank_public_donor_residuals_20260827.py
+  s_f22d08b6c8b199::t_ecba3fa3aa9891 1-57
+tools/audit/render_debug_2d_runtime.py
+  s_f22d08b6c8b199::t_6f5ba5a14b8a31 1-263
+tools/audit/render_debug_box_runtime.py
+  s_f22d08b6c8b199::t_f6b9f2e3aff344 1-393
+tools/audit/render_debug_three_runtime.py
+  s_f22d08b6c8b199::t_c04230f38aa18f 1-791
+tools/audit/rotate_vector2d_alias_runtime.py
+  s_f22d08b6c8b199::t_e36c083c42eed3 1-293
+tools/audit/scan_seh_relocation_gaps.py
+  s_f22d08b6c8b199::t_a86211d7e495cd 1-64
+tools/audit/weapons_inventory_runtime_differential.py
+  s_f22d08b6c8b199::t_c3f391a5cfec65 1-1194
+tools/audit/weather_delete_runtime.py
+  s_f22d08b6c8b199::t_1539c4a2b9bb50 1-614
+tools/audit_object_admission.py
+  s_f22d08b6c8b199::t_726c37295bfe6c 1-195
+tools/audit_semantic_matches.py
+  s_f22d08b6c8b199::t_ca2dc218664a80 1-381
+tools/bijection_walk.py
+  s_f22d08b6c8b199::t_71a18e5b94bb97 1-183
+tools/c2_diag_map.py
+  s_f22d08b6c8b199::t_2350ef7cda3a70 1-68
+tools/c2_eip_sampler.py
+  s_f22d08b6c8b199::t_c893ecfdd8cfa6 1-92
+tools/c2_live_debug.py
+  s_f22d08b6c8b199::t_d102c6991583a5 1-227
+tools/c2dbg32/.gitignore
+  s_f22d08b6c8b199::t_626d60184180f1 1-16
+tools/c2dbg32/BACKEND_MODULE_MAP.md
+  s_f22d08b6c8b199::t_172e4adc661781 1-103
+tools/c2dbg32/IR_LAYOUT.md
+  s_f22d08b6c8b199::t_6a9f12ffbd8508 1-826
+tools/c2dbg32/README.md
+  s_f22d08b6c8b199::t_a88292ed94f8cf 1-198
+tools/c2dbg32/acc_sampler.py
+  s_f22d08b6c8b199::t_e0e577cce29c44 1-115
+tools/c2dbg32/c2dis.py
+  s_f22d08b6c8b199::t_a291e9748a518e 1-63
+tools/c2dbg32/c2func.py
+  s_f22d08b6c8b199::t_5254fef6700c6d 1-46
+tools/c2dbg32/dbg32.c
+  s_f22d08b6c8b199::t_765ec0b8190b80 1-489
+tools/c2dbg32/diffsample.py
+  s_f22d08b6c8b199::t_0d8a371563e99e 1-124
+tools/c2dbg32/gen_config.py
+  s_f22d08b6c8b199::t_ac5dfdbcf975a3 1-29
+tools/c2dbg32/gen_config_collapse.py
+  s_f22d08b6c8b199::t_d0ec1406d92e08 1-36
+tools/c2dbg32/gen_config_cross.py
+  s_f22d08b6c8b199::t_fa7f83c4f27d42 1-53
+tools/c2dbg32/gen_config_gs.py
+  s_f22d08b6c8b199::t_ffc57b68c501cf 1-17
+tools/c2dbg32/gen_config_lab.py
+  s_f22d08b6c8b199::t_8bdf38e0c52678 1-55
+tools/c2dbg32/gen_config_probe.py
+  s_f22d08b6c8b199::t_925eb4ded72b37 1-18
+tools/c2dbg32/gen_config_repro198.py
+  s_f22d08b6c8b199::t_66750150555cbf 1-20
+tools/c2dbg32/gen_config_rz.py
+  s_f22d08b6c8b199::t_970a43fc3f98ea 1-17
+tools/c2dbg32/gen_config_smp.py
+  s_f22d08b6c8b199::t_a11a9ac26569a7 1-28
+tools/c2dbg32/gen_config_telnet.py
+  s_f22d08b6c8b199::t_aed67f6bad482e 1-15
+tools/c2dbg32/lab_collapse.py
+  s_f22d08b6c8b199::t_03a289b5f77d1d 1-157
+tools/c2dbg32/lab_collapse2.py
+  s_f22d08b6c8b199::t_47d868a3267b71 1-198
+tools/c2dbg32/periodic_sampler.py
+  s_f22d08b6c8b199::t_44eddc780488f0 1-69
+tools/c2dbg32/repro_00198fd0.c
+  s_f22d08b6c8b199::t_455cee2f3c0858 1-113
+tools/c2dbg32/repro_collapse.c
+  s_f22d08b6c8b199::t_7c5508d3c79e28 1-40
+tools/c2dbg32/repro_nocollapse.c
+  s_f22d08b6c8b199::t_ce30268ea48dba 1-41
+tools/c2dbg32/repro_stristr.c
+  s_f22d08b6c8b199::t_c3f3074bbc5377 1-32
+tools/c2dbg32/result_collapse.txt
+  s_f22d08b6c8b199::t_c06e388cc259f4 1-178
+tools/c2dbg32/result_nocollapse.txt
+  s_f22d08b6c8b199::t_8c6004a84ce7fe 1-203
+tools/c2dbg32/spillA.c
+  s_f22d08b6c8b199::t_ec80370c83370e 1-11
+tools/c2dbg32/spillB.c
+  s_f22d08b6c8b199::t_dee0427be0d41e 1-21
+tools/c2dbg32/spillC.c
+  s_f22d08b6c8b199::t_4e9949a3c80b5d 1-15
+tools/c2dbg32/spillD.c
+  s_f22d08b6c8b199::t_4a1a001a9cfae9 1-15
+tools/c2dbg32/spillE.c
+  s_f22d08b6c8b199::t_9682f5a689c04d 1-12
+tools/campaign/README.md
+  s_f22d08b6c8b199::t_61f8fa476ea05d 1-230
+tools/campaign/_coff_tools.py
+  s_f22d08b6c8b199::t_692fe13a78d24b 1-125
+tools/campaign/alias_scan.py
+  s_f22d08b6c8b199::t_07bdbb058c6725 1-53
+tools/campaign/alndiff.py
+  s_f22d08b6c8b199::t_ae739f4c233bb2 1-291
+tools/campaign/apply_edits.py
+  s_f22d08b6c8b199::t_d0deb516015e8e 1-18
+tools/campaign/attest_scan.py
+  s_f22d08b6c8b199::t_2925baa8e796de 1-82
+tools/campaign/board.py
+  s_f22d08b6c8b199::t_45e817dd8329fb 1-89
+tools/campaign/branch_sweep.py
+  s_f22d08b6c8b199::t_a0b68bdf2ed07c 1-99
+tools/campaign/coffio.py
+  s_f22d08b6c8b199::t_edb551a34b5b37 1-140
+tools/campaign/data_census.py
+  s_f22d08b6c8b199::t_9903f989b18e45 1-163
+tools/campaign/double_apply.py
+  s_f22d08b6c8b199::t_9b8bfdd82ba710 1-131
+tools/campaign/emitted_symbols.py
+  s_f22d08b6c8b199::t_97fb48f8c51c1e 1-46
+tools/campaign/flag_scan.py
+  s_f22d08b6c8b199::t_22c1994d176dbe 1-90
+tools/campaign/flagmatrix.py
+  s_f22d08b6c8b199::t_c9057195e96567 1-61
+tools/campaign/fpu_push_scan.py
+  s_f22d08b6c8b199::t_5b476229085e80 1-77
+tools/campaign/fpupush_atlas.c
+  s_f22d08b6c8b199::t_5723655f21ac49 1-206
+tools/campaign/fpupush_atlas.py
+  s_f22d08b6c8b199::t_e836dcf011788d 1-56
+tools/campaign/frame_census.py
+  s_f22d08b6c8b199::t_dc1ea427414a77 1-163
+tools/campaign/gate.py
+  s_f22d08b6c8b199::t_f4ee52bbde9639 1-173
+tools/campaign/identity_only_scan.py
+  s_f22d08b6c8b199::t_480b521e0ec122 1-58
+tools/campaign/idiom_census.py
+  s_f22d08b6c8b199::t_2410666524b6b4 1-184
+tools/campaign/import_symbol_names.py
+  s_f22d08b6c8b199::t_dabc206106df56 1-724
+tools/campaign/lab_compile.py
+  s_f22d08b6c8b199::t_411f4f5147fda7 1-57
+tools/campaign/linker_common_base.py
+  s_f22d08b6c8b199::t_ecd6d5ed01ec90 1-63
+tools/campaign/merge_candidates.py
+  s_f22d08b6c8b199::t_888ff7c5f2cb9b 1-263
+tools/campaign/mk_repro.py
+  s_f22d08b6c8b199::t_2c9cd3990b83a1 1-79
+tools/campaign/namegap.py
+  s_f22d08b6c8b199::t_68c29caaf3d94a 1-305
+tools/campaign/probe_bool_macro.py
+  s_f22d08b6c8b199::t_42057a77fbfd5b 1-78
+tools/campaign/probe_bool_writeout.py
+  s_f22d08b6c8b199::t_504d56dbd286b4 1-93
+tools/campaign/real_regions.py
+  s_f22d08b6c8b199::t_175d5cb9ae8bfe 1-121
+tools/campaign/relocdiff.py
+  s_f22d08b6c8b199::t_a5c239a31e2098 1-340
+tools/campaign/residual_triage.py
+  s_f22d08b6c8b199::t_4bdaed33ee51e0 1-166
+tools/campaign/resolved_address_scan.py
+  s_f22d08b6c8b199::t_fbd9f744181d12 1-81
+tools/campaign/slotmap.py
+  s_f22d08b6c8b199::t_e713e0f31326af 1-34
+tools/campaign/stable_verdicts.py
+  s_f22d08b6c8b199::t_b63f2609e65426 1-157
+tools/campaign/stdcall_scan.py
+  s_f22d08b6c8b199::t_f617da39cbd7a5 1-215
+tools/campaign/structural_split.py
+  s_f22d08b6c8b199::t_3fb6e73f713963 1-236
+tools/campaign/tinfo.py
+  s_f22d08b6c8b199::t_37725c1b7cc911 1-271
+tools/campaign/units_hunt_all.py
+  s_f22d08b6c8b199::t_2e1ed9f0fe31d3 1-95
+tools/campaign/unpark.py
+  s_f22d08b6c8b199::t_414db079184c25 1-432
+tools/campaign/unparked.py
+  s_f22d08b6c8b199::t_04c3cc9b1b32a8 1-263
+tools/campaign/verdicts.py
+  s_f22d08b6c8b199::t_5f955a08fff68e 1-71
+tools/campaign/volatile_scan.py
+  s_f22d08b6c8b199::t_bbf80e4d723723 1-57
+tools/ci_build.py
+  s_f22d08b6c8b199::t_270341cdd72529 1-97
+tools/codegen_blocker_classifier.py
+  s_f22d08b6c8b199::t_9c1c7308c8bdf4 1-607
+tools/coff_compare.py
+  s_f22d08b6c8b199::t_5f4f7ac84a7e9c 1-784
+tools/context_diff_oracle.py
+  s_f22d08b6c8b199::t_67f85673f21b47 1-120
+tools/corpus_dictionary.py
+  s_f22d08b6c8b199::t_bb9441bea5e343 1-419
+tools/crossbuild_bridge.py
+  s_f22d08b6c8b199::t_d1f060315e0eeb 1-863
+tools/decomp_treemap_multilane.py
+  s_f22d08b6c8b199::t_6b6fa82d972700 1-1634
+tools/download_tool.py
+  s_f22d08b6c8b199::t_1700dc5f654bc8 1-213
+tools/emission_shape_oracle.py
+  s_f22d08b6c8b199::t_db91e3db8cb24f 1-158
+tools/fake_match_scan.py
+  s_f22d08b6c8b199::t_5575328619766b 1-800
+tools/fixtures/cseries_assertions.c
+  s_f22d08b6c8b199::t_c8c3085401517a 1-146
+tools/fixtures/rasterizer_frame_statistics_owner.c
+  s_f22d08b6c8b199::t_9eac945cb46e15 1-223
+tools/fixtures/rasterizer_shared_state.c
+  s_f22d08b6c8b199::t_53c036204846cd 1-253
+tools/flag_provenance_census.py
+  s_f22d08b6c8b199::t_f0c534ac4bb722 1-345
+tools/halo_telemetry.mjs
+  s_f22d08b6c8b199::t_91132d6ac3c9d5 1-141
+tools/inlined_helper_candidates.py
+  s_f22d08b6c8b199::t_5fa6408757cd3d 1-182
+tools/inverted_branch_scan.py
+  s_f22d08b6c8b199::t_dd523c81a4eb87 1-112
+tools/link_probe.py
+  s_f22d08b6c8b199::t_b9421d04b91bb6 1-216
+tools/linux_build.py
+  s_f22d08b6c8b199::t_1b2b76bcd4dcb4 1-466
+tools/linux_link_check.py
+  s_f22d08b6c8b199::t_5588257279e2c6 1-90
+tools/linux_msvc_semantics.py
+  s_f22d08b6c8b199::t_7b26ab42d89c2a 1-187
+tools/lockstep_slot_compare.py
+  s_f22d08b6c8b199::t_3567125a5a5e53 1-88
+tools/lockstep_walk.py
+  s_f22d08b6c8b199::t_c6debd49b44c4c 1-110
+tools/loop_index_width_scan.py
+  s_f22d08b6c8b199::t_f4ae26c23d5560 1-134
+tools/msvc_deps_filter.py
+  s_f22d08b6c8b199::t_8ffb9f8840884b 1-89
+tools/ninja_syntax.py
+  s_f22d08b6c8b199::t_40c081dc25c672 1-249
+tools/object_admission_policy.py
+  s_f22d08b6c8b199::t_3cf12c9eefc318 1-84
+tools/parked_functions.py
+  s_f22d08b6c8b199::t_851593993288c7 1-300
+tools/pdb200_extract.py
+  s_f22d08b6c8b199::t_17e9409104a7c8 1-534
+tools/pdb200_types.py
+  s_f22d08b6c8b199::t_9480a240a70888 1-356
+tools/pgo_train.py
+  s_f22d08b6c8b199::t_dd1c28f12e8ca6 1-204
+tools/project_x86.py
+  s_f22d08b6c8b199::t_8c3b82b830a2dc 1-962
+tools/rank_object_closeouts.py
+  s_f22d08b6c8b199::t_fc82a6e79a2124 1-241
+tools/regression_gate.py
+  s_f22d08b6c8b199::t_bac807460d2bfc 1-1440
+tools/residual_frontier.py
+  s_f22d08b6c8b199::t_b1186f0fc90e41 1-427
+tools/semantic_progress.py
+  s_f22d08b6c8b199::t_b79a5d5367a919 1-838
+tools/shape_atlas.py
+  s_f22d08b6c8b199::t_c522514d2e1941 1-168
+tools/string_oracle.py
+  s_f22d08b6c8b199::t_fce5cb1d4e47c7 1-213
+tools/symbol_aliases.py
+  s_f22d08b6c8b199::t_d798b5d8ba975e 1-136
+tools/system_link_bots.py
+  s_f22d08b6c8b199::t_c90771f35993df 1-423
+tools/test_action_obey_callbacks_runtime_differential.py
+  s_f22d08b6c8b199::t_d9503078e7ee81 1-99
+tools/test_action_vehicle_control_runtime_differential.py
+  s_f22d08b6c8b199::t_e62211a7f068f2 1-264
+tools/test_actor_aim_jump_runtime_differential.py
+  s_f22d08b6c8b199::t_5f1594cd06ddfd 1-182
+tools/test_actor_looking_decoder_runtime.py
+  s_f22d08b6c8b199::t_771c1be0f76f0d 1-433
+tools/test_audit_object_admission.py
+  s_f22d08b6c8b199::t_ca6522dc6b905c 1-205
+tools/test_audit_semantic_matches.py
+  s_f22d08b6c8b199::t_e5618a42c89e56 1-187
+tools/test_bitmaps_runtime_differential.py
+  s_f22d08b6c8b199::t_2d8d1a07c52bbb 1-110
+tools/test_campaign_coff_utilities.py
+  s_f22d08b6c8b199::t_7e902a1d2d7786 1-265
+tools/test_campaign_emitted_symbols.py
+  s_f22d08b6c8b199::t_87a526eeecc191 1-155
+tools/test_campaign_merge_candidates.py
+  s_f22d08b6c8b199::t_d6c89788949792 1-115
+tools/test_campaign_relocdiff.py
+  s_f22d08b6c8b199::t_d8e859d83e7160 1-145
+tools/test_campaign_stdcall_scan.py
+  s_f22d08b6c8b199::t_0983ec06a98cef 1-125
+tools/test_campaign_unpark.py
+  s_f22d08b6c8b199::t_1020d676f47a6b 1-129
+tools/test_campaign_unparked.py
+  s_f22d08b6c8b199::t_ff25818a3c6632 1-137
+tools/test_codegen_blocker_classifier.py
+  s_f22d08b6c8b199::t_6a09b1612b1f80 1-277
+tools/test_coff_compare.py
+  s_f22d08b6c8b199::t_64441c1e9a670e 1-1066
+tools/test_countdown_timer_increment_runtime.py
+  s_f22d08b6c8b199::t_a0b697f8a77070 1-532
+tools/test_crossbuild_bridge.py
+  s_f22d08b6c8b199::t_29288a91f00c91 1-209
+tools/test_cseries_assertions.py
+  s_f22d08b6c8b199::t_df85b66bd6bcdf 1-205
+tools/test_decomp_treemap_multilane.py
+  s_f22d08b6c8b199::t_dec0f4a8351b72 1-612
+tools/test_effect_generate_part_particle_abi_runtime.py
+  s_f22d08b6c8b199::t_22850af19b798c 1-415
+tools/test_fake_match_scan.py
+  s_f22d08b6c8b199::t_a96ec43c76a19c 1-211
+tools/test_geometry_clean_pair_runtime_differential.py
+  s_f22d08b6c8b199::t_4799ae7a2be844 1-310
+tools/test_geometry_geosphere_runtime_differential.py
+  s_f22d08b6c8b199::t_985a7a2bea5555 1-468
+tools/test_hud_get_return_eip_runtime.py
+  s_f22d08b6c8b199::t_27d8f64cdf022e 1-92
+tools/test_hud_weapon_crosshair_runtime.py
+  s_f22d08b6c8b199::t_54f2fba8f5aea0 1-58
+tools/test_import_symbol_names.py
+  s_f22d08b6c8b199::t_87f23fa9ecc665 1-241
+tools/test_link_probe.py
+  s_f22d08b6c8b199::t_548fd019d5b5a5 1-64
+tools/test_linux_port.py
+  s_f22d08b6c8b199::t_5f78dcf52ea147 1-226
+tools/test_masm_build_rule.py
+  s_f22d08b6c8b199::t_d1104207886df4 1-55
+tools/test_network_join_token_runtime.py
+  s_f22d08b6c8b199::t_2bb408f95b0993 1-244
+tools/test_network_protocol_contracts.py
+  s_f22d08b6c8b199::t_c6fb9a7bf3dee0 1-109
+tools/test_network_server_dispose_payloads.py
+  s_f22d08b6c8b199::t_8814ddc1f7df04 1-152
+tools/test_network_server_reset_contract.py
+  s_f22d08b6c8b199::t_a9e1b6496a2d1b 1-82
+tools/test_network_server_reset_counter.py
+  s_f22d08b6c8b199::t_a4881351a721f4 1-125
+tools/test_parked_functions.py
+  s_f22d08b6c8b199::t_0e5b07758afb20 1-316
+tools/test_particle_system_lifecycle_runtime.py
+  s_f22d08b6c8b199::t_1b0874a5a535a9 1-291
+tools/test_particle_system_natural_init_runtime.py
+  s_f22d08b6c8b199::t_9149c0a8ea5766 1-265
+tools/test_path_3d_runtime.py
+  s_f22d08b6c8b199::t_7742bf8f91d2e4 1-64
+tools/test_path_attractor_runtime.py
+  s_f22d08b6c8b199::t_a79de08a06b1c9 1-39
+tools/test_path_obstacles_add_disc_runtime.py
+  s_f22d08b6c8b199::t_63f7d476eb2b8e 1-69
+tools/test_path_obstacles_test_circle_runtime.py
+  s_f22d08b6c8b199::t_c31b6ba679486f 1-176
+tools/test_path_obstacles_test_pill_runtime.py
+  s_f22d08b6c8b199::t_978d8763dc6aee 1-226
+tools/test_pdb200_extract.py
+  s_f22d08b6c8b199::t_cf56f90d3a11f5 1-239
+tools/test_player_ui_fast_setup_default_variant.py
+  s_f22d08b6c8b199::t_905e7005d9b9c1 1-37
+tools/test_progress_bar_base_layer_runtime.py
+  s_f22d08b6c8b199::t_e2aaa43e900336 1-66
+tools/test_rank_object_closeouts.py
+  s_f22d08b6c8b199::t_239adee7231b7e 1-127
+tools/test_rasterizer_frame_statistics_owner.py
+  s_f22d08b6c8b199::t_8da65e9fc3445b 1-385
+tools/test_rasterizer_lights_frame_runtime.py
+  s_f22d08b6c8b199::t_5a0fb01e297a51 1-264
+tools/test_rasterizer_shared_state.py
+  s_f22d08b6c8b199::t_2b459bd1db9c48 1-155
+tools/test_regression_gate.py
+  s_f22d08b6c8b199::t_0f800cdef27926 1-658
+tools/test_render_debug_2d_runtime.py
+  s_f22d08b6c8b199::t_8d12c5b7d1cd2d 1-70
+tools/test_render_debug_box_runtime.py
+  s_f22d08b6c8b199::t_de2993d91380e5 1-155
+tools/test_render_debug_three_runtime.py
+  s_f22d08b6c8b199::t_b2c469a6aba177 1-360
+tools/test_rotate_vector2d_alias_runtime.py
+  s_f22d08b6c8b199::t_6391c73070d168 1-41
+tools/test_semantic_progress.py
+  s_f22d08b6c8b199::t_94905f76e5c6c1 1-837
+tools/test_shape_atlas.py
+  s_f22d08b6c8b199::t_a790e6ea5758e1 1-63
+tools/test_stable_verdicts.py
+  s_f22d08b6c8b199::t_e50b7167976c0f 1-118
+tools/test_symbol_aliases.py
+  s_f22d08b6c8b199::t_671c9152220bc6 1-46
+tools/test_transfer_executor.py
+  s_f22d08b6c8b199::t_47c3e4eb3b8a6c 1-716
+tools/test_tu_context.py
+  s_f22d08b6c8b199::t_90d3f62afd696c 1-39
+tools/test_weapons_inventory_runtime_differential.py
+  s_f22d08b6c8b199::t_8105920aa3c4a0 1-136
+tools/test_weather_delete_runtime.py
+  s_f22d08b6c8b199::t_e31bfdc958a49a 1-297
+tools/test_web_online_host_configuration.py
+  s_f22d08b6c8b199::t_6fc281f53c8960 1-117
+tools/transfer_executor.py
+  s_f22d08b6c8b199::t_7df3824ad21b57 1-1691
+tools/triage_residuals.py
+  s_f22d08b6c8b199::t_5ffb9ce16143a4 1-68
+tools/tu_context.py
+  s_f22d08b6c8b199::t_263058fc0c61a9 1-210
+tools/vsgen/LICENSE
+  s_f22d08b6c8b199::t_1c863c40c13bb5 1-21
+tools/vsgen/configuration.py
+  s_f22d08b6c8b199::t_2b81a0979fcae4 1-44
+tools/vsgen/sln.py
+  s_f22d08b6c8b199::t_76d63467e1ffd7 1-180
+tools/vsgen/vcxproj.py
+  s_f22d08b6c8b199::t_40f79c1c5f6d31 1-300
+tools/web_build.py
+  s_f22d08b6c8b199::t_5383c23363a8c4 1-371
+tools/web_run.py
+  s_f22d08b6c8b199::t_a7330e1374eec3 1-183
+tools/web_serve.py
+  s_f22d08b6c8b199::t_d6337ac4f1709a 1-212
+tools/web_stage_cloudflare.py
+  s_f22d08b6c8b199::t_15759e518c2511 1-106
+tools/windows_build.py
+  s_f22d08b6c8b199::t_21a5689f2167a3 1-466
+tools/xdk_headers.py
+  s_f22d08b6c8b199::t_62af582faffc26 1-580
+tools/xiso_extract.py
+  s_f22d08b6c8b199::t_140681b4c24b06 1-410
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7009ea9c3b8bd665b8fae661192cb882cb3155c6",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
