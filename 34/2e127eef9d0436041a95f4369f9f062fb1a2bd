@@ -1,0 +1,23 @@
+port/web/tests/sdl_gamepad_worker_test.js
+  s_f22d08b6c8b199::t_2cfce04460f552 1-33
+port/web/halo_sdl3.py
+  s_f22d08b6c8b199::t_2cfce04460f552 1-147
+tools/web_build.py
+  s_f22d08b6c8b199::t_2cfce04460f552 9,38-39,57,114,313,343
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "342e127eef9d0436041a95f4369f9f062fb1a2bd",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
