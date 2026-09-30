@@ -1,0 +1,32 @@
+port/web/shell.html
+  s_f22d08b6c8b199::t_8c52bcb04a45db 1660-1661,1736-1812,1815,1835-1845,1863-1875,2671,2703,2719
+tools/web_stage_cloudflare.py
+  s_f22d08b6c8b199::t_8c52bcb04a45db 10-11,46-49,65-86,96,109-110,126
+services/web/src/index.js
+  s_f22d08b6c8b199::t_8c52bcb04a45db 39-46,94-97,167-183,197-208,228-235,240
+tools/halo_telemetry.mjs
+  s_f22d08b6c8b199::t_8c52bcb04a45db 117-130,132-150,208,237
+  s_f22d08b6c8b199::t_c0b627738de0d3 131
+docs/telemetry.md
+  s_f22d08b6c8b199::t_c0b627738de0d3 75
+  s_f22d08b6c8b199::t_8c52bcb04a45db 27,76-84
+port/web/tests/shell_loading_input_test.js
+  s_f22d08b6c8b199::t_7dbf48f3f9f959 164
+  s_f22d08b6c8b199::t_8c52bcb04a45db 24-25,154-163,165-186
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "c9f89a3331bbfc3d3abe3702f4b55a6fa3f5b4c0",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
