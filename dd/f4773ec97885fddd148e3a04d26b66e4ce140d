@@ -1,0 +1,45 @@
+services/signaling/src/index.ts
+  s_f22d08b6c8b199::t_9aba4605b82d49 6,171-190,676,699-710
+  s_f22d08b6c8b199::t_eb2b9046c9cc11 677-681
+  s_f22d08b6c8b199::t_657be7c7dc2cee 59-60
+services/signaling/src/abuse.ts
+  s_f22d08b6c8b199::t_9aba4605b82d49 50-64
+  s_f22d08b6c8b199::t_9d3cbca0dabbc2 49
+source/main/main.h
+  s_f22d08b6c8b199::t_9aba4605b82d49 117-119
+source/main/main.c
+  s_f22d08b6c8b199::t_9aba4605b82d49 1283-1291
+port/web/online_client.js
+  s_f22d08b6c8b199::t_657be7c7dc2cee 242-243
+  s_f22d08b6c8b199::t_0296cb791f52b7 197-203,209-216,221-234
+services/signaling/test/signaling.spec.ts
+  s_f22d08b6c8b199::t_8c37d54c8405f6 152-158,166-188,192-208,212,217-224
+services/signaling/src/presence.ts
+  s_f22d08b6c8b199::t_657be7c7dc2cee 6-7
+  s_f22d08b6c8b199::t_9aba4605b82d49 5,8,14-19,37-50,87-158,164-165,167
+  s_f22d08b6c8b199::t_b6741801dea2a7 166
+port/web/shell.html
+  s_f22d08b6c8b199::t_0296cb791f52b7 642,644,661-665,1429-1433,1911-1915
+  s_f22d08b6c8b199::t_155f068cd8c38a 1916
+port/web/src/web_platform.c
+  s_f22d08b6c8b199::t_9aba4605b82d49 6,89-91
+  s_f22d08b6c8b199::t_dac95545b88164 92-93
+port/web/tests/shell_loading_input_test.js
+  s_f22d08b6c8b199::t_8c37d54c8405f6 146-148,150-152
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "ddf4773ec97885fddd148e3a04d26b66e4ce140d",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
