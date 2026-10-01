@@ -1,0 +1,25 @@
+port/web/src/web_platform.c
+  s_f22d08b6c8b199::t_4efc0bff34c92f 116
+tools/web_build.py
+  s_f22d08b6c8b199::t_17265483342e9c 334,345
+port/web/fetch_path_normalization.js
+  s_f22d08b6c8b199::t_81851bdd2968c2 13,17,31,34-57
+  s_f22d08b6c8b199::t_17265483342e9c 1-4,6-12,14-16,18-30,32-33,58-60
+  s_f22d08b6c8b199::t_885c41803498b2 5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "17190a8dbe505ad7dab2d9a0cf3b0d1d68b93114",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
