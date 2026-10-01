@@ -1,0 +1,41 @@
+port/web/src/web_online_ui.c
+  s_f22d08b6c8b199::t_341adbc49fe41c 43-53,86-92,115-120,141-146,197-239,410-414,427-440,467-481,644,652-656,668
+source/interface/player_ui.h
+  s_f22d08b6c8b199::t_3cda4674cfc056 92-102
+port/web/tests/online_client_host_setup_test.js
+  s_f22d08b6c8b199::t_5843411a104785 89-92,95-100,148,235-238,353,433-464
+  s_f22d08b6c8b199::t_9bdec6dc3856a3 465
+port/web/src/web_online_ui.h
+  s_f22d08b6c8b199::t_341adbc49fe41c 87-95
+port/web/online_client.js
+  s_f22d08b6c8b199::t_715f5e835d1f16 24-31,164-173,537,572,579,583,837-918,931-932,944,947,954,957-959,1135-1153,2017-2026
+tools/test_web_online_host_configuration.py
+  s_f22d08b6c8b199::t_269632b7de10ef 110-123
+  s_f22d08b6c8b199::t_632106a1d316d2 144-147
+  s_f22d08b6c8b199::t_5843411a104785 62-109
+port/web/shell.html
+  s_f22d08b6c8b199::t_b325f209bdc65c 1410-1412
+  s_f22d08b6c8b199::t_b5cd1a00096c7b 496-550,1711-1728
+  s_f22d08b6c8b199::t_8a5ef8897689ac 177-195,1466-1475,1778-1780,2324-2350,2612,2836
+port/web/tests/shell_loading_input_test.js
+  s_f22d08b6c8b199::t_5843411a104785 59-60,103-105
+source/interface/player_ui.c
+  s_f22d08b6c8b199::t_3cda4674cfc056 657,659-668,725-751,757-801
+  s_f22d08b6c8b199::t_89d03634d5489b 802
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "c1749b360c7a23c8f526dc72453848dc1fff26bc",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
