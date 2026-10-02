@@ -1,0 +1,51 @@
+tools/web_build.py
+  s_f22d08b6c8b199::t_151a4301389546 334,346
+port/web/fetch_path_normalization.js
+  s_f22d08b6c8b199::t_151a4301389546 38-48
+  s_f22d08b6c8b199::t_aad41ee8bb9241 49
+port/web/shell.html
+  s_f22d08b6c8b199::t_4f8cbe90e7bd81 1271,1280-1281,1284,1286,1289
+  s_f22d08b6c8b199::t_276fb0c4783fb2 1274,1276
+  s_f22d08b6c8b199::t_836b3120bb1956 1593
+  s_f22d08b6c8b199::t_4ba585271849f2 9,1270,1275,1277-1279,1282-1283,1285,1287-1288,1290-1303,1590-1592,1594-1603,1810-1815,1853-1855,1877-1989
+  s_f22d08b6c8b199::t_d24ffeac401ac2 2816-2817
+  s_f22d08b6c8b199::t_3b632126023bff 1272-1273
+  s_f22d08b6c8b199::t_66be0c3d2172db 3010
+  s_f22d08b6c8b199::t_5b4cbc7b3adcae 1990
+port/web/tests/xiso_test.js
+  s_f22d08b6c8b199::t_dfc9532d38ce58 4-13,15,18-27
+  s_f22d08b6c8b199::t_4f8cbe90e7bd81 14,16-17
+  s_f22d08b6c8b199::t_449001a31c0c4c 1-3,28-167
+port/web/src/web_platform.c
+  s_f22d08b6c8b199::t_151a4301389546 120
+  s_f22d08b6c8b199::t_18cc69d4942bfa 121-122
+tools/web_stage_cloudflare.py
+  s_f22d08b6c8b199::t_151a4301389546 2,4-6
+README.md
+  s_f22d08b6c8b199::t_836b3120bb1956 67
+  s_f22d08b6c8b199::t_2809909d9d6433 44-47,68-71,83-86
+services/web/README.md
+  s_f22d08b6c8b199::t_2809909d9d6433 4-6,10,28-31
+port/web/xiso.js
+  s_f22d08b6c8b199::t_836b3120bb1956 261-265
+  s_f22d08b6c8b199::t_151a4301389546 1-260,266-453
+services/web/src/index.js
+  s_f22d08b6c8b199::t_89d2e4e9af00b9 13-15,251
+  s_f22d08b6c8b199::t_8a3b4eb80df453 310
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d0b770a1f6d1cb5aa1989b487803b1b556a3aabf",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
