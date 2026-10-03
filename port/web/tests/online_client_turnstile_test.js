@@ -68,8 +68,8 @@ const removedWidgets = [];
 const resetWidgets = [];
 let nextWidgetId = 1;
 const requestBodies = [];
-const nativeInvite = 'halo://join/' + '1a3899f578c05489ed38e74a70b701cc' +
-  'fb184685d09c1cc1a96c7287751629b6';
+const nativeInvite = 'halo://join/' + '8f60f64f5fb2cda7043454e4aecd305d' +
+  '07153f6367a2d644d0737f1a46565982';
 
 const context = {
   console,

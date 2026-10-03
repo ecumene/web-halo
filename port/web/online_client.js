@@ -1045,6 +1045,13 @@
   function parseInvite(value) {
     var text = String(value || "").trim();
     if (!text || text.length > 1024) throw new Error("Paste a valid invite link.");
+    var nativeInvite = /^halo:\/\/join\/([0-9a-fA-F]{64})$/.exec(text);
+    if (nativeInvite) {
+      return {
+        code: "halo://join/" + nativeInvite[1].toLowerCase(),
+        kind: "native",
+      };
+    }
     try {
       var url = new URL(text);
       if (url.protocol.toLowerCase() === "halo:") {
@@ -1067,9 +1074,6 @@
       text = decodeURIComponent(text);
     } catch (error) {
       throw new Error("That invite link is malformed.");
-    }
-    if (/^halo:\/\/join\/[0-9a-fA-F]{64}$/.test(text)) {
-      return { code: text.toLowerCase(), kind: "native" };
     }
     var separator = text.indexOf(".");
     if (separator <= 0 || separator === text.length - 1) {
