@@ -1,0 +1,21 @@
+services/signaling/wrangler.jsonc
+  s_f22d08b6c8b199::t_ffdf1614aaa0ab 22-25
+services/signaling/worker-configuration.d.ts
+  s_f22d08b6c8b199::t_331dab663502f3 2,23,39
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d8b829ea79e4804c69a0c13592c7cc218de55e73",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
