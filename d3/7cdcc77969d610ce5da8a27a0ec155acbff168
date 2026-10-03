@@ -1,0 +1,24 @@
+services/native-gateway/src/main.rs
+  s_f22d08b6c8b199::t_86997d53031d0a 37-41,51,66-74,284-316,399,478,588-624
+  s_f22d08b6c8b199::t_2ab22b06677f50 36,625-627
+infra/aws-native-gateway/template.yml
+  s_f22d08b6c8b199::t_f03cbb2641e9e7 27,29-30,66,68,223,255,266,326-407,431-436,438
+infra/aws-native-gateway/README.md
+  s_f22d08b6c8b199::t_9e72a820eb1305 7-8,12-17,30-33,41
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d37cdcc77969d610ce5da8a27a0ec155acbff168",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
