@@ -24,12 +24,10 @@ Parameters:
   ControlSecretParameter:
     Type: String
     Default: /halo/native-gateway/control-secret
-  PublicHostname:
+  CloudFrontOriginPrefixListId:
     Type: String
-    Default: native.mitchellhynes.com
-  PublicWebsocketUrl:
-    Type: String
-    Default: wss://native.mitchellhynes.com/v1/connect
+    Description: AWS-managed com.amazonaws.global.cloudfront.origin-facing prefix list in this region.
+    AllowedPattern: ^pl-[0-9a-f]+$
   AllowedOrigins:
     Type: String
     Default: https://mitchellhynes.com,https://halo-web.otherness-bugs.workers.dev
@@ -65,16 +63,11 @@ Resources:
           CidrIp: 0.0.0.0/0
           FromPort: !Ref UdpPortStart
           ToPort: !Ref UdpPortEnd
-        - Description: ACME certificate issuance and HTTPS redirect
+        - Description: HTTP origin reachable only from CloudFront
           IpProtocol: tcp
-          CidrIp: 0.0.0.0/0
+          SourcePrefixListId: !Ref CloudFrontOriginPrefixListId
           FromPort: 80
           ToPort: 80
-        - Description: TLS, signed session creation, and one-time-ticket WebSockets
-          IpProtocol: tcp
-          CidrIp: 0.0.0.0/0
-          FromPort: 443
-          ToPort: 443
       SecurityGroupEgress:
         - Description: DNS and authenticated UDP peer traffic
           IpProtocol: udp
@@ -227,7 +220,7 @@ Resources:
           cat >/etc/halo-native-gateway/public.env <<'ENVIRONMENT'
           BIND_ADDR=127.0.0.1:8080
           CONTROL_SECRET_FILE=/run/secrets/control-secret
-          PUBLIC_WEBSOCKET_URL=${PublicWebsocketUrl}
+          PUBLIC_WEBSOCKET_URL=auto
           PUBLIC_UDP_IP=${GatewayEip}
           ALLOWED_ORIGINS=${AllowedOrigins}
           UDP_PORT_START=${UdpPortStart}
@@ -259,7 +252,7 @@ Resources:
             admin off
           }
 
-          ${PublicHostname} {
+          :80 {
             @gateway path /health /v1/sessions /v1/connect
             handle @gateway {
               reverse_proxy 127.0.0.1:8080
@@ -268,9 +261,9 @@ Resources:
               respond 404
             }
             header {
-              Strict-Transport-Security "max-age=31536000; includeSubDomains"
               X-Content-Type-Options nosniff
               Referrer-Policy no-referrer
+              Cache-Control "no-store"
             }
             log {
               output stdout
@@ -330,6 +323,88 @@ Resources:
       AllocationId: !GetAtt GatewayEip.AllocationId
       InstanceId: !Ref GatewayInstance
 
+  GatewayCachePolicy:
+    Type: AWS::CloudFront::CachePolicy
+    Properties:
+      CachePolicyConfig:
+        Comment: Never cache native gateway control or WebSocket requests.
+        DefaultTTL: 0
+        MaxTTL: 0
+        MinTTL: 0
+        Name: !Sub ${AWS::StackName}-disabled-cache
+        ParametersInCacheKeyAndForwardedToOrigin:
+          CookiesConfig:
+            CookieBehavior: none
+          EnableAcceptEncodingBrotli: false
+          EnableAcceptEncodingGzip: false
+          HeadersConfig:
+            HeaderBehavior: none
+          QueryStringsConfig:
+            QueryStringBehavior: none
+
+  GatewayOriginRequestPolicy:
+    Type: AWS::CloudFront::OriginRequestPolicy
+    Properties:
+      OriginRequestPolicyConfig:
+        Comment: Forward the WebSocket handshake, signed control headers, and viewer hostname.
+        CookiesConfig:
+          CookieBehavior: none
+        HeadersConfig:
+          HeaderBehavior: allViewer
+        Name: !Sub ${AWS::StackName}-all-viewer
+        QueryStringsConfig:
+          QueryStringBehavior: all
+
+  GatewayDistribution:
+    Type: AWS::CloudFront::Distribution
+    DependsOn:
+      - GatewayEipAssociation
+    Properties:
+      DistributionConfig:
+        Comment: TLS and WebSocket edge for the Halo native gateway
+        DefaultCacheBehavior:
+          AllowedMethods:
+            - DELETE
+            - GET
+            - HEAD
+            - OPTIONS
+            - PATCH
+            - POST
+            - PUT
+          CachePolicyId: !Ref GatewayCachePolicy
+          CachedMethods:
+            - GET
+            - HEAD
+          Compress: false
+          OriginRequestPolicyId: !Ref GatewayOriginRequestPolicy
+          TargetOriginId: GatewayOrigin
+          ViewerProtocolPolicy: redirect-to-https
+        Enabled: true
+        HttpVersion: http2and3
+        IPV6Enabled: true
+        Origins:
+          - ConnectionAttempts: 3
+            ConnectionTimeout: 10
+            CustomOriginConfig:
+              HTTPPort: 80
+              HTTPSPort: 443
+              OriginKeepaliveTimeout: 5
+              OriginProtocolPolicy: http-only
+              OriginReadTimeout: 60
+              OriginSSLProtocols:
+                - TLSv1.2
+            DomainName: !GetAtt GatewayInstance.PublicDnsName
+            Id: GatewayOrigin
+        PriceClass: PriceClass_100
+        Restrictions:
+          GeoRestriction:
+            RestrictionType: none
+        ViewerCertificate:
+          CloudFrontDefaultCertificate: true
+      Tags:
+        - Key: Project
+          Value: halo-native-gateway
+
   InstanceStatusAlarm:
     Type: AWS::CloudWatch::Alarm
     Properties:
@@ -353,5 +428,11 @@ Outputs:
     Value: !Ref GatewayEip
   PublicUdpPorts:
     Value: !Sub ${UdpPortStart}-${UdpPortEnd}/udp
+  GatewayHttpsUrl:
+    Value: !Sub https://${GatewayDistribution.DomainName}
+  WorkerControlUrl:
+    Value: !Sub https://${GatewayDistribution.DomainName}/v1/sessions
+  BrowserWebsocketUrl:
+    Value: !Sub wss://${GatewayDistribution.DomainName}/v1/connect
   SecuritySummary:
-    Value: SSM-only administration; no SSH; HTTPS and fixed UDP range only; IMDSv2 required; encrypted root volume.
+    Value: SSM-only administration; no SSH; TCP origin restricted to CloudFront; fixed UDP range only; IMDSv2 required; encrypted root volume.

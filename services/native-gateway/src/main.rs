@@ -34,6 +34,12 @@ const SIGNATURE_SKEW: Duration = Duration::from_secs(30);
 const MAX_CONTROL_BODY: usize = 16 * 1024;
 
 #[derive(Clone)]
+enum PublicWebsocketUrl {
+    RequestHost,
+    Static(String),
+}
+
+#[derive(Clone)]
 struct Config {
     bind: SocketAddr,
     control_secret: Arc<[u8]>,
@@ -42,7 +48,7 @@ struct Config {
     max_sessions_per_actor: usize,
     origins: Arc<[String]>,
     public_ip: Ipv4Addr,
-    public_websocket_url: String,
+    public_websocket_url: PublicWebsocketUrl,
     udp_port_start: u16,
     udp_port_end: u16,
 }
@@ -57,11 +63,15 @@ impl Config {
         if control_secret.len() < 32 {
             return Err("CONTROL_SECRET must contain at least 32 characters".into());
         }
-        let public_websocket_url =
-            env::var("PUBLIC_WEBSOCKET_URL").map_err(|_| "PUBLIC_WEBSOCKET_URL is required")?;
-        if !public_websocket_url.starts_with("wss://") || public_websocket_url.len() > 512 {
-            return Err("PUBLIC_WEBSOCKET_URL must be a wss:// URL".into());
-        }
+        let public_websocket_url = match env::var("PUBLIC_WEBSOCKET_URL")
+            .map_err(|_| "PUBLIC_WEBSOCKET_URL is required")?
+        {
+            value if value == "auto" => PublicWebsocketUrl::RequestHost,
+            value if value.starts_with("wss://") && value.len() <= 512 => {
+                PublicWebsocketUrl::Static(value)
+            }
+            _ => return Err("PUBLIC_WEBSOCKET_URL must be 'auto' or a wss:// URL".into()),
+        };
         let origins: Vec<String> = env::var("ALLOWED_ORIGINS")
             .map_err(|_| "ALLOWED_ORIGINS is required")?
             .split(',')
@@ -271,6 +281,39 @@ fn valid_hex(value: &str, size: usize) -> bool {
             .all(|byte| byte.is_ascii_hexdigit() && !byte.is_ascii_uppercase())
 }
 
+fn public_websocket_url(
+    configured: &PublicWebsocketUrl,
+    headers: &HeaderMap,
+) -> Result<String, ApiError> {
+    if let PublicWebsocketUrl::Static(value) = configured {
+        return Ok(value.clone());
+    }
+    let host = headers
+        .get(axum::http::header::HOST)
+        .and_then(|value| value.to_str().ok())
+        .ok_or_else(|| {
+            ApiError::new(
+                StatusCode::BAD_REQUEST,
+                "INVALID_HOST",
+                "Gateway hostname is invalid.",
+            )
+        })?;
+    if host.len() > 253
+        || !host.ends_with(".cloudfront.net")
+        || host.starts_with('.')
+        || !host.bytes().all(|byte| {
+            byte.is_ascii_lowercase() || byte.is_ascii_digit() || byte == b'-' || byte == b'.'
+        })
+    {
+        return Err(ApiError::new(
+            StatusCode::BAD_REQUEST,
+            "INVALID_HOST",
+            "Gateway hostname is invalid.",
+        ));
+    }
+    Ok(format!("wss://{host}/v1/connect"))
+}
+
 async fn create_session(
     State(state): State<AppState>,
     headers: HeaderMap,
@@ -353,6 +396,7 @@ async fn create_session(
             "Request body is invalid.",
         ));
     }
+    let websocket_url = public_websocket_url(&state.config.public_websocket_url, &headers)?;
     let invite = Invite::parse(&input.invite).map_err(|_| {
         ApiError::new(
             StatusCode::BAD_REQUEST,
@@ -431,7 +475,7 @@ async fn create_session(
             peer_id,
             remote_identifier,
             ticket,
-            websocket_url: state.config.public_websocket_url.clone(),
+            websocket_url,
         }),
     ))
 }
@@ -540,4 +584,44 @@ async fn main() {
     axum::serve(listener, app)
         .await
         .expect("gateway server failed");
+}
+
+#[cfg(test)]
+mod tests {
+    use axum::http::{HeaderMap, HeaderValue};
+
+    use super::{PublicWebsocketUrl, public_websocket_url};
+
+    #[test]
+    fn derives_cloudfront_websocket_url_from_request_host() {
+        let mut headers = HeaderMap::new();
+        headers.insert(
+            "host",
+            HeaderValue::from_static("d123example.cloudfront.net"),
+        );
+        assert_eq!(
+            public_websocket_url(&PublicWebsocketUrl::RequestHost, &headers).unwrap(),
+            "wss://d123example.cloudfront.net/v1/connect"
+        );
+    }
+
+    #[test]
+    fn rejects_untrusted_derived_host() {
+        let mut headers = HeaderMap::new();
+        headers.insert("host", HeaderValue::from_static("attacker.example"));
+        assert!(public_websocket_url(&PublicWebsocketUrl::RequestHost, &headers).is_err());
+    }
+
+    #[test]
+    fn preserves_explicit_websocket_url() {
+        let headers = HeaderMap::new();
+        assert_eq!(
+            public_websocket_url(
+                &PublicWebsocketUrl::Static("wss://native.example/v1/connect".into()),
+                &headers,
+            )
+            .unwrap(),
+            "wss://native.example/v1/connect"
+        );
+    }
 }
