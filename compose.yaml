@@ -1,0 +1,58 @@
+# Browser build environment. Usage (from the repository root):
+#
+#   docker compose run --rm web sh -c 'python3 configure.py --release --pgo=off --lto=off && ninja web'
+#   docker compose up serve signaling   # http://127.0.0.1:8765/build/web/halo.html
+#
+# ./halo-web.sh runs all of this (build, serve, package for another machine).
+
+x-web: &web
+  build: docker/web
+  image: halo-web-build
+  user: "${HOST_UID:-1000}:${HOST_GID:-1000}"
+  # Least privilege: no capabilities, no privilege escalation (setuid), a
+  # read-only image; only /src, the Emscripten cache and /tmp are writable.
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  read_only: true
+  tmpfs:
+    - /tmp
+  volumes:
+    - .:/src
+    - emscripten-cache:/emsdk/upstream/emscripten/cache
+
+services:
+  web:
+    <<: *web
+    profiles: [tools]
+
+  serve:
+    <<: *web
+    command: python3 tools/web_serve.py --bind 0.0.0.0 --port 8765
+    # The server only reads: the repository is mounted read-only.
+    volumes:
+      - .:/src:ro
+    ports:
+      - "127.0.0.1:8765:8765"
+
+  # Online lobbies (services/signaling), simulated locally by wrangler dev.
+  # Only room setup (WebRTC offers) goes through it; game traffic is direct.
+  signaling:
+    build:
+      context: services/signaling
+      additional_contexts:
+        docker: docker/signaling
+      dockerfile: ../../docker/signaling/Dockerfile
+    image: halo-signaling
+    cap_drop: [ALL]
+    security_opt: [no-new-privileges:true]
+    environment:
+      ALLOWED_ORIGINS: ${HALO_ALLOWED_ORIGINS:-http://127.0.0.1:8765,http://localhost:8765}
+      PUBLIC_GAME_URL: ${HALO_PUBLIC_GAME_URL:-http://127.0.0.1:8765/build/web/halo.html}
+    volumes:
+      - signaling-data:/data
+    ports:
+      - "127.0.0.1:8787:8787"
+
+volumes:
+  emscripten-cache:
+  signaling-data:

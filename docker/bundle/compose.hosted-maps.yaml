@@ -1,0 +1,9 @@
+# Hosted maps: this machine serves the game data (bundle made with
+# ./halo-web.sh package --hosted-maps). The bundle has this file as
+# compose.override.yaml, which Compose loads with compose.yaml. The page
+# reads the maps from assets/maps next to it; see HALO_MAPS in .env.
+
+services:
+  web:
+    volumes:
+      - ${HALO_MAPS:-./maps}:/srv/build/web/assets/maps:ro
