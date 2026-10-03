@@ -19,9 +19,10 @@
     "TURN_ACTOR_HOURLY_EGRESS_CAP_BYTES": "1000000000",
     "TURN_GLOBAL_DAILY_EGRESS_CAP_BYTES": "10000000000",
     "DEFAULT_ROOM_CAPACITY": "128",
-    "MAX_ROOM_CAPACITY": "128"
-    // Set NATIVE_GATEWAY_CONTROL_URL after the separately isolated native
-    // gateway is deployed. NATIVE_GATEWAY_SECRET is a Wrangler secret.
+    "MAX_ROOM_CAPACITY": "128",
+    "NATIVE_GATEWAY_CONTROL_URL": "https://d2u8lg7djmkct8.cloudfront.net/v1/sessions"
+    // NATIVE_GATEWAY_SECRET is a Wrangler secret shared with the isolated
+    // native gateway through encrypted AWS SSM Parameter Store.
   },
   "triggers": {
     "crons": ["*/5 * * * *"]
