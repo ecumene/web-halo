@@ -1,0 +1,25 @@
+port/web/online_client.js
+  s_f22d08b6c8b199::t_19b5ccb5f2b408 1048-1054
+source/game/game.h
+  s_f22d08b6c8b199::t_769b2f82c83681 137-139
+source/game/game.c
+  s_f22d08b6c8b199::t_769b2f82c83681 365-367,785-791,798-805,927-931
+port/web/tests/online_client_turnstile_test.js
+  s_f22d08b6c8b199::t_19b5ccb5f2b408 71-72
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "7aaedf1ca18cd54889e101fd7beeedd1be8a92aa",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
