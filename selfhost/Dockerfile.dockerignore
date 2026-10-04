@@ -1,0 +1,11 @@
+# Used when building from a local clone (BuildKit reads <Dockerfile>.dockerignore).
+.git
+build
+dist
+assets
+**/node_modules
+**/.wrangler
+selfhost/data
+selfhost/iso
+*.iso
+*.xiso
