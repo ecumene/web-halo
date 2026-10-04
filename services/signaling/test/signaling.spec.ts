@@ -280,34 +280,6 @@ describe("signaling API", () => {
     });
   });
 
-  it("validates native links before contacting the isolated gateway", async () => {
-    const malformed = await exports.default.fetch(
-      jsonRequest("/v1/native/sessions", {
-        buildId: BUILD_ID,
-        identifier: "66778899aabb",
-        invite: "halo://join/not-a-capability",
-        protocolVersion: 1,
-      }),
-    );
-    expect(malformed.status).toBe(400);
-    expect(await malformed.json()).toMatchObject({
-      error: { code: "VALIDATION_FAILED" },
-    });
-
-    const valid = await exports.default.fetch(
-      jsonRequest("/v1/native/sessions", {
-        buildId: BUILD_ID,
-        identifier: "66778899aabb",
-        invite: "halo://join/1a3899f578c05489ed38e74a70b701ccfb184685d09c1cc1a96c7287751629b6",
-        protocolVersion: 1,
-      }),
-    );
-    expect(valid.status).toBe(503);
-    expect(await valid.json()).toMatchObject({
-      error: { code: "NATIVE_GATEWAY_UNAVAILABLE" },
-    });
-  });
-
   it("enforces build compatibility, unique identifiers, and capacity", async () => {
     const room = await createRoom();
 

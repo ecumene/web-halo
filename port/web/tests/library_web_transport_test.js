@@ -19,10 +19,6 @@ HEAPU8.set([2, 0, 0, 0, 0, 1], localIdentifierPointer);
 const calls = { states: [], received: [], removed: [] };
 global.Module = {
   _web_net_remote_local_identifier: () => localIdentifierPointer,
-  _web_net_remote_set_local_identifier: (pointer, length) => {
-    HEAPU8.set(HEAPU8.slice(pointer, pointer + length), localIdentifierPointer);
-    return 1;
-  },
   _web_net_remote_ingress_buffer: () => ingressPointer,
   _web_net_remote_ingress_capacity: () => 16396,
   _web_net_remote_add_peer: () => 0x01004064,
@@ -82,23 +78,6 @@ class FakePeerConnection {
   async getStats() { return new Map(); }
 }
 global.RTCPeerConnection = FakePeerConnection;
-
-class FakeWebSocket {
-  static OPEN = 1;
-  constructor(url, protocols) {
-    this.url = url;
-    this.protocols = protocols;
-    this.binaryType = '';
-    this.bufferedAmount = 0;
-    this.readyState = 0;
-    this.sent = [];
-    FakeWebSocket.last = this;
-  }
-  send(value) { this.sent.push(value); }
-  close() { this.readyState = 3; if (this.onclose) this.onclose({ reason: '' }); }
-  open() { this.readyState = FakeWebSocket.OPEN; if (this.onopen) this.onopen(); }
-}
-global.WebSocket = FakeWebSocket;
 
 global.HaloWebTransportRuntime = library.$HaloWebTransportRuntime;
 HaloWebTransportRuntime.install();
@@ -162,26 +141,6 @@ HaloWebTransportRuntime.install();
   assert.equal(HaloWebTransport.removePeer('friend'), true);
   await new Promise(resolve => setTimeout(resolve, 5));
   assert.deepEqual(calls.removed, [0x01004064]);
-
-  assert.equal(await HaloWebTransport.setLocalIdentifier('020000000009'), '020000000009');
-  const gatewayAdding = HaloWebTransport.addGatewayPeer({
-    peerId: 'native-host',
-    remoteIdentifier: '020000000008',
-    websocketUrl: 'wss://gateway.example/v1/connect',
-    ticket: 'A'.repeat(43),
-  });
-  const gatewayPeer = await gatewayAdding;
-  assert.equal(gatewayPeer.remoteIdentifier, '020000000008');
-  const gatewaySocket = FakeWebSocket.last;
-  assert.deepEqual(gatewaySocket.protocols,
-    ['halo-native-v1', 'ticket.' + 'A'.repeat(43)]);
-  gatewaySocket.open();
-  gatewaySocket.onmessage({ data: JSON.stringify({ type: 'ready', v: 1 }) });
-  assert(states.some(state => state.peerId === 'native-host' &&
-    state.state === 'connected' && state.detail === 'native-gateway'));
-  assert.equal(library.web_transport_send(0x01004064, 0, 512, outbound.length), 1);
-  assert.equal(gatewaySocket.sent.length, 1);
-  assert.equal(HaloWebTransport.removePeer('native-host'), true);
   console.log('library_web_transport tests passed');
 })().catch(error => {
   console.error(error);

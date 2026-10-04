@@ -46,11 +46,6 @@ Non-secret settings live in `wrangler.jsonc`:
 | `TURN_TTL_SECONDS` | TURN credential lifetime; default one hour, maximum two hours here |
 | `DEFAULT_ROOM_CAPACITY` | Capacity including the host; default 128 |
 | `MAX_ROOM_CAPACITY` | Hard capacity ceiling; 128 machines |
-| `NATIVE_GATEWAY_CONTROL_URL` | Optional private session-creation endpoint for the native-link gateway |
-
-`NATIVE_GATEWAY_SECRET` is a Wrangler secret shared only with the isolated
-native-link gateway. When either native-gateway setting is absent, native
-invites fail closed with `503`; ordinary browser rooms are unaffected.
 
 `wrangler types` generates `worker-configuration.d.ts` from this file. The only
 manual environment augmentation is the required room-signing secret and the two
@@ -64,17 +59,6 @@ Object:
 ```sh
 openssl rand -hex 32 | npx wrangler secret put ROOM_ID_SECRET
 ```
-
-After deploying the native-link gateway, configure its signed control plane:
-
-```sh
-openssl rand -hex 32 | npx wrangler secret put NATIVE_GATEWAY_SECRET
-```
-
-Set `NATIVE_GATEWAY_CONTROL_URL` to the gateway's HTTPS `/v1/sessions`
-endpoint in `wrangler.jsonc`. Browsers never receive that endpoint or secret;
-they receive only a one-use, origin-bound WebSocket ticket after the Worker
-has applied its existing ban, rate-limit, and Turnstile checks.
 
 The configured rate-limit bindings cap room creation at 20 per minute and
 session creation at 512 per minute for one connecting address in one Cloudflare

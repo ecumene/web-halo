@@ -1045,29 +1045,11 @@
   function parseInvite(value) {
     var text = String(value || "").trim();
     if (!text || text.length > 1024) throw new Error("Paste a valid invite link.");
-    var nativeInvite = /^halo:\/\/join\/([0-9a-fA-F]{64})$/.exec(text);
-    if (nativeInvite) {
-      return {
-        code: "halo://join/" + nativeInvite[1].toLowerCase(),
-        kind: "native",
-      };
-    }
     try {
       var url = new URL(text);
-      if (url.protocol.toLowerCase() === "halo:") {
-        if (url.hostname.toLowerCase() !== "join" ||
-            !/^\/[0-9a-fA-F]{64}$/.test(url.pathname)) {
-          throw new Error("That Halo invite link is not valid.");
-        }
-        return {
-          code: "halo://join/" + url.pathname.slice(1).toLowerCase(),
-          kind: "native",
-        };
-      }
       var fragment = new URLSearchParams(url.hash.replace(/^#/, ""));
       text = fragment.get("join") || "";
     } catch (error) {
-      if (error && error.message === "That Halo invite link is not valid.") throw error;
       /* A room code is expected not to be a URL. */
     }
     try {
@@ -1085,7 +1067,7 @@
         !/^[A-Za-z0-9_-]{16,256}$/.test(ticket)) {
       throw new Error("That invite link is not valid.");
     }
-    return { code: text, kind: "web", roomId: roomId, ticket: ticket };
+    return { code: text, roomId: roomId, ticket: ticket };
   }
 
   function takeInviteFromLocation() {
@@ -1355,14 +1337,7 @@
     session.peerStates.set(event.peerId, event.state);
     updateAggregateTransportState();
     if (event.state === "connected") {
-      if (event.detail === "native-gateway") {
-        session.connectionPath = "gateway";
-        syncTelemetryContext();
-        telemetry("transport_connected", "native-gateway");
-        elements.detail.textContent = "Connected to a native Halo host";
-      } else {
-        determineConnectionPath(event.peerId);
-      }
+      determineConnectionPath(event.peerId);
       if (session.role === "guest" && !session.gameCommandIssued) {
         try {
           applyPlayerCustomization(session.profile);
@@ -1381,8 +1356,7 @@
         }, 700);
       }
     } else if (event.state === "connecting" && session.role === "guest") {
-      setStatus(event.detail === "native-gateway" ?
-        "Reaching the native Halo host…" : "Connecting directly to your friend…");
+      setStatus("Connecting directly to your friend…");
     } else if (event.state === "failed" && session.role === "guest") {
       fail(new Error(event.detail || "Could not connect to the host."));
     }
@@ -1644,75 +1618,6 @@
     });
   }
 
-  async function createNativeSession(invite, turnstileToken) {
-    var body = {
-      protocolVersion: PROTOCOL_VERSION,
-      buildId: buildId(),
-      identifier: localIdentifier(),
-      invite: invite,
-    };
-    if (turnstileToken) body.turnstileToken = turnstileToken;
-    return fetchJson("/v1/native/sessions", {
-      method: "POST",
-      body: JSON.stringify(body),
-    });
-  }
-
-  function validateNativeSessionResponse(result) {
-    var descriptor = result && result.session;
-    if (!result || result.v !== PROTOCOL_VERSION || result.kind !== "native" ||
-        !descriptor || typeof descriptor.peerId !== "string" ||
-        !/^[0-9a-f]{12}$/.test(descriptor.localIdentifier || "") ||
-        !/^[0-9a-f]{12}$/.test(descriptor.remoteIdentifier || "") ||
-        !/^wss:\/\//i.test(descriptor.websocketUrl || "") ||
-        !/^[A-Za-z0-9_-]{32,128}$/.test(descriptor.ticket || "")) {
-      throw new Error("The native gateway returned an incomplete response.");
-    }
-  }
-
-  async function connectNativeInvite(invite, turnstileToken, operation) {
-    var result = await createNativeSession(invite.code, turnstileToken);
-    requireCurrentOperation(operation);
-    validateNativeSessionResponse(result);
-    var descriptor = result.session;
-    await transport().setLocalIdentifier(descriptor.localIdentifier);
-    session.room = { id: "native" };
-    session.roomTicket = null;
-    session.selfPeerId = "native-self-" + descriptor.localIdentifier;
-    session.connectionPath = "gateway";
-    syncTelemetryContext();
-    updateLocalRoster();
-    session.roster.set(descriptor.peerId, {
-      peerId: descriptor.peerId,
-      profile: null,
-      role: "host",
-    });
-    renderRoster();
-    configureTransport([]);
-    var adding = transport().addGatewayPeer({
-      peerId: descriptor.peerId,
-      remoteIdentifier: descriptor.remoteIdentifier,
-      ticket: descriptor.ticket,
-      websocketUrl: descriptor.websocketUrl,
-    });
-    session.peerIdentifiers.set(descriptor.peerId, descriptor.remoteIdentifier);
-    session.peerPromises.set(descriptor.peerId, adding);
-    session.peerAliases.set(descriptor.peerId, descriptor.peerId);
-    try {
-      await adding;
-      requireCurrentOperation(operation);
-    } catch (error) {
-      if (session.peerPromises.get(descriptor.peerId) === adding) {
-        session.peerPromises.delete(descriptor.peerId);
-        session.peerIdentifiers.delete(descriptor.peerId);
-        session.peerAliases.delete(descriptor.peerId);
-      }
-      throw error;
-    }
-    setGameTransportState(TRANSPORT_STATE.CONNECTING);
-    setStatus("Invite accepted. Reaching the native host…");
-  }
-
   function scheduleReconnect() {
     if (!session.active || session.closing || session.reconnectTimer) return;
     var operation = session.operationGeneration;
@@ -1874,8 +1779,8 @@
     session.role = "guest";
     syncTelemetryContext();
     session.closing = false;
-    session.room = invite.kind === "native" ? { id: "native" } : { id: invite.roomId };
-    session.roomTicket = invite.kind === "native" ? null : invite.ticket;
+    session.room = { id: invite.roomId };
+    session.roomTicket = invite.ticket;
     session.profile = profile;
     writePlayerProfile(profile);
     showDialog();
@@ -1884,10 +1789,6 @@
     setHeader("Joining friend…", "waiting");
     setStatus("Opening your friend's private room…");
     try {
-      if (invite.kind === "native") {
-        await connectNativeInvite(invite, turnstileToken, operation);
-        return;
-      }
       var result = await createSession(invite.ticket, turnstileToken);
       requireCurrentOperation(operation);
       validateRoomResponse(result);

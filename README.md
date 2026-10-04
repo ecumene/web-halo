@@ -77,15 +77,6 @@ To play with friends:
 3. Each friend opens the link and Halo joins the lobby automatically. The host
    starts the game when everyone is ready.
 
-Current Windows and Linux builds also create native
-`halo://join/<capability>` invites. The browser's **Join game** box accepts
-that exact link, so one Windows/Linux host can invite browser, Windows, and
-Linux players with a single capability. Native players open it normally;
-browser players paste it into the website after choosing their name and armor
-color. The isolated gateway under
-[`services/native-gateway`](services/native-gateway/README.md) speaks the
-current upstream `hceu/3` protocol without exposing a general UDP proxy.
-
 Audio starts muted. Everyone needs a current desktop browser with WebGL 2,
 WebAssembly threads, WebRTC, and cross-origin isolation support.
 

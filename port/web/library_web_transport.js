@@ -75,31 +75,6 @@ addToLibrary({
         HEAPU8.slice(pointer, pointer + 6));
     },
 
-    setLocalIdentifier: async function(value) {
-      var runtime = HaloWebTransportRuntime;
-      var identifier = runtime.identifierBytes(value);
-      if (!runtime.registrationChain ||
-          typeof runtime.registrationChain.then !== 'function') {
-        runtime.registrationChain = Promise.resolve();
-      }
-      var operation = runtime.registrationChain.then(function() {
-        return runtime.callWhenUnlocked(function() {
-          var ingress = runtime.moduleFunction('web_net_remote_ingress_buffer')();
-          HEAPU8.set(identifier, ingress);
-          return runtime.moduleFunction('web_net_remote_set_local_identifier')(
-            ingress, identifier.length) ? runtime.identifierText(identifier) : 0;
-        });
-      });
-      runtime.registrationChain = operation.catch(function() {});
-      try {
-        return await operation;
-      } catch (error) {
-        throw new Error('Halo could not adopt the native gateway identity', {
-          cause: error,
-        });
-      }
-    },
-
     callWhenUnlocked: async function(fn, timeoutMilliseconds) {
       var deadline = performance.now() + (timeoutMilliseconds || 5000);
       for (;;) {
@@ -203,16 +178,7 @@ addToLibrary({
         channel.bufferedAmount <= highWater;
     },
 
-    gatewayWriteable: function(record, highWater) {
-      return !!record.gatewaySocket && record.gatewayReady &&
-        record.gatewaySocket.readyState === WebSocket.OPEN &&
-        record.gatewaySocket.bufferedAmount <= highWater;
-    },
-
     channelsReady: function(record) {
-      if (record.gatewaySocket) {
-        return record.gatewayReady && record.gatewaySocket.readyState === WebSocket.OPEN;
-      }
       return !!record.reliable && record.reliable.readyState === 'open' &&
         !!record.unreliable && record.unreliable.readyState === 'open';
     },
@@ -230,12 +196,10 @@ addToLibrary({
       if (!record || record.removed) return;
       var runtime = HaloWebTransportRuntime;
       var connected = runtime.channelsReady(record);
-      var reliableWriteable = connected && (record.gatewaySocket ?
-        runtime.gatewayWriteable(record, runtime.RELIABLE_HIGH_WATER) :
-        runtime.channelWriteable(record.reliable, runtime.RELIABLE_HIGH_WATER));
-      var unreliableWriteable = connected && (record.gatewaySocket ?
-        runtime.gatewayWriteable(record, runtime.UNRELIABLE_HIGH_WATER) :
-        runtime.channelWriteable(record.unreliable, runtime.UNRELIABLE_HIGH_WATER));
+      var reliableWriteable = connected && runtime.channelWriteable(
+        record.reliable, runtime.RELIABLE_HIGH_WATER);
+      var unreliableWriteable = connected && runtime.channelWriteable(
+        record.unreliable, runtime.UNRELIABLE_HIGH_WATER);
       var result;
       try {
         result = runtime.moduleFunction('web_net_remote_set_peer_state')(
@@ -252,8 +216,7 @@ addToLibrary({
       }
       record.needsStateSync = false;
       if (result < 0) return;
-      if (connected) runtime.emitState(record, 'connected',
-        record.gatewaySocket ? 'native-gateway' : null);
+      if (connected) runtime.emitState(record, 'connected');
     },
 
     configureChannel: function(record, channel, reliable) {
@@ -339,105 +302,6 @@ addToLibrary({
         record.unreliableQueuedBytes += bytes.byteLength;
       }
       runtime.schedulePump(0);
-    },
-
-    addGatewayPeer: async function(options) {
-      var runtime = HaloWebTransportRuntime;
-      if (!options || typeof options.peerId !== 'string' || !options.peerId ||
-          options.peerId.length > 128) {
-        throw new TypeError('peerId must be a non-empty string of at most 128 characters');
-      }
-      if (runtime.peersById.has(options.peerId)) {
-        throw new Error('Peer already exists: ' + options.peerId);
-      }
-      if (typeof options.websocketUrl !== 'string' ||
-          !/^wss:\/\//i.test(options.websocketUrl)) {
-        throw new TypeError('websocketUrl must be an encrypted WebSocket URL');
-      }
-      if (typeof options.ticket !== 'string' ||
-          !/^[A-Za-z0-9_-]{32,128}$/.test(options.ticket)) {
-        throw new TypeError('ticket is malformed');
-      }
-      var identifier = runtime.identifierBytes(options.remoteIdentifier);
-      if (runtime.identifierText(identifier) === runtime.localIdentifier()) {
-        throw new Error('Cannot connect this browser to itself');
-      }
-      var address = await runtime.registerPeer(identifier);
-      if (!address) throw new Error('No virtual peer addresses are available');
-      if (runtime.peersByAddress.has(address)) {
-        await runtime.removePeerFromWasm(address);
-        throw new Error('A virtual peer address is already in use');
-      }
-      var socket;
-      try {
-        socket = new WebSocket(options.websocketUrl,
-          ['halo-native-v1', 'ticket.' + options.ticket]);
-      } catch (error) {
-        await runtime.removePeerFromWasm(address);
-        throw error;
-      }
-      socket.binaryType = 'arraybuffer';
-      var record = {
-        peerId: options.peerId,
-        identifier: runtime.identifierText(identifier),
-        address: address,
-        addressText: runtime.addressText(address),
-        pc: null,
-        gatewaySocket: socket,
-        gatewayReady: false,
-        reliable: null,
-        unreliable: null,
-        reliableQueue: [],
-        unreliableQueue: [],
-        reliableQueuedBytes: 0,
-        unreliableQueuedBytes: 0,
-        droppedDatagrams: 0,
-        needsStateSync: true,
-        lastPublicState: null,
-        removed: false,
-      };
-      runtime.peersById.set(record.peerId, record);
-      runtime.peersByAddress.set(record.address, record);
-      socket.onopen = function() {
-        if (!record.removed) runtime.emitState(record, 'connecting', 'native-gateway');
-      };
-      socket.onmessage = function(event) {
-        if (record.removed) return;
-        if (typeof event.data === 'string') {
-          var control;
-          try { control = JSON.parse(event.data); } catch (error) {
-            runtime.failPeer(record, new Error('Native gateway sent invalid control data'));
-            return;
-          }
-          if (control && control.type === 'ready' && control.v === 1) {
-            record.gatewayReady = true;
-            record.needsStateSync = true;
-            runtime.syncPeerState(record);
-            runtime.schedulePump(0);
-          } else if (control && control.type === 'error') {
-            runtime.failPeer(record, new Error(control.message || 'Native gateway failed'));
-          }
-          return;
-        }
-        runtime.receiveChannelMessage(record,
-          event.data instanceof ArrayBuffer && new Uint8Array(event.data)[2] !== 1,
-          event.data);
-      };
-      socket.onerror = function() {
-        runtime.reportError(record, new Error('Native gateway WebSocket failed'));
-      };
-      socket.onclose = function(event) {
-        if (!record.removed) {
-          runtime.failPeer(record, new Error(
-            event.reason || 'Native gateway connection closed'));
-        }
-      };
-      runtime.emitState(record, 'connecting', 'native-gateway');
-      return {
-        peerId: record.peerId,
-        address: record.addressText,
-        remoteIdentifier: record.identifier,
-      };
     },
 
     deliverOne: function(record, reliable) {
@@ -683,10 +547,9 @@ addToLibrary({
       var record = runtime.peersById.get(peerId);
       if (!record || record.removed) return false;
       record.removed = true;
-      if (record.gatewaySocket) record.gatewaySocket.close(1000, 'left game');
       if (record.reliable) record.reliable.close();
       if (record.unreliable) record.unreliable.close();
-      if (record.pc) record.pc.close();
+      record.pc.close();
       runtime.peersById.delete(peerId);
       if (runtime.peersByAddress.get(record.address) === record) {
         runtime.peersByAddress.delete(record.address);
@@ -700,26 +563,6 @@ addToLibrary({
       var runtime = HaloWebTransportRuntime;
       var record = runtime.peersByAddress.get(runtime.normalizeAddress(address));
       if (!record || record.removed || length < 12 || length > 16396) return 0;
-      if (record.gatewaySocket) {
-        var gatewayHighWater = reliable ? runtime.RELIABLE_HIGH_WATER :
-          runtime.UNRELIABLE_HIGH_WATER;
-        if (!runtime.gatewayWriteable(record, gatewayHighWater)) {
-          record.needsStateSync = true;
-          runtime.schedulePump(1);
-          return 0;
-        }
-        try {
-          record.gatewaySocket.send(HEAPU8.slice(pointer, pointer + length));
-          if (record.gatewaySocket.bufferedAmount > gatewayHighWater) {
-            record.needsStateSync = true;
-            runtime.schedulePump(1);
-          }
-          return 1;
-        } catch (error) {
-          runtime.reportError(record, error);
-          return 0;
-        }
-      }
       var channel = reliable ? record.reliable : record.unreliable;
       var highWater = reliable ? runtime.RELIABLE_HIGH_WATER :
         runtime.UNRELIABLE_HIGH_WATER;
@@ -756,9 +599,7 @@ addToLibrary({
           if (options.onError !== undefined) runtime.options.onError = options.onError;
         },
         getLocalIdentifier: function() { return runtime.localIdentifier(); },
-        setLocalIdentifier: function(value) { return runtime.setLocalIdentifier(value); },
         addPeer: function(options) { return runtime.addPeer(options); },
-        addGatewayPeer: function(options) { return runtime.addGatewayPeer(options); },
         handleSignal: function(peerId, signal) { return runtime.handleSignal(peerId, signal); },
         restartIce: function(peerId) { return runtime.restartIce(peerId); },
         removePeer: function(peerId) { return runtime.removePeer(peerId); },
@@ -780,7 +621,7 @@ addToLibrary({
         getStats: async function(peerId) {
           var record = runtime.peersById.get(peerId);
           if (!record || record.removed) throw new Error('Unknown peer: ' + peerId);
-          return record.pc ? record.pc.getStats() : new Map();
+          return record.pc.getStats();
         },
         isSupported: function() { return typeof RTCPeerConnection === 'function'; },
       });

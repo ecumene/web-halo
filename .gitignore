@@ -9,7 +9,6 @@ __pycache__
 
 # Build files
 build/
-target/
 projects/
 .ninja_*
 build.ninja
