@@ -1,0 +1,31 @@
+port/web/tests/online_client_turnstile_test.js
+  s_f22d08b6c8b199::t_8269149b1fbfe2 112,114
+port/web/library_web_transport.js
+  s_f22d08b6c8b199::t_d73894e3ea8719 199-202,219,552,624
+port/web/online_client.js
+  s_f22d08b6c8b199::t_c1cf773beae223 1077,1347,1366,1789-1790
+port/web/shell.html
+  s_f22d08b6c8b199::t_49fd9b75a0397a 1771
+port/web/src/web_loopback_net.c
+  s_f22d08b6c8b199::t_180c2afd6c2add 1672,1751
+services/signaling/worker-configuration.d.ts
+  s_f22d08b6c8b199::t_005bd59f9f8a5e 2,38
+services/signaling/wrangler.jsonc
+  s_f22d08b6c8b199::t_475df61f61fbd0 22
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "528ba7180c68a7f7e7bf732e870e681dab7853ed",
+  "prompts": {},
+  "sessions": {
+    "s_f22d08b6c8b199": {
+      "agent_id": {
+        "tool": "codex",
+        "id": "01a0e8b0-b1ec-7102-b6d0-61553656454c",
+        "model": "gpt-5.6-sol"
+      },
+      "human_author": "Mitchell Hynes <mitch@spellbook.legal>"
+    }
+  }
+}
