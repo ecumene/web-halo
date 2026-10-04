@@ -880,11 +880,7 @@ DWORD WSAAPI XNetGetTitleXnAddr(XNADDR *address)
 	memset(address, 0, sizeof(*address));
 	address->bSizeOfStruct = sizeof(*address);
 	address->ina.s_addr = ip;
-#ifdef HALO_WEB
-	web_net_local_identifier(address->abEnet, sizeof(address->abEnet));
-#else
 	memcpy(address->abEnet, p2p_identifier(), sizeof(address->abEnet));
-#endif
 	return ip ? (XNET_GET_XNADDR_ETHERNET | XNET_GET_XNADDR_DHCP) : XNET_GET_XNADDR_ETHERNET;
 }
 

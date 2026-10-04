@@ -222,21 +222,11 @@ static void test_backpressure_flush(unsigned long peer)
 
 int main(void)
 {
-	unsigned char gateway_identifier[6] = { 2, 0, 0, 0, 0, 9 };
-	unsigned char local_identifier[6];
 	unsigned char remote_identifier[6] = { 2, 0, 0, 0, 0, 2 };
 	unsigned long peer;
 
-	assert(web_net_local_identifier(local_identifier, sizeof(local_identifier)) == 1);
-	assert(local_identifier[5] == 1);
-	assert(web_net_remote_set_local_identifier(gateway_identifier,
-		sizeof(gateway_identifier)) == 1);
-	assert(web_net_local_identifier(local_identifier, sizeof(local_identifier)) == 1);
-	assert(!memcmp(local_identifier, gateway_identifier, sizeof(local_identifier)));
 	test_local_loopback();
 	peer = add_remote_peer(remote_identifier);
-	assert(web_net_remote_set_local_identifier(gateway_identifier,
-		sizeof(gateway_identifier)) == 0);
 	test_remote_datagrams(peer);
 	test_remote_streams(peer);
 	test_backpressure_flush(peer);

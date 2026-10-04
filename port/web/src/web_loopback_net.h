@@ -38,8 +38,6 @@ int web_net_select(int *read, int *read_count, int *write, int *write_count,
 /* A peer's six-byte XNADDR identifier maps to its browser-local virtual
 address.  xnet.c uses this when resolving an advertised system-link game. */
 int web_net_peer_address(const unsigned char *identifier, unsigned long *address);
-/* Copies the identifier this browser build advertises in XNADDR. */
-int web_net_local_identifier(void *identifier, int identifier_length);
 
 /* WebRTC bridge exports.  The JavaScript adapter calls these through the
 Emscripten Module object.  Mutating calls return zero when the socket lock is
@@ -50,7 +48,6 @@ int web_net_remote_remove_peer(unsigned long address);
 int web_net_remote_set_peer_state(unsigned long address, int connected,
 	int reliable_writeable, int unreliable_writeable);
 const void *web_net_remote_local_identifier(void);
-int web_net_remote_set_local_identifier(const void *identifier, int identifier_length);
 void *web_net_remote_ingress_buffer(void);
 int web_net_remote_ingress_capacity(void);
 /* 1: consumed, 0: retry later, -1: malformed/fatal protocol input. */

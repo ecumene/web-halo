@@ -133,8 +133,6 @@ struct web_outbound_frame
 
 static struct web_socket web_sockets[WEB_NET_MAXIMUM_SOCKETS];
 static struct web_remote_peer web_remote_peers[WEB_NET_MAXIMUM_REMOTE_PEERS];
-static unsigned char web_local_identifier[WEB_NET_IDENTIFIER_SIZE];
-static int web_has_local_identifier;
 static pthread_mutex_t web_sockets_mutex = PTHREAD_MUTEX_INITIALIZER;
 static pthread_cond_t web_sockets_condition = PTHREAD_COND_INITIALIZER;
 static pthread_mutex_t web_outbound_flush_mutex = PTHREAD_MUTEX_INITIALIZER;
@@ -1637,21 +1635,6 @@ int web_net_peer_address(const unsigned char *identifier, unsigned long *address
 	return found;
 }
 
-int web_net_local_identifier(void *identifier, int identifier_length)
-{
-	if (!identifier || identifier_length != WEB_NET_IDENTIFIER_SIZE)
-		return 0;
-	pthread_mutex_lock(&web_sockets_mutex);
-	if (!web_has_local_identifier)
-	{
-		memcpy(web_local_identifier, p2p_identifier(), WEB_NET_IDENTIFIER_SIZE);
-		web_has_local_identifier = 1;
-	}
-	memcpy(identifier, web_local_identifier, WEB_NET_IDENTIFIER_SIZE);
-	pthread_mutex_unlock(&web_sockets_mutex);
-	return 1;
-}
-
 EMSCRIPTEN_KEEPALIVE unsigned long web_net_remote_add_peer(
 	const void *identifier, int identifier_length)
 {
@@ -1686,12 +1669,7 @@ EMSCRIPTEN_KEEPALIVE unsigned long web_net_remote_add_peer(
 	free_peer->address = htonl(0x64400001u + (unsigned int)index);
 	/* Each direction gets one parity of connection IDs, preventing the two
 	ends from colliding when both open a stream at the same time. */
-	if (!web_has_local_identifier)
-	{
-		memcpy(web_local_identifier, p2p_identifier(), WEB_NET_IDENTIFIER_SIZE);
-		web_has_local_identifier = 1;
-	}
-	local_identifier = web_local_identifier;
+	local_identifier = p2p_identifier();
 	free_peer->next_connection =
 		memcmp(local_identifier, bytes, WEB_NET_IDENTIFIER_SIZE) < 0 ? 0 : 1;
 	result = free_peer->address;
@@ -1770,36 +1748,7 @@ EMSCRIPTEN_KEEPALIVE int web_net_remote_set_peer_state(unsigned long address,
 
 EMSCRIPTEN_KEEPALIVE const void *web_net_remote_local_identifier(void)
 {
-	if (!web_has_local_identifier)
-		web_net_local_identifier(web_local_identifier, sizeof(web_local_identifier));
-	return web_local_identifier;
-}
-
-EMSCRIPTEN_KEEPALIVE int web_net_remote_set_local_identifier(
-	const void *identifier, int identifier_length)
-{
-	int index;
-
-	if (!identifier || identifier_length != WEB_NET_IDENTIFIER_SIZE)
-		return 0;
-	pthread_mutex_lock(&web_sockets_mutex);
-	for (index = 0; index < WEB_NET_MAXIMUM_REMOTE_PEERS; index++)
-	{
-		if (web_remote_peers[index].used)
-		{
-			pthread_mutex_unlock(&web_sockets_mutex);
-			return 0;
-		}
-	}
-	if ((((const unsigned char *)identifier)[0] & 3) != 2)
-	{
-		pthread_mutex_unlock(&web_sockets_mutex);
-		return 0;
-	}
-	memcpy(web_local_identifier, identifier, WEB_NET_IDENTIFIER_SIZE);
-	web_has_local_identifier = 1;
-	pthread_mutex_unlock(&web_sockets_mutex);
-	return 1;
+	return p2p_identifier();
 }
 
 EMSCRIPTEN_KEEPALIVE void *web_net_remote_ingress_buffer(void)

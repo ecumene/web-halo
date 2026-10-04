@@ -68,8 +68,6 @@ const removedWidgets = [];
 const resetWidgets = [];
 let nextWidgetId = 1;
 const requestBodies = [];
-const nativeInvite = 'halo://join/' + '8f60f64f5fb2cda7043454e4aecd305d' +
-  '07153f6367a2d644d0737f1a46565982';
 
 const context = {
   console,
@@ -112,9 +110,9 @@ const context = {
     setItem() {},
   },
   location: {
-    hash: '#join=' + encodeURIComponent(nativeInvite),
+    hash: '#join=room.1234567890abcdef',
     hostname: 'halo.example',
-    href: 'https://halo.example/halo.html#join=' + encodeURIComponent(nativeInvite),
+    href: 'https://halo.example/halo.html#join=room.1234567890abcdef',
     origin: 'https://halo.example',
     pathname: '/halo.html',
     port: '',
@@ -181,7 +179,6 @@ async function settle() {
   await settle();
   assert.equal(requestBodies.length, 1);
   assert.equal(requestBodies[0].turnstileToken, 'first-token');
-  assert.equal(requestBodies[0].invite, nativeInvite);
   assert.equal(elements['online-dialog'].dataset.view, 'join',
     'a rejected token keeps the invite ready for another attempt');
   assert.equal(elements['online-human-verification'].dataset.state, 'error');

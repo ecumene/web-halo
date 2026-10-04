@@ -53,10 +53,7 @@ export type {
 const ROOM_ROUTE = /^\/v1\/rooms\/([^/]+)$/u;
 const SESSION_ROUTE = /^\/v1\/rooms\/([^/]+)\/sessions$/u;
 const WEBSOCKET_ROUTE = /^\/v1\/rooms\/([^/]+)\/ws$/u;
-const NATIVE_SESSION_ROUTE = "/v1/native/sessions";
 const ADMIN_BAN_ROUTE = /^\/v1\/admin\/bans\/([0-9a-f]{32})$/u;
-const NATIVE_INVITE_PATTERN = /^halo:\/\/join\/([0-9a-f]{64})$/u;
-const IDENTIFIER_PATTERN = /^[0-9a-f]{12}$/u;
 const MINIMUM_ROOM_CAPACITY = 2;
 const MAXIMUM_ROOM_CAPACITY = 128;
 const PRESENCE_SESSION_ID_PATTERN =
@@ -189,156 +186,6 @@ function parsePresenceHeartbeat(value: unknown): {
     throw new HttpError(400, "VALIDATION_FAILED", "campaign must be a boolean.");
   }
   return { campaign: record.campaign, sessionId: record.sessionId };
-}
-
-function parseNativeSessionInput(value: unknown): {
-  buildId: string;
-  identifier: string;
-  invite: string;
-  protocolVersion: number;
-  turnstileToken?: string;
-} {
-  if (typeof value !== "object" || value === null || Array.isArray(value)) {
-    throw new HttpError(400, "VALIDATION_FAILED", "Body must be a JSON object.");
-  }
-  const record = value as Record<string, unknown>;
-  if (
-    typeof record.invite !== "string" ||
-    record.invite !== record.invite.toLowerCase() ||
-    !NATIVE_INVITE_PATTERN.test(record.invite)
-  ) {
-    throw new HttpError(400, "VALIDATION_FAILED", "invite must be a native halo://join link.");
-  }
-  if (typeof record.identifier !== "string" || !IDENTIFIER_PATTERN.test(record.identifier)) {
-    throw new HttpError(400, "VALIDATION_FAILED", "identifier must be 12 lowercase hexadecimal characters.");
-  }
-  if (typeof record.buildId !== "string" || record.buildId.length < 1 || record.buildId.length > 128) {
-    throw new HttpError(400, "VALIDATION_FAILED", "buildId is malformed.");
-  }
-  if (record.protocolVersion !== SIGNALING_PROTOCOL_VERSION) {
-    throw new HttpError(409, "PROTOCOL_MISMATCH", "This browser build is not compatible with the gateway.");
-  }
-  if (record.turnstileToken !== undefined && (
-    typeof record.turnstileToken !== "string" ||
-    record.turnstileToken.length < 1 ||
-    record.turnstileToken.length > 4096
-  )) {
-    throw new HttpError(400, "VALIDATION_FAILED", "turnstileToken is malformed.");
-  }
-  return {
-    buildId: record.buildId,
-    identifier: record.identifier,
-    invite: record.invite,
-    protocolVersion: record.protocolVersion,
-    ...(typeof record.turnstileToken === "string" ? { turnstileToken: record.turnstileToken } : {}),
-  };
-}
-
-function base64Url(bytes: Uint8Array): string {
-  let binary = "";
-  for (const byte of bytes) binary += String.fromCharCode(byte);
-  return btoa(binary).replace(/\+/gu, "-").replace(/\//gu, "_").replace(/=+$/gu, "");
-}
-
-async function gatewaySignature(secret: string, value: string): Promise<string> {
-  const key = await crypto.subtle.importKey(
-    "raw",
-    new TextEncoder().encode(secret),
-    { hash: "SHA-256", name: "HMAC" },
-    false,
-    ["sign"],
-  );
-  return base64Url(new Uint8Array(await crypto.subtle.sign("HMAC", key, new TextEncoder().encode(value))));
-}
-
-async function createNativeSession(
-  request: Request,
-  env: RuntimeEnv,
-  origin: string | null,
-): Promise<Response> {
-  const input = parseNativeSessionInput(await readJsonBody(request));
-  const actorId = await requireAllowedActor(request, env);
-  const verificationId = await verificationIdFor(request, input.identifier, env);
-  try {
-    await requireHumanVerification(request, env, verificationId, input.turnstileToken, "join_room");
-  } catch {
-    throw new HttpError(403, "TURNSTILE_REJECTED", "Complete the human verification and try again.");
-  }
-
-  const endpoint = env.NATIVE_GATEWAY_CONTROL_URL;
-  const secret = env.NATIVE_GATEWAY_SECRET;
-  if (!endpoint || !secret || secret.length < 32) {
-    throw new HttpError(503, "NATIVE_GATEWAY_UNAVAILABLE", "Native game joining is temporarily unavailable.");
-  }
-  const requestId = crypto.randomUUID();
-  const timestamp = String(Date.now());
-  const body = JSON.stringify({
-    actorId,
-    identifier: input.identifier,
-    invite: input.invite,
-    origin,
-    requestId,
-  });
-  const signature = await gatewaySignature(secret, `${timestamp}\n${requestId}\n${body}`);
-  let gatewayResponse: Response;
-  try {
-    gatewayResponse = await fetch(endpoint, {
-      body,
-      headers: {
-        "Content-Type": "application/json",
-        "X-Halo-Request-Id": requestId,
-        "X-Halo-Signature": signature,
-        "X-Halo-Timestamp": timestamp,
-      },
-      method: "POST",
-    });
-  } catch {
-    throw new HttpError(503, "NATIVE_GATEWAY_UNAVAILABLE", "Native game joining is temporarily unavailable.");
-  }
-  if (!gatewayResponse.ok) {
-    console.warn(JSON.stringify({ message: "native gateway rejected session", requestId, status: gatewayResponse.status }));
-    throw new HttpError(
-      gatewayResponse.status === 429 ? 429 : 503,
-      gatewayResponse.status === 429 ? "RATE_LIMITED" : "NATIVE_GATEWAY_UNAVAILABLE",
-      gatewayResponse.status === 429 ?
-        "Too many native joins. Please wait a minute and try again." :
-        "Native game joining is temporarily unavailable.",
-    );
-  }
-  const value: unknown = await gatewayResponse.json();
-  if (typeof value !== "object" || value === null || Array.isArray(value)) {
-    throw new HttpError(502, "NATIVE_GATEWAY_INVALID_RESPONSE", "The native gateway returned an invalid response.");
-  }
-  const result = value as Record<string, unknown>;
-  if (
-    typeof result.peerId !== "string" || result.peerId.length < 1 || result.peerId.length > 128 ||
-    typeof result.localIdentifier !== "string" || !IDENTIFIER_PATTERN.test(result.localIdentifier) ||
-    typeof result.remoteIdentifier !== "string" || !IDENTIFIER_PATTERN.test(result.remoteIdentifier) ||
-    typeof result.ticket !== "string" || !/^[A-Za-z0-9_-]{32,128}$/u.test(result.ticket) ||
-    typeof result.websocketUrl !== "string"
-  ) {
-    throw new HttpError(502, "NATIVE_GATEWAY_INVALID_RESPONSE", "The native gateway returned an invalid response.");
-  }
-  let websocketUrlValue: URL;
-  try {
-    websocketUrlValue = new URL(result.websocketUrl);
-  } catch {
-    throw new HttpError(502, "NATIVE_GATEWAY_INVALID_RESPONSE", "The native gateway returned an invalid response.");
-  }
-  if (websocketUrlValue.protocol !== "wss:") {
-    throw new HttpError(502, "NATIVE_GATEWAY_INVALID_RESPONSE", "The native gateway must use an encrypted connection.");
-  }
-  return withCors(jsonResponse({
-    kind: "native",
-    session: {
-      peerId: result.peerId,
-      localIdentifier: result.localIdentifier,
-      remoteIdentifier: result.remoteIdentifier,
-      ticket: result.ticket,
-      websocketUrl: websocketUrlValue.toString(),
-    },
-    v: SIGNALING_PROTOCOL_VERSION,
-  }, 201), origin);
 }
 
 async function handleAdminRequest(
@@ -848,10 +695,6 @@ async function route(request: Request, env: RuntimeEnv): Promise<Response> {
     await requireRateLimit(env.ROOM_CREATE_LIMITER, request, "room-create");
     await requireRateLimit(env.TURN_ISSUE_LIMITER, request, "turn-issue");
     return createRoom(request, env, origin);
-  }
-  if (request.method === "POST" && url.pathname === NATIVE_SESSION_ROUTE) {
-    await requireRateLimit(env.SESSION_CREATE_LIMITER, request, "native-session-create");
-    return createNativeSession(request, env, origin);
   }
   if (request.method === "POST" && url.pathname === "/v1/presence") {
     await requireRateLimit(env.SESSION_CREATE_LIMITER, request, "presence-heartbeat");

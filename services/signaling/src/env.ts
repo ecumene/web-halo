@@ -12,8 +12,6 @@ export type RuntimeEnv = Omit<Env, "ALLOW_NO_ORIGIN" | "ENVIRONMENT"> & {
   ALLOW_NO_ORIGIN: string;
   ENVIRONMENT: string;
   ROOM_ID_SECRET: string;
-  NATIVE_GATEWAY_CONTROL_URL?: string;
-  NATIVE_GATEWAY_SECRET?: string;
   TURN_KEY_ID?: string;
   TURN_KEY_SECRET?: string;
   TURNSTILE_SECRET: string;
