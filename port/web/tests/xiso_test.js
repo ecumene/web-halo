@@ -13,6 +13,8 @@ const wrangler = fs.readFileSync(path.join(repository, 'services', 'web', 'wrang
 
 assert.match(shell, /id="xiso-dialog"[\s\S]*comply with copyright law[\s\S]*does not provide Halo game data[\s\S]*discord\.gg\/DQRgPUq6B8/,
   'the first-run gate must explain the lawful local-disc requirement');
+assert.match(shell, /Independent website[\s\S]*not part of, operated by, or supported by[\s\S]*halocombatevolved\.com/,
+  'the XISO gate must clearly distinguish this website from OpenCE');
 assert.doesNotMatch(shell, /Your game · your device|The XISO never leaves this device/,
   'the first-run gate must stay compact');
 assert.doesNotMatch(shell, /i am mitch|activateLegacyBrowserFlow|halo-legacy-map-url/,

@@ -1287,6 +1287,13 @@
     }
     .xiso-card p { margin: 0; color: #aac0ce; font-size: .75rem; line-height: 1.45; }
     .xiso-card a { color: #79d1ff; text-underline-offset: .16em; }
+    .xiso-card .xiso-disclaimer {
+      padding: .55rem .65rem;
+      border-left: 2px solid #69c9ff;
+      background: rgba(32, 133, 196, .1);
+      color: #c8dfec;
+    }
+    .xiso-disclaimer strong { color: #e8f6ff; }
     .xiso-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
     #xiso-file { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     #xiso-progress {
@@ -1589,8 +1596,9 @@
   <dialog id="xiso-dialog" aria-labelledby="xiso-title" aria-describedby="xiso-description" tabindex="-1">
     <section class="xiso-card">
       <h1 id="xiso-title">Choose your Halo XISO</h1>
+      <p class="xiso-disclaimer"><strong>Independent website.</strong> This website is maintained by Mitchell Hynes. It is not part of, operated by, or supported by <a href="https://halocombatevolved.com/" target="_blank" rel="noopener noreferrer">OpenCE</a>.</p>
       <p id="xiso-description">To comply with copyright law and respect the original Halo CE decompilation team, this website does not provide Halo game data. Choose an XISO made from your own Xbox copy of <cite>Halo: Combat Evolved</cite>.</p>
-      <p>Need help making one? Visit <a href="https://discord.gg/DQRgPUq6B8" target="_blank" rel="noopener noreferrer">discord.gg/DQRgPUq6B8</a> for instructions on ripping your own disc.</p>
+      <p>Need help ripping your own disc? The OpenCE community has <a href="https://discord.gg/DQRgPUq6B8" target="_blank" rel="noopener noreferrer">disc-ripping instructions</a>. For help with this website, please contact Mitchell—not OpenCE.</p>
       <input id="xiso-file" type="file" accept=".iso,.xiso,application/octet-stream" aria-label="Choose Halo XISO">
       <div class="xiso-actions">
         <button id="xiso-choose" class="primary" type="button">Choose XISO</button>
