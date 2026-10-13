@@ -1,0 +1,33 @@
+# Halo in a browser: the game files and the signaling service (online
+# lobbies). Settings in .env; see README.md.
+
+x-hardening: &hardening
+  cap_drop: [ALL]
+  security_opt: [no-new-privileges:true]
+  restart: unless-stopped
+
+services:
+  web:
+    <<: *hardening
+    image: python:3.12-slim
+    user: "65534:65534"
+    read_only: true
+    command: python3 /app/web_serve.py --root /srv --bind 0.0.0.0 --port 8765
+    volumes:
+      - ./web_serve.py:/app/web_serve.py:ro
+      - ./www:/srv:ro
+    ports:
+      - "${HALO_BIND:-127.0.0.1}:${HALO_WEB_PORT:-8765}:8765"
+
+  signaling:
+    <<: *hardening
+    image: halo-signaling
+    environment:
+      PUBLIC_ORIGIN: ${HALO_PUBLIC_ORIGIN:-}
+    volumes:
+      - signaling-data:/data
+    ports:
+      - "${HALO_BIND:-127.0.0.1}:${HALO_SIGNALING_PORT:-8787}:8787"
+
+volumes:
+  signaling-data:
