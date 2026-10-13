@@ -1,0 +1,68 @@
+# Halo: Combat Evolved in the browser, LAN only (Dockge stack "halo").
+# Paste this into a new Dockge stack and fill in the .env box from
+# selfhost/example.env. Docker builds straight from your fork on GitHub.
+
+name: halo
+
+x-build: &build
+  # Your fork's selfhost branch, e.g.
+  # https://github.com/<you>/web-halo.git#selfhost  (or a local clone path)
+  context: ${HALO_SOURCE:?Set HALO_SOURCE in .env to your fork's git URL}
+  dockerfile: selfhost/Dockerfile
+  args:
+    BUILD_JOBS: ${BUILD_JOBS:-0}
+
+services:
+  # The game files over HTTPS (self-signed) + /v1 to signaling.
+  web:
+    build:
+      <<: *build
+      target: web
+    image: halo-selfhost/web:latest
+    container_name: halo-web
+    restart: unless-stopped
+    depends_on:
+      - signaling
+    environment:
+      HALO_HOST: ${HALO_HOST:?Set HALO_HOST in .env to the server's LAN IP}
+    ports:
+      - "${HALO_HTTPS_PORT:-8443}:8443"
+    volumes:
+      - ./data/maps:/srv/www/assets/maps:ro
+      # Optional artwork for the site (names in selfhost/README.md).
+      - ./data/ui:/srv/www/assets/ui:ro
+      - caddy-data:/data
+      - caddy-config:/config
+
+  # Lobbies, invite links and WebRTC signaling. Not published: only Caddy
+  # talks to it. Game traffic goes browser to browser on your LAN.
+  signaling:
+    build:
+      <<: *build
+      target: signaling
+    image: halo-selfhost/signaling:latest
+    container_name: halo-signaling
+    restart: unless-stopped
+    environment:
+      PUBLIC_GAME_URL: https://${HALO_HOST}:${HALO_HTTPS_PORT:-8443}/
+      ALLOWED_ORIGINS: ${ALLOWED_ORIGINS:-*}
+    volumes:
+      - signaling-data:/data
+
+  # One-shot: copy maps/ out of your disc image into ./data/maps.
+  #   docker compose run --rm extract
+  extract:
+    build:
+      <<: *build
+      target: extract
+    image: halo-selfhost/extract:latest
+    profiles: ["setup"]
+    volumes:
+      - ./iso:/iso:ro
+      - ./data:/data
+    command: ["/iso/${HALO_ISO:-halo.iso}"]
+
+volumes:
+  caddy-data:
+  caddy-config:
+  signaling-data:

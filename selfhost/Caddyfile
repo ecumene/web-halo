@@ -1,0 +1,68 @@
+# Caddy for the LAN-only Halo server.
+#
+# Browsers only run the game (WebAssembly threads need SharedArrayBuffer) on an
+# HTTPS page that sends the COOP/COEP headers below; on plain http://<lan-ip>
+# SharedArrayBuffer doesn't exist. So Caddy serves HTTPS with its own
+# self-signed certificate for HALO_HOST (the server's LAN IP). Each browser
+# shows a warning on the first visit; after "Advanced -> Proceed" the game runs
+# normally. No account, no domain, nothing installed on players' PCs.
+{
+	# Don't try to add Caddy's root CA to the container's own trust store.
+	skip_install_trust
+	# Browsers send no SNI when you browse to an IP address, and inside Docker
+	# the local address is the container's, so tell Caddy which cert to use.
+	default_sni {$HALO_HOST}
+	# Only HTTPS on 8443; no port-80 redirect listener.
+	auto_https disable_redirects
+	servers {
+		# HTTP/3 would need a UDP port mapping; keep to TCP.
+		protocols h1 h2
+	}
+}
+
+https://{$HALO_HOST}:8443 {
+	tls {
+		# A long-lived certificate, so the browser's "proceed" decision keeps
+		# matching instead of being asked again every time Caddy renews it.
+		issuer internal {
+			lifetime 180d
+			sign_with_root
+		}
+	}
+
+	header {
+		Cross-Origin-Opener-Policy "same-origin"
+		Cross-Origin-Embedder-Policy "require-corp"
+		Cross-Origin-Resource-Policy "same-origin"
+		X-Content-Type-Options "nosniff"
+		Referrer-Policy "same-origin"
+		# Revalidate every load so a rebuild is picked up (ETag keeps it cheap).
+		Cache-Control "no-cache"
+	}
+
+	# The page sends crash/performance telemetry to the public site's backend.
+	# Nothing here collects it.
+	handle /v1/telemetry/* {
+		respond 204
+	}
+
+	# Rooms, invites and WebRTC signaling: the signaling container.
+	handle /v1/* {
+		reverse_proxy {$SIGNALING_UPSTREAM:signaling:8787} {
+			header_up CF-Connecting-IP {client_ip}
+		}
+	}
+
+	# Game data, streamed with HTTP range requests.
+	handle /assets/maps/* {
+		root * /srv/www
+		header Content-Type "application/octet-stream"
+		file_server
+	}
+
+	handle {
+		root * /srv/www
+		encode zstd gzip
+		file_server
+	}
+}
