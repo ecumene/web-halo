@@ -32,6 +32,34 @@ export const PLAYER_STYLES = [
 
 export type PlayerStyle = (typeof PLAYER_STYLES)[number];
 
+export const MULTIPLAYER_MAPS = [
+  "Battle Creek",
+  "Sidewinder",
+  "Damnation",
+  "Rat Race",
+  "Prisoner",
+  "Hang 'Em High",
+  "Chill Out",
+  "Derelict",
+  "Boarding Action",
+  "Blood Gulch",
+  "Wizard",
+  "Chiron TL-34",
+  "Longest",
+] as const;
+
+export const MULTIPLAYER_MODES = [
+  "Slayer",
+  "Team Slayer",
+  "Capture the Flag",
+  "Oddball",
+  "King of the Hill",
+  "Race",
+] as const;
+
+export type MultiplayerMap = (typeof MULTIPLAYER_MAPS)[number];
+export type MultiplayerMode = (typeof MULTIPLAYER_MODES)[number];
+
 export interface PlayerProfile {
   name: string;
   style: PlayerStyle;
@@ -76,6 +104,24 @@ export interface PublicRoomDescriptor {
   expiresAt: number;
   id: string;
   protocolVersion: typeof SIGNALING_PROTOCOL_VERSION;
+}
+
+export type MatchPhase = "lobby" | "live";
+
+export interface ListedGame {
+  buildId: string;
+  capacity: number;
+  country: string | null;
+  hostName: string;
+  joinCode: string;
+  map: MultiplayerMap;
+  mode: MultiplayerMode;
+  name: string;
+  open: boolean;
+  phase: MatchPhase;
+  players: number;
+  queue: number;
+  roomId: string;
 }
 
 export interface CreateRoomResponse {
@@ -132,6 +178,25 @@ export type ClientMessage =
   | {
       profile: PlayerProfile;
       type: "profile";
+      v: typeof SIGNALING_PROTOCOL_VERSION;
+    }
+  | {
+      listed: false;
+      type: "listing";
+      v: typeof SIGNALING_PROTOCOL_VERSION;
+    }
+  | {
+      listed: true;
+      map: MultiplayerMap;
+      mode: MultiplayerMode;
+      name: string;
+      ticket: string;
+      type: "listing";
+      v: typeof SIGNALING_PROTOCOL_VERSION;
+    }
+  | {
+      phase: MatchPhase;
+      type: "phase";
       v: typeof SIGNALING_PROTOCOL_VERSION;
     }
   | {
@@ -192,6 +257,50 @@ export function parsePlayerProfile(
 
 function isBuildId(value: unknown): value is string {
   return typeof value === "string" && BUILD_ID_PATTERN.test(value);
+}
+
+export function parseBuildId(value: unknown): string | null {
+  return isBuildId(value) ? value : null;
+}
+
+export function isMultiplayerMap(value: unknown): value is MultiplayerMap {
+  return (
+    typeof value === "string" &&
+    (MULTIPLAYER_MAPS as readonly string[]).includes(value)
+  );
+}
+
+export function isMultiplayerMode(value: unknown): value is MultiplayerMode {
+  return (
+    typeof value === "string" &&
+    (MULTIPLAYER_MODES as readonly string[]).includes(value)
+  );
+}
+
+export function parseServerName(value: unknown): ValidationResult<string> {
+  if (
+    typeof value !== "string" ||
+    value.length < 1 ||
+    value.length > 40 ||
+    value !== value.trim() ||
+    !/^[\u0020-\u007E]+$/u.test(value) ||
+    !/[A-Za-z0-9]/u.test(value)
+  ) {
+    return {
+      ok: false,
+      message:
+        "Server name must be 1-40 letters, numbers, spaces, or basic punctuation.",
+    };
+  }
+  return { ok: true, value };
+}
+
+export function parseCountryCode(value: unknown): string | null {
+  return typeof value === "string" && /^[A-Z]{2}$/u.test(value) ? value : null;
+}
+
+export function parseMatchPhase(value: unknown): MatchPhase | null {
+  return value === "lobby" || value === "live" ? value : null;
 }
 
 function turnstileToken(value: unknown): string | undefined | null {
@@ -390,6 +499,49 @@ export function parseClientMessage(value: unknown): ValidationResult<ClientMessa
         type: "profile",
         v: SIGNALING_PROTOCOL_VERSION,
       },
+    };
+  }
+
+  if (value.type === "listing") {
+    if (value.listed === false) {
+      return {
+        ok: true,
+        value: { listed: false, type: "listing", v: SIGNALING_PROTOCOL_VERSION },
+      };
+    }
+    if (value.listed !== true) {
+      return { ok: false, message: "Listing must say whether the game is public." };
+    }
+    const name = parseServerName(value.name);
+    if (!name.ok) return name;
+    if (!isMultiplayerMap(value.map) || !isMultiplayerMode(value.mode)) {
+      return { ok: false, message: "Listing map or mode is invalid." };
+    }
+    if (typeof value.ticket !== "string" || !TOKEN_PATTERN.test(value.ticket)) {
+      return { ok: false, message: "Listing ticket is malformed." };
+    }
+    return {
+      ok: true,
+      value: {
+        listed: true,
+        map: value.map,
+        mode: value.mode,
+        name: name.value,
+        ticket: value.ticket,
+        type: "listing",
+        v: SIGNALING_PROTOCOL_VERSION,
+      },
+    };
+  }
+
+  if (value.type === "phase") {
+    const phase = parseMatchPhase(value.phase);
+    if (phase === null) {
+      return { ok: false, message: "Match phase must be lobby or live." };
+    }
+    return {
+      ok: true,
+      value: { phase, type: "phase", v: SIGNALING_PROTOCOL_VERSION },
     };
   }
 

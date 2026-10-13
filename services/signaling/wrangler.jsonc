@@ -45,6 +45,10 @@
       {
         "name": "PRESENCE",
         "class_name": "PlayerPresence"
+      },
+      {
+        "name": "GAMES",
+        "class_name": "GameDirectory"
       }
     ]
   },
@@ -58,10 +62,18 @@
       }
     },
     {
-      "name": "SESSION_CREATE_LIMITER",
+      "name":     "SESSION_CREATE_LIMITER",
       "namespace_id": "41002",
       "simple": {
         "limit": 512,
+        "period": 60
+      }
+    },
+    {
+      "name": "GAME_LIST_LIMITER",
+      "namespace_id": "41004",
+      "simple": {
+        "limit": 120,
         "period": 60
       }
     },
@@ -82,6 +94,10 @@
     {
       "tag": "v2",
       "new_sqlite_classes": ["PlayerPresence"]
+    },
+    {
+      "tag": "v3",
+      "new_sqlite_classes": ["GameDirectory"]
     }
   ],
   "observability": {

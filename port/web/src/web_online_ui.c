@@ -54,6 +54,7 @@ unsigned char player_ui_configure_network_server_game_advanced(
 void game_connection_set(short connection);
 void main_goto_main_menu(void);
 short network_game_client_get_state(struct network_game_client *client, short *state_data);
+unsigned short network_game_server_get_state(struct network_game_server *server, short *substate);
 short network_game_client_get_error(struct network_game_client *client);
 unsigned char network_game_client_join_first_available_game(void);
 unsigned char network_game_client_add_player(struct network_game_client *client, short controller_index);
@@ -119,6 +120,7 @@ static atomic_int web_online_requested_health_percent = ATOMIC_VAR_INIT(100);
 static atomic_int web_online_requested_rules = ATOMIC_VAR_INIT(0xa);
 static atomic_int web_online_requested_player_magnetism = ATOMIC_VAR_INIT(1);
 static atomic_int web_online_public_state = ATOMIC_VAR_INIT(_web_online_state_idle);
+static atomic_int web_online_match_phase = ATOMIC_VAR_INIT(0);
 static atomic_int web_online_public_error = ATOMIC_VAR_INIT(_web_online_error_none);
 static atomic_int web_online_transport_state = ATOMIC_VAR_INIT(_web_online_transport_disconnected);
 static atomic_uint web_online_customization_sequence = ATOMIC_VAR_INIT(0);
@@ -151,6 +153,11 @@ static struct
 static void publish_state(int state)
 {
 	atomic_store_explicit(&web_online_public_state, state, memory_order_release);
+}
+
+static void publish_match_phase(int live)
+{
+	atomic_store_explicit(&web_online_match_phase, live ? 1 : 0, memory_order_release);
 }
 
 static void publish_error(int error)
@@ -304,6 +311,11 @@ EMSCRIPTEN_KEEPALIVE int platform_web_online_get_state(void)
 	return atomic_load_explicit(&web_online_public_state, memory_order_acquire);
 }
 
+EMSCRIPTEN_KEEPALIVE int platform_web_online_get_match_phase(void)
+{
+	return atomic_load_explicit(&web_online_match_phase, memory_order_acquire);
+}
+
 EMSCRIPTEN_KEEPALIVE int platform_web_online_get_error(void)
 {
 	return atomic_load_explicit(&web_online_public_error, memory_order_acquire);
@@ -395,6 +407,7 @@ static void reset_owned_game(void)
 static void clear_session(void)
 {
 	memset(&web_online, 0, sizeof(web_online));
+	publish_match_phase(0);
 }
 
 static void fail_session(int error)
@@ -547,6 +560,14 @@ static void update_host(float seconds)
 	web_online.seconds += seconds;
 	if (web_online.seconds >= 0.5f)
 		add_primary_player_when_ready(client, seconds);
+	{
+		struct network_game_server *server = global_network_game_server_get();
+		unsigned short server_state = server ?
+			network_game_server_get_state(server, NULL) : 0;
+		/* Pregame stays open. In-game and the scoreboard hold newcomers until
+		 * the next lobby so a live match is not joined mid-round. */
+		publish_match_phase(server_state == 1 || server_state == 2);
+	}
 	publish_state(_web_online_state_hosting);
 }
 

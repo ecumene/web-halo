@@ -572,6 +572,64 @@
     }
     .invite-label { color: #9db0ba; font-size: .78rem; }
     #online-detail { margin: .75rem 0 0; color: #80949e; font-size: .7rem; line-height: 1.4; }
+    .online-mode-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .4rem; margin-top: .9rem; }
+    .online-mode-tabs button { min-height: 2.75rem; }
+    .online-mode-tabs button[aria-selected="true"] {
+      border-color: #5ac0fb; background: rgba(21, 86, 124, .72); font-weight: 700;
+    }
+    .browser-filters {
+      display: flex; flex-wrap: wrap; align-items: end; gap: .55rem; margin-top: .85rem;
+    }
+    .browser-filters label { display: grid; gap: .25rem; min-width: 0; color: #9db0ba; font-size: .72rem; }
+    .browser-search { flex: 1 1 12rem; }
+    .browser-filters select, .browser-filters input[type="search"], .list-public, #online-server-name {
+      min-width: 0; border: 1px solid rgba(45, 157, 226, .4); border-radius: .12rem;
+      color: #edf7f2; background: rgba(0, 9, 24, .8); font: inherit;
+    }
+    .browser-filters select, .browser-filters input[type="search"], #online-server-name {
+      width: 100%; min-height: 2.75rem; padding: .45rem .6rem;
+    }
+    .browser-check { display: flex; align-items: center; gap: .4rem; min-height: 2.75rem; color: #d5e7ef; font-size: .78rem; }
+    .browser-filters button, .browser-join { min-height: 2.75rem; }
+    .browser-status { min-height: 1.3rem; margin: .55rem 0; color: #9db0ba; font-size: .78rem; }
+    .browser-scroll {
+      min-height: 16rem; max-height: 22rem; overflow: auto; border: 1px solid rgba(130, 196, 238, .22);
+      border-radius: .2rem; background: rgba(1, 12, 28, .55);
+    }
+    .browser-table { width: 100%; min-width: 44rem; border-collapse: collapse; }
+    .browser-table th, .browser-table td {
+      padding: .45rem .55rem; border-bottom: 1px solid rgba(130, 196, 238, .14);
+      text-align: left; vertical-align: middle;
+    }
+    .browser-table th { position: sticky; top: 0; z-index: 1; background: #07182a; color: #8fb4c8; font-size: .68rem; letter-spacing: .06em; text-transform: uppercase; }
+    .browser-table th button {
+      width: 100%; min-height: 2.75rem; padding: .2rem .35rem; border-color: transparent;
+      background: transparent; color: inherit; font: inherit; font-size: inherit;
+      letter-spacing: inherit; text-align: left; text-transform: inherit;
+    }
+    .browser-table th button:focus-visible { outline: 2px solid #5ac0fb; outline-offset: 2px; }
+    .browser-table th button:hover, .browser-table tbody tr:hover { background: rgba(20, 78, 112, .35); }
+    .browser-table th[aria-sort="ascending"] button::after { content: " ↑"; }
+    .browser-table th[aria-sort="descending"] button::after { content: " ↓"; }
+    .browser-server { display: grid; min-width: 0; }
+    .browser-server strong, .browser-server span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .browser-server strong { color: #e7f6ff; font-size: .84rem; }
+    .browser-server span, .browser-muted { color: #8ea6b3; font-size: .72rem; }
+    .player-meter { width: 4.5rem; height: .35rem; margin-bottom: .2rem; border-radius: 999px; background: rgba(130, 196, 238, .18); overflow: hidden; }
+    .player-meter span { display: block; height: 100%; background: #3ecf8e; }
+    .player-meter[data-fill="busy"] span { background: #e2b340; }
+    .player-meter[data-fill="full"] span { background: #e06a5a; }
+    .browser-empty, .browser-skeleton { margin: 0; padding: .9rem .7rem; color: #9db0ba; }
+    .browser-skeleton { height: 2.4rem; margin: .45rem; border-radius: .2rem; background: rgba(62, 122, 153, .18); }
+    .list-public { display: flex; gap: .55rem; align-items: flex-start; margin-top: .85rem; padding: .65rem .7rem; color: #d5e7ef; font-size: .82rem; cursor: pointer; }
+    .list-public input { width: 1.05rem; height: 1.05rem; margin-top: .15rem; }
+    .list-public small { display: block; color: #8ea3ad; font-size: .72rem; }
+    .server-name-field { display: grid; gap: .3rem; margin-top: .8rem; }
+    .server-name-field span { color: #9db0ba; font-size: .75rem; }
+    .browser-join:disabled { cursor: not-allowed; }
+    @media (prefers-reduced-motion: reduce) {
+      .browser-skeleton { animation: none; }
+    }
     .profile-join-action {
       display: grid;
       gap: .7rem;
@@ -1562,7 +1620,8 @@
           <button id="invite-copy" class="primary" type="button" aria-live="polite">Copy link</button>
         </div>
         <p id="invite-copy-status" class="sidebar-copy-status" role="status" hidden></p>
-        <button id="online-leave-host" type="button">Close room</button>
+        <p id="invite-listing" class="sidebar-copy-status" hidden>On the server list. Mid-game joins wait until this match ends.</p>
+        <button id="online-leave-host" type="button">Leave game</button>
       </section>
     </aside>
     <section id="loading" aria-live="polite" aria-busy="true">
@@ -1680,17 +1739,63 @@
       <section class="online-flow">
         <div class="online-heading">
           <div>
-            <h2 id="online-title">Play with friends</h2>
-            <p id="online-description">Pick a map and mode, then send the invite link to your friends.</p>
+            <h2 id="online-title">Server browser</h2>
+            <p id="online-description">Join an open game, or queue for one that's already playing. Hosts can list a public room.</p>
           </div>
         </div>
         <div id="online-status" class="online-status" role="status" hidden></div>
+        <div id="online-mode-tabs" class="online-mode-tabs" role="tablist" aria-label="Online play">
+          <button id="online-tab-browse" type="button" role="tab" aria-selected="true" aria-controls="online-browser">Find a game</button>
+          <button id="online-tab-host" type="button" role="tab" aria-selected="false" aria-controls="online-setup">Host a game</button>
+        </div>
         <div id="online-wizard">
-          <ol id="online-wizard-steps" class="wizard-steps" aria-label="Create a game">
+          <section id="online-browser" role="tabpanel" aria-labelledby="online-tab-browse">
+            <form id="online-browser-filters" class="browser-filters">
+              <label class="browser-search">Server name
+                <input id="online-browser-query" type="search" autocomplete="off" spellcheck="false" placeholder="Search servers">
+              </label>
+              <label>Map
+                <select id="online-browser-map">
+                  <option value="all">All maps</option>
+                  <option>Battle Creek</option><option>Sidewinder</option><option>Damnation</option>
+                  <option>Rat Race</option><option>Prisoner</option><option>Hang 'Em High</option>
+                  <option>Chill Out</option><option>Derelict</option><option>Boarding Action</option>
+                  <option>Blood Gulch</option><option>Wizard</option><option>Chiron TL-34</option>
+                  <option>Longest</option>
+                </select>
+              </label>
+              <label>Mode
+                <select id="online-browser-mode">
+                  <option value="all">All modes</option>
+                  <option>Slayer</option><option>Team Slayer</option><option>Capture the Flag</option>
+                  <option>Oddball</option><option>King of the Hill</option><option>Race</option>
+                </select>
+              </label>
+              <label class="browser-check"><input id="online-browser-hide-full" type="checkbox"> Hide full</label>
+              <button id="online-browser-refresh" type="button">Refresh</button>
+            </form>
+            <p id="online-browser-status" class="browser-status" role="status">Loading the server list…</p>
+            <div id="online-browser-scroll" class="browser-scroll">
+              <table id="online-browser-table" class="browser-table">
+                <thead>
+                  <tr>
+                    <th scope="col" id="online-browser-heading-name"><button type="button" data-sort="name">Server</button></th>
+                    <th scope="col" id="online-browser-heading-players" aria-sort="descending"><button type="button" data-sort="players">Players</button></th>
+                    <th scope="col" id="online-browser-heading-queue"><button type="button" data-sort="queue">Waiting</button></th>
+                    <th scope="col" id="online-browser-heading-map"><button type="button" data-sort="map">Map</button></th>
+                    <th scope="col" id="online-browser-heading-mode"><button type="button" data-sort="mode">Mode</button></th>
+                    <th scope="col"><span class="sr-only">Join</span></th>
+                  </tr>
+                </thead>
+                <tbody id="online-browser-list"></tbody>
+              </table>
+            </div>
+          </section>
+          <ol id="online-wizard-steps" class="wizard-steps" aria-label="Create a game" hidden>
             <li id="online-wizard-map" class="wizard-step" data-number="1" data-step="map" aria-current="step">Map</li>
             <li id="online-wizard-mode" class="wizard-step" data-number="2" data-step="mode">Mode</li>
           </ol>
-          <div id="online-setup" class="online-stack">
+          <div id="online-setup" class="online-stack" hidden>
             <form id="online-host-form" class="online-stack host-setup">
               <section id="online-step-map">
                 <p id="online-map-title" class="host-setup-title">Choose a map</p>
@@ -1748,6 +1853,14 @@
                   <option value="4">King of the Hill</option>
                   <option value="5">Race</option>
                 </select>
+                <label class="server-name-field">Server name
+                  <input id="online-server-name" name="server-name" type="text" maxlength="40"
+                         autocomplete="off" spellcheck="false" placeholder="Blood Gulch">
+                </label>
+                <label class="list-public">
+                  <input id="online-list-public" type="checkbox" checked>
+                  <span>Public room<small>Anyone can join from the server list. If a game is already going, they wait until it ends.</small></span>
+                </label>
                 <details class="advanced-settings">
                   <summary><span>Advanced settings</span><span class="advanced-settings-optional">Optional · stock rules by default</span></summary>
                   <div class="advanced-settings-body">
@@ -1768,7 +1881,7 @@
                 </details>
                 <div class="wizard-actions">
                   <button id="online-mode-back" type="button">Back</button>
-                  <button id="online-host" class="primary" type="submit">Create link</button>
+                  <button id="online-host" class="primary" type="submit">Host game</button>
                 </div>
               </section>
             </form>
@@ -1785,7 +1898,7 @@
             <button id="online-cancel" type="button">Cancel</button>
           </div>
         </div>
-        <p id="online-detail">Private invite room · gameplay connects peer-to-peer when possible</p>
+        <p id="online-detail">Public rooms are listed here. Gameplay still connects peer-to-peer when it can.</p>
       </section>
     </div>
   </dialog>

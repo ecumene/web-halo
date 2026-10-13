@@ -70,12 +70,16 @@ your own Xbox copy. The browser validates it locally, copies only the required
 maps to origin-private storage in small chunks, and then reads those local files
 on demand. The XISO never leaves your device.
 
-To play with friends:
+To play with other people:
 
-1. Select **Play online**, choose the map and mode, then create a private lobby.
-2. Copy the invite link and send the same link to up to 127 friends.
-3. Each friend opens the link and Halo joins the lobby automatically. The host
-   starts the game when everyone is ready.
+1. Select **Play online**. **Find a game** lists public rooms for this build.
+   Join an open lobby immediately, or queue for one that is already playing.
+   Queued players enter when that game returns to the lobby, so a match in
+   progress keeps its teams. If the host leaves, another player in that game
+   hosts the next lobby. When nobody else is in it, everyone comes back here.
+2. Or choose **Host a game**, pick the map and mode, and leave **List this
+   game publicly** checked. Uncheck it for a private invite link.
+3. Friends can still use the invite link. A room holds up to 128 players.
 
 Audio starts muted. Everyone needs a current desktop browser with WebGL 2,
 WebAssembly threads, WebRTC, and cross-origin isolation support.

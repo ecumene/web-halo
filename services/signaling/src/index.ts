@@ -12,15 +12,21 @@ import {
 } from "./abuse";
 import { roomIdSignatureMatches, signedRoomId } from "./crypto";
 import type { RuntimeEnv } from "./env";
+import { GAME_DIRECTORY_NAME } from "./directory";
 import {
   MAX_HTTP_BODY_BYTES,
   ROOM_ID_PATTERN,
   SIGNALING_PROTOCOL_VERSION,
   TOKEN_PATTERN,
+  isMultiplayerMap,
+  isMultiplayerMode,
+  parseBuildId,
   parseCreateRoomInput,
   parseCreateSessionInput,
+  parseServerName,
   type CreateRoomResponse,
   type CreateSessionResponse,
+  type ListedGame,
   type PublicRoomDescriptor,
   type SessionDescriptor,
 } from "./protocol";
@@ -28,12 +34,14 @@ import {
   SignalingRoom,
   type CreateRoomResult,
   type CreateSessionResult,
+  type HandoffHint,
   type MintedSession,
 } from "./room";
 import { generateIceServersWithFallback, revokeTurnCredential } from "./turn";
 import { enforceTurnBandwidthCaps, turnIsDisabled, turnUsageSummary } from "./turn_cap";
 import { requireHumanVerification } from "./turnstile";
 
+export { GameDirectory } from "./directory";
 export { SignalingRoom } from "./room";
 export { PlayerPresence } from "./presence";
 export type {
@@ -631,6 +639,17 @@ async function createSession(
   return withCors(jsonResponse(body, 201), origin);
 }
 
+function handoffHint(body: Record<string, unknown>): HandoffHint | null {
+  if (!isMultiplayerMap(body.map) || !isMultiplayerMode(body.mode)) return null;
+  const name = parseServerName(body.name);
+  return {
+    listed: body.listed === true && name.ok,
+    map: body.map,
+    mode: body.mode,
+    name: name.ok ? name.value : body.map,
+  };
+}
+
 async function closeRoom(
   request: Request,
   env: RuntimeEnv,
@@ -650,6 +669,7 @@ async function closeRoom(
   }
   const result = await env.ROOMS.getByName(roomId).closeRoom(
     (body as { ticket: string }).ticket,
+    handoffHint(body as Record<string, unknown>),
   );
   if (!result.ok) {
     throw new HttpError(
@@ -659,6 +679,22 @@ async function closeRoom(
     );
   }
   return withCors(new Response(null, { status: 204 }), origin);
+}
+
+async function listGames(
+  url: URL,
+  env: RuntimeEnv,
+  origin: string | null,
+): Promise<Response> {
+  const buildId = parseBuildId(url.searchParams.get("buildId"));
+  if (buildId === null) {
+    throw new HttpError(400, "VALIDATION_FAILED", "buildId is required.");
+  }
+  const games: ListedGame[] = await env.GAMES.getByName(GAME_DIRECTORY_NAME).list(buildId);
+  return withCors(
+    jsonResponse({ games, v: SIGNALING_PROTOCOL_VERSION }),
+    origin,
+  );
 }
 
 async function route(request: Request, env: RuntimeEnv): Promise<Response> {
@@ -690,6 +726,10 @@ async function route(request: Request, env: RuntimeEnv): Promise<Response> {
       status: 204,
     });
     return withCors(response, origin);
+  }
+  if (request.method === "GET" && url.pathname === "/v1/games") {
+    await requireRateLimit(env.GAME_LIST_LIMITER, request, "game-list");
+    return listGames(url, env, origin);
   }
   if (request.method === "POST" && url.pathname === "/v1/rooms") {
     await requireRateLimit(env.ROOM_CREATE_LIMITER, request, "room-create");

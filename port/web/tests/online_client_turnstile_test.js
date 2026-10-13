@@ -68,6 +68,7 @@ const removedWidgets = [];
 const resetWidgets = [];
 let nextWidgetId = 1;
 const requestBodies = [];
+const requestUrls = [];
 
 const context = {
   console,
@@ -84,7 +85,8 @@ const context = {
       return null;
     },
   },
-  fetch: async (_url, options) => {
+  fetch: async (url, options) => {
+    requestUrls.push(String(url));
     requestBodies.push(JSON.parse(options.body));
     return {
       ok: false,
@@ -200,6 +202,20 @@ async function settle() {
   assert.equal(elements['online-join-profile'].disabled, false);
   assert.match(elements['online-verification-status'].textContent, /Verified/);
   assert(resetWidgets.length >= 1, 'used tokens are reset after submission');
+
+  context.location.hostname = '127.0.0.1';
+  context.location.href = 'http://127.0.0.1:8765/build/web/halo.html';
+  context.location.origin = 'http://127.0.0.1:8765';
+  context.location.port = '8765';
+  context.location.protocol = 'http:';
+  elements['online-map-next'].listeners.click();
+  assert.equal(elements['online-step-mode'].hidden, false);
+  await context.HaloOnline.host();
+  assert.match(requestUrls.at(-1), /^http:\/\/127\.0\.0\.1:8787\/v1\/rooms$/);
+  assert.equal(elements['online-step-map'].hidden, true,
+    'a rejected host check stays on the mode step');
+  assert.equal(elements['online-step-mode'].hidden, false);
+  assert.match(elements['online-verification-status'].textContent, /won't need to refresh/);
 
   console.log('online client Turnstile lifecycle tests passed');
 })().catch(error => {

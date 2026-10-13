@@ -124,6 +124,26 @@ GET /v1/health
 { "ok": true, "v": 1 }
 ```
 
+### List public games
+
+```http
+GET /v1/games?buildId=streamhash-2026-09-28
+```
+
+Returns `{ "v": 1, "games": [...] }`. Each game includes `name`, `hostName`,
+`map`, `mode`, `players`, `capacity`, `open`, `phase` (`lobby` or `live`),
+`queue`, `country`, and `joinCode`. `joinCode` is the public guest invite, never
+the host ticket. Listings older than three minutes are omitted. Joining still
+uses `POST /v1/rooms/:roomId/sessions` and Turnstile. A guest who connects while
+`phase` is `live` receives `admission: "hold"` on `welcome` and an `admit`
+message when the host reports `phase: "lobby"`. If the host leaves while
+someone else is in the match, that player receives `host-handoff` and starts
+the next lobby with the same map and mode. A brief connection drop waits eight
+seconds before that handoff, so a host can reconnect. When nobody else is in
+the game, everyone receives `room-closed` with `reason: "host-ended"` and
+returns to the server list. The live match itself cannot move to another
+machine.
+
 ### Create a room
 
 ```http

@@ -6,14 +6,23 @@ import {
   randomToken,
   hashToken,
 } from "./crypto";
+import { GAME_DIRECTORY_NAME, type PublishGameInput } from "./directory";
 import {
   MAX_WEBSOCKET_MESSAGE_CHARACTERS,
   IDENTIFIER_PATTERN,
   PEER_ID_PATTERN,
   SIGNALING_PROTOCOL_VERSION,
   TOKEN_PATTERN,
+  isMultiplayerMap,
+  isMultiplayerMode,
   parseClientMessage,
+  parseCountryCode,
+  parseMatchPhase,
   parsePlayerProfile,
+  parseServerName,
+  type MatchPhase,
+  type MultiplayerMap,
+  type MultiplayerMode,
   type PeerRole,
   type PlayerProfile,
 } from "./protocol";
@@ -37,7 +46,44 @@ interface SessionRow extends Record<string, SqlStorageValue> {
   token_hash: ArrayBuffer;
 }
 
+const HOST_AWAY_GRACE_MS = 8_000;
+
+interface StoredListing {
+  joinCode: string;
+  map: MultiplayerMap;
+  mode: MultiplayerMode;
+  name: string;
+}
+
+export interface HandoffHint {
+  listed: boolean;
+  map: MultiplayerMap;
+  mode: MultiplayerMode;
+  name: string;
+}
+
+function isStoredListing(value: unknown): value is StoredListing {
+  if (typeof value !== "object" || value === null || Array.isArray(value)) {
+    return false;
+  }
+  const record = value as Record<string, unknown>;
+  return (
+    parseServerName(record.name).ok &&
+    isMultiplayerMap(record.map) &&
+    isMultiplayerMode(record.mode) &&
+    typeof record.joinCode === "string" &&
+    record.joinCode.length <= 180
+  );
+}
+
+function requestCountry(request: Request): string | null {
+  const code = parseCountryCode(request.headers.get("CF-IPCountry"));
+  if (code === null || code === "XX" || code === "T1") return null;
+  return code;
+}
+
 interface SocketAttachment {
+  country?: string;
   departed?: boolean;
   identifier: string;
   joinedAt: number;
@@ -45,6 +91,7 @@ interface SocketAttachment {
   messageWindowStartedAt?: number;
   peerId: string;
   profile?: PlayerProfile;
+  publicListing?: StoredListing;
   role: PeerRole;
 }
 
@@ -125,6 +172,12 @@ function isSocketAttachment(value: unknown): value is SocketAttachment {
   if (record.profile !== undefined && !parsePlayerProfile(record.profile).ok) {
     return false;
   }
+  if (record.publicListing !== undefined && !isStoredListing(record.publicListing)) {
+    return false;
+  }
+  if (record.country !== undefined && parseCountryCode(record.country) === null) {
+    return false;
+  }
   return (
     typeof record.joinedAt === "number" &&
     typeof record.identifier === "string" &&
@@ -148,6 +201,10 @@ const MAX_GUEST_WEBSOCKET_MESSAGES_PER_MINUTE = 240;
 const MAX_HOST_WEBSOCKET_MESSAGES_PER_MINUTE = 16_384;
 
 export class SignalingRoom extends DurableObject<Env> {
+  private expiring = false;
+  /** Stops a disconnect and an intentional leave from promoting two hosts. */
+  private handoffClaimed = false;
+
   constructor(ctx: DurableObjectState, env: Env) {
     super(ctx, env);
   }
@@ -311,7 +368,10 @@ export class SignalingRoom extends DurableObject<Env> {
     };
   }
 
-  async closeRoom(ticket: string): Promise<CloseRoomResult> {
+  async closeRoom(
+    ticket: string,
+    hint: HandoffHint | null,
+  ): Promise<CloseRoomResult> {
     const room = this.getRoom();
     if (room === null) {
       await this.expireRoom();
@@ -320,7 +380,8 @@ export class SignalingRoom extends DurableObject<Env> {
     if (!hashesMatch(await hashToken(ticket), room.host_ticket_hash)) {
       return { code: "INVALID_TICKET", ok: false };
     }
-    await this.expireRoom();
+    this.markHostsYielded();
+    await this.handoffOrClose(hint);
     return { ok: true };
   }
 
@@ -391,7 +452,9 @@ export class SignalingRoom extends DurableObject<Env> {
     const pair = new WebSocketPair();
     const client = pair[0];
     const server = pair[1];
+    const country = requestCountry(request);
     const attachment: SocketAttachment = {
+      ...(country === null ? {} : { country }),
       identifier: session.identifier,
       joinedAt: now,
       messageCount: 0,
@@ -399,6 +462,15 @@ export class SignalingRoom extends DurableObject<Env> {
       peerId: session.peer_id,
       role: session.role,
     };
+    if (attachment.role === "host") {
+      const listing = this.readListing();
+      if (listing !== null) attachment.publicListing = listing;
+      this.clearDeparture();
+      this.ctx.waitUntil(this.ctx.storage.setAlarm(room.expires_at));
+    }
+    const held = attachment.role === "guest" && this.matchPhase() === "live"
+      ? this.enqueueGuest(attachment.peerId, now)
+      : null;
 
     this.ctx.acceptWebSocket(server, [
       `peer:${attachment.peerId}`,
@@ -408,6 +480,13 @@ export class SignalingRoom extends DurableObject<Env> {
     this.updatePresence(room.room_id, attachment.peerId, true);
     server.send(
       jsonMessage({
+        ...(held === null
+          ? {}
+          : {
+              admission: "hold",
+              queuePosition: held.queuePosition,
+              queueSize: held.queueSize,
+            }),
         peers: existingConnections
           .filter(({ attachment: peer }) => peer.role !== attachment.role)
           .map(({ attachment: peer }) => ({
@@ -540,6 +619,19 @@ export class SignalingRoom extends DurableObject<Env> {
         );
         this.retireSocket(socket, 1011, "Signaling delivery failed.");
       }
+      if (sender.role === "host" && sender.publicListing !== undefined) {
+        this.scheduleListingSync();
+      }
+      return;
+    }
+
+    if (message.type === "phase") {
+      this.applyPhase(socket, sender, message.phase);
+      return;
+    }
+
+    if (message.type === "listing") {
+      this.ctx.waitUntil(this.applyListing(socket, sender, message));
       return;
     }
 
@@ -630,7 +722,27 @@ export class SignalingRoom extends DurableObject<Env> {
   }
 
   override async alarm(): Promise<void> {
-    await this.expireRoom();
+    const room = this.getRoom();
+    if (room === null) return;
+    const due = this.departureDue();
+    if (
+      due !== null &&
+      Date.now() + 1_000 >= due &&
+      Date.now() < room.expires_at
+    ) {
+      this.clearDeparture();
+      if (!this.expiring && this.connections("host").length === 0) {
+        await this.handoffOrClose(null);
+      }
+      const surviving = this.getRoom();
+      if (surviving !== null && !this.expiring) {
+        await this.ctx.storage.setAlarm(surviving.expires_at);
+      }
+      return;
+    }
+    if (Date.now() >= room.expires_at) {
+      await this.expireRoom();
+    }
   }
 
   private announceDeparture(socket: WebSocket): void {
@@ -649,15 +761,30 @@ export class SignalingRoom extends DurableObject<Env> {
       // The socket may already be fully closed; readyState filtering still
       // prevents it from participating in room membership.
     }
+    if (attachment.role === "guest") {
+      this.dequeueGuest(attachment.peerId);
+      this.notifyQueue();
+    }
+    const hostLeft = attachment.role === "host";
+    const yielded = hostLeft && this.hasYielded(attachment.peerId);
+    if (hostLeft && !yielded) {
+      if (this.connections("guest").length > 0) {
+        const at = Date.now() + HOST_AWAY_GRACE_MS;
+        this.writeDeparture(at);
+        this.ctx.waitUntil(this.ctx.storage.setAlarm(at));
+      } else {
+        this.ctx.waitUntil(this.handoffOrClose(null));
+      }
+    }
     this.broadcastToRole(
       {
         identifier: attachment.identifier,
         peerId: attachment.peerId,
-        reason: attachment.role === "host" ? "host-disconnected" : "disconnected",
+        reason: hostLeft && !yielded ? "host-away" : "disconnected",
         type: "peer-left",
         v: SIGNALING_PROTOCOL_VERSION,
       },
-      attachment.role === "host" ? "guest" : "host",
+      hostLeft ? "guest" : "host",
       socket,
     );
     this.broadcastRoster();
@@ -687,6 +814,7 @@ export class SignalingRoom extends DurableObject<Env> {
         this.retireSocket(socket, 1011, "Signaling delivery failed.");
       }
     }
+    this.scheduleListingSync();
   }
 
   private broadcastToRole(
@@ -773,11 +901,256 @@ export class SignalingRoom extends DurableObject<Env> {
     return undefined;
   }
 
+  private markHostsYielded(): void {
+    for (const host of this.connections("host")) {
+      this.rememberYielded(host.attachment.peerId);
+      host.attachment.departed = true;
+      try {
+        host.socket.serializeAttachment(host.attachment);
+      } catch {
+        // The leaving host is already on the way out.
+      }
+    }
+  }
+
+  private rememberYielded(peerId: string): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec(
+      "INSERT OR IGNORE INTO yielded_host (peer_id) VALUES (?)",
+      peerId,
+    );
+  }
+
+  private hasYielded(peerId: string): boolean {
+    this.ensureMatchTables();
+    return (
+      this.ctx.storage.sql
+        .exec<{ peer_id: string }>(
+          "SELECT peer_id FROM yielded_host WHERE peer_id = ?",
+          peerId,
+        )
+        .toArray()[0] !== undefined
+    );
+  }
+
+  private writeDeparture(at: number): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec(
+      `INSERT INTO host_departure (singleton, handoff_at) VALUES (1, ?)
+       ON CONFLICT(singleton) DO UPDATE SET handoff_at = excluded.handoff_at`,
+      at,
+    );
+  }
+
+  private clearDeparture(): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec("DELETE FROM host_departure");
+  }
+
+  private departureDue(): number | null {
+    this.ensureMatchTables();
+    return (
+      this.ctx.storage.sql
+        .exec<{ handoff_at: number }>(
+          "SELECT handoff_at FROM host_departure WHERE singleton = 1",
+        )
+        .toArray()[0]?.handoff_at ?? null
+    );
+  }
+
+  private readListing(): StoredListing | null {
+    this.ensureMatchTables();
+    const row = this.ctx.storage.sql
+      .exec<{
+        join_code: string;
+        map_name: string;
+        mode_name: string;
+        name: string;
+      }>(
+        `SELECT join_code, name, map_name, mode_name
+           FROM public_listing WHERE singleton = 1`,
+      )
+      .toArray()[0];
+    if (row === undefined) return null;
+    if (!isMultiplayerMap(row.map_name) || !isMultiplayerMode(row.mode_name)) {
+      return null;
+    }
+    const name = parseServerName(row.name);
+    if (!name.ok) return null;
+    return {
+      joinCode: row.join_code,
+      map: row.map_name,
+      mode: row.mode_name,
+      name: name.value,
+    };
+  }
+
+  private pickSuccessor():
+    | { attachment: SocketAttachment; socket: WebSocket }
+    | undefined {
+    const queued = new Set(this.queueIds());
+    return this.connections("guest")
+      .filter(({ attachment }) => !queued.has(attachment.peerId))
+      .sort((left, right) =>
+        left.attachment.joinedAt - right.attachment.joinedAt ||
+        left.attachment.peerId.localeCompare(right.attachment.peerId))[0];
+  }
+
+  private async handoffOrClose(hint: HandoffHint | null): Promise<void> {
+    if (this.expiring || this.handoffClaimed) return;
+    this.handoffClaimed = true;
+    try {
+      const listing = this.readListing();
+      const map = listing?.map ?? hint?.map;
+      const mode = listing?.mode ?? hint?.mode;
+      const successor =
+        map === undefined || mode === undefined ? undefined : this.pickSuccessor();
+      if (successor === undefined || map === undefined || mode === undefined) {
+        await this.closeGracefully();
+        return;
+      }
+      await this.promote(successor, {
+        listed: listing !== null,
+        map,
+        mode,
+        name: listing?.name ?? hint?.name ?? map,
+      });
+      this.handoffClaimed = false;
+    } catch (error) {
+      this.handoffClaimed = false;
+      throw error;
+    }
+  }
+
+  private async promote(
+    successor: { attachment: SocketAttachment; socket: WebSocket },
+    settings: HandoffHint,
+  ): Promise<void> {
+    const room = this.getRoom();
+    if (room === null || this.expiring) return;
+    const ticket = randomToken();
+    const ticketHash = await hashToken(ticket);
+    this.ctx.storage.sql.exec(
+      "UPDATE room SET host_ticket_hash = ? WHERE singleton = 1",
+      ticketHash,
+    );
+    const others = this.connections("guest").filter(
+      ({ attachment }) => attachment.peerId !== successor.attachment.peerId,
+    );
+    const listing = this.readListing();
+    successor.attachment.role = "host";
+    if (listing !== null) successor.attachment.publicListing = listing;
+    try {
+      successor.socket.serializeAttachment(successor.attachment);
+    } catch {
+      successor.attachment.role = "guest";
+      await this.closeGracefully();
+      return;
+    }
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec(
+      `INSERT INTO match_state (singleton, phase) VALUES (1, 'lobby')
+       ON CONFLICT(singleton) DO UPDATE SET phase = 'lobby'`,
+    );
+    this.ctx.storage.sql.exec(
+      "INSERT INTO handoff_admit (singleton) VALUES (1) ON CONFLICT(singleton) DO NOTHING",
+    );
+    this.clearDeparture();
+    const hostName = successor.attachment.profile?.name ?? "Spartan";
+    try {
+      successor.socket.send(
+        jsonMessage({
+          listed: settings.listed,
+          map: settings.map,
+          mode: settings.mode,
+          name: settings.name,
+          peers: others.map(({ attachment }) => ({
+            identifier: attachment.identifier,
+            peerId: attachment.peerId,
+            role: attachment.role,
+          })),
+          ticket,
+          type: "host-handoff",
+          v: SIGNALING_PROTOCOL_VERSION,
+        }),
+      );
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          error: error instanceof Error ? error.message : String(error),
+          message: "failed to offer the room to the next host",
+        }),
+      );
+      await this.closeGracefully();
+      return;
+    }
+    this.broadcastToRole(
+      {
+        hostName,
+        hostPeerId: successor.attachment.peerId,
+        identifier: successor.attachment.identifier,
+        map: settings.map,
+        mode: settings.mode,
+        name: settings.name,
+        type: "host-handoff",
+        v: SIGNALING_PROTOCOL_VERSION,
+      },
+      "guest",
+    );
+    this.broadcastRoster();
+    const surviving = this.getRoom();
+    if (surviving !== null) {
+      await this.ctx.storage.setAlarm(surviving.expires_at);
+    }
+  }
+
+  private consumeHandoffAdmit(): boolean {
+    this.ensureMatchTables();
+    const pending =
+      this.ctx.storage.sql
+        .exec<{ singleton: number }>(
+          "SELECT singleton FROM handoff_admit WHERE singleton = 1",
+        )
+        .toArray()[0] !== undefined;
+    if (!pending) return false;
+    this.ctx.storage.sql.exec("DELETE FROM handoff_admit");
+    return true;
+  }
+
+  private closeGracefully(): Promise<void> {
+    this.markHostsYielded();
+    for (const { socket } of this.connections()) {
+      try {
+        socket.send(
+          jsonMessage({
+            reason: "host-ended",
+            type: "room-closed",
+            v: SIGNALING_PROTOCOL_VERSION,
+          }),
+        );
+      } catch {
+        // Closing the socket still ends the room.
+      }
+    }
+    return this.expireRoom();
+  }
+
   private async expireRoom(): Promise<void> {
+    this.expiring = true;
     const room = this.getRoom();
     if (room !== null) {
       for (const { attachment } of this.connections()) {
         this.updatePresence(room.room_id, attachment.peerId, false);
+      }
+      try {
+        await this.env.GAMES.getByName(GAME_DIRECTORY_NAME).remove(room.room_id);
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            error: error instanceof Error ? error.message : String(error),
+            message: "failed to remove public game listing",
+          }),
+        );
       }
     }
     for (const socket of this.ctx.getWebSockets()) {
@@ -911,6 +1284,370 @@ export class SignalingRoom extends DurableObject<Env> {
       "DELETE FROM pending_sessions WHERE expires_at <= ?",
       now,
     );
+  }
+
+  private ensureMatchTables(): void {
+    this.ctx.storage.sql.exec(`
+      CREATE TABLE IF NOT EXISTS match_state (
+        singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
+        phase TEXT NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS join_queue (
+        peer_id TEXT PRIMARY KEY,
+        joined_at INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS public_listing (
+        singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
+        join_code TEXT NOT NULL,
+        name TEXT NOT NULL,
+        map_name TEXT NOT NULL,
+        mode_name TEXT NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS host_departure (
+        singleton INTEGER PRIMARY KEY CHECK (singleton = 1),
+        handoff_at INTEGER NOT NULL
+      );
+      CREATE TABLE IF NOT EXISTS yielded_host (
+        peer_id TEXT PRIMARY KEY
+      );
+      CREATE TABLE IF NOT EXISTS handoff_admit (
+        singleton INTEGER PRIMARY KEY CHECK (singleton = 1)
+      );
+    `);
+  }
+
+  private matchPhase(): MatchPhase {
+    this.ensureMatchTables();
+    const row = this.ctx.storage.sql
+      .exec<{ phase: string }>("SELECT phase FROM match_state WHERE singleton = 1")
+      .toArray()[0];
+    return parseMatchPhase(row?.phase) ?? "lobby";
+  }
+
+  private setMatchPhase(phase: MatchPhase): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec(
+      `INSERT INTO match_state (singleton, phase) VALUES (1, ?)
+       ON CONFLICT(singleton) DO UPDATE SET phase = excluded.phase`,
+      phase,
+    );
+  }
+
+  private queueIds(): string[] {
+    this.ensureMatchTables();
+    return this.ctx.storage.sql
+      .exec<{ peer_id: string }>(
+        "SELECT peer_id FROM join_queue ORDER BY joined_at, peer_id",
+      )
+      .toArray()
+      .map(({ peer_id }) => peer_id);
+  }
+
+  private enqueueGuest(
+    peerId: string,
+    now: number,
+  ): { queuePosition: number; queueSize: number } {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec(
+      "INSERT OR IGNORE INTO join_queue (peer_id, joined_at) VALUES (?, ?)",
+      peerId,
+      now,
+    );
+    const ids = this.queueIds();
+    const index = ids.indexOf(peerId);
+    return {
+      queuePosition: index < 0 ? ids.length : index + 1,
+      queueSize: ids.length,
+    };
+  }
+
+  private dequeueGuest(peerId: string): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec("DELETE FROM join_queue WHERE peer_id = ?", peerId);
+  }
+
+  private clearQueue(): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec("DELETE FROM join_queue");
+  }
+
+  private listingStored(): boolean {
+    this.ensureMatchTables();
+    return (
+      this.ctx.storage.sql
+        .exec<{ singleton: number }>(
+          "SELECT singleton FROM public_listing WHERE singleton = 1",
+        )
+        .toArray()[0] !== undefined
+    );
+  }
+
+  private writeListing(listing: StoredListing): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec(
+      `INSERT INTO public_listing (singleton, join_code, name, map_name, mode_name)
+       VALUES (1, ?, ?, ?, ?)
+       ON CONFLICT(singleton) DO UPDATE SET
+         join_code = excluded.join_code,
+         name = excluded.name,
+         map_name = excluded.map_name,
+         mode_name = excluded.mode_name`,
+      listing.joinCode,
+      listing.name,
+      listing.map,
+      listing.mode,
+    );
+  }
+
+  private clearListing(): void {
+    this.ensureMatchTables();
+    this.ctx.storage.sql.exec("DELETE FROM public_listing");
+  }
+
+  private notifyQueue(): void {
+    const ids = this.queueIds();
+    ids.forEach((peerId, index) => {
+      const target = this.connectionForPeer(peerId);
+      if (target === undefined) return;
+      try {
+        target.socket.send(
+          jsonMessage({
+            position: index + 1,
+            size: ids.length,
+            type: "hold",
+            v: SIGNALING_PROTOCOL_VERSION,
+          }),
+        );
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            error: error instanceof Error ? error.message : String(error),
+            message: "failed to update join queue",
+          }),
+        );
+      }
+    });
+  }
+
+  private admitQueuedGuests(): void {
+    const ids = this.queueIds();
+    this.clearQueue();
+    for (const peerId of ids) {
+      const target = this.connectionForPeer(peerId);
+      if (target === undefined) continue;
+      try {
+        target.socket.send(
+          jsonMessage({ type: "admit", v: SIGNALING_PROTOCOL_VERSION }),
+        );
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            error: error instanceof Error ? error.message : String(error),
+            message: "failed to admit queued player",
+          }),
+        );
+      }
+    }
+  }
+
+  private applyPhase(
+    socket: WebSocket,
+    sender: SocketAttachment,
+    phase: MatchPhase,
+  ): void {
+    if (this.expiring) return;
+    if (sender.role !== "host") {
+      this.sendError(socket, "LISTING_FORBIDDEN", "Only the host can change the match.");
+      return;
+    }
+    const previous = this.matchPhase();
+    this.setMatchPhase(phase);
+    this.broadcastToRole(
+      { phase, type: "phase", v: SIGNALING_PROTOCOL_VERSION },
+      "guest",
+    );
+    if (
+      (previous === "live" && phase === "lobby") ||
+      (phase === "lobby" && this.consumeHandoffAdmit())
+    ) {
+      this.admitQueuedGuests();
+    }
+    this.scheduleListingSync();
+  }
+
+  private scheduleListingSync(): void {
+    if (this.expiring) return;
+    this.ctx.waitUntil(this.syncPublicListing());
+  }
+
+  private listingPayload(
+    room: RoomRow,
+    host: SocketAttachment,
+    listing: StoredListing,
+  ): PublishGameInput {
+    const queued = this.queueIds().length;
+    const connected = this.connections().length;
+    const pending = this.pendingSessionCount(Date.now());
+    const hostName = host.profile?.name ?? "Spartan";
+    return {
+      buildId: room.build_id,
+      capacity: room.capacity,
+      country: host.country ?? null,
+      expiresAt: room.expires_at,
+      hostName: parsePlayerProfile({ name: hostName, style: "sage" }).ok ? hostName : "Spartan",
+      joinCode: listing.joinCode,
+      map: listing.map,
+      mode: listing.mode,
+      name: listing.name,
+      open: connected + pending < room.capacity,
+      phase: this.matchPhase(),
+      players: Math.max(1, connected - queued),
+      queue: queued,
+      roomId: room.room_id,
+      updatedAt: Date.now(),
+    };
+  }
+
+  private async syncPublicListing(): Promise<void> {
+    if (this.expiring) return;
+    const room = this.getRoom();
+    if (room === null || !this.listingStored()) return;
+    const host = this.connections("host")[0];
+    const listing = host?.attachment.publicListing;
+    if (host === undefined || listing === undefined) {
+      if (this.departureDue() !== null) return;
+      this.clearListing();
+      try {
+        await this.env.GAMES.getByName(GAME_DIRECTORY_NAME).remove(room.room_id);
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            error: error instanceof Error ? error.message : String(error),
+            message: "failed to remove public game listing",
+          }),
+        );
+      }
+      return;
+    }
+    try {
+      const published = await this.env.GAMES.getByName(GAME_DIRECTORY_NAME).publish(
+        this.listingPayload(room, host.attachment, listing),
+      );
+      if (!published.ok) {
+        console.error(
+          JSON.stringify({
+            code: published.code,
+            message: "public game listing was rejected",
+          }),
+        );
+      }
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          error: error instanceof Error ? error.message : String(error),
+          message: "failed to publish public game listing",
+        }),
+      );
+    }
+  }
+
+  private async applyListing(
+    socket: WebSocket,
+    sender: SocketAttachment,
+    message: Extract<ReturnType<typeof parseClientMessage>, { ok: true }>["value"],
+  ): Promise<void> {
+    if (message.type !== "listing" || this.expiring) return;
+    const current = safeAttachment(socket);
+    if (current === null || current.departed === true || current.peerId !== sender.peerId) {
+      return;
+    }
+    if (current.role !== "host") {
+      this.sendError(socket, "LISTING_FORBIDDEN", "Only the host can list a game.");
+      return;
+    }
+    const room = this.getRoom();
+    if (room === null) {
+      this.sendError(socket, "LISTING_REJECTED", "This game is no longer available to list.");
+      return;
+    }
+    if (!message.listed) {
+      delete current.publicListing;
+      try {
+        socket.serializeAttachment(current);
+      } catch {
+        this.sendError(socket, "LISTING_REJECTED", "Halo could not update this listing.");
+        return;
+      }
+      this.clearListing();
+      try {
+        await this.env.GAMES.getByName(GAME_DIRECTORY_NAME).remove(room.room_id);
+      } catch (error) {
+        console.error(
+          JSON.stringify({
+            error: error instanceof Error ? error.message : String(error),
+            message: "failed to remove public game listing",
+          }),
+        );
+      }
+      this.sendListingAck(socket, false);
+      return;
+    }
+    if (!hashesMatch(await hashToken(message.ticket), room.guest_ticket_hash)) {
+      this.sendError(socket, "LISTING_REJECTED", "Halo could not list this game.");
+      return;
+    }
+    const listing: StoredListing = {
+      joinCode: `${room.room_id}.${message.ticket}`,
+      map: message.map,
+      mode: message.mode,
+      name: message.name,
+    };
+    const published = await this.env.GAMES.getByName(GAME_DIRECTORY_NAME).publish(
+      this.listingPayload(room, current, listing),
+    );
+    if (!published.ok) {
+      this.sendError(
+        socket,
+        published.code === "DIRECTORY_FULL" ? "DIRECTORY_FULL" : "LISTING_REJECTED",
+        published.code === "DIRECTORY_FULL"
+          ? "The server list is full right now. Your private invite still works."
+          : "Halo could not list this game.",
+      );
+      return;
+    }
+    current.publicListing = listing;
+    try {
+      socket.serializeAttachment(current);
+    } catch {
+      try {
+        await this.env.GAMES.getByName(GAME_DIRECTORY_NAME).remove(room.room_id);
+      } catch {
+        // The listing expires on its own if this cleanup also fails.
+      }
+      this.sendError(socket, "LISTING_REJECTED", "Halo could not update this listing.");
+      return;
+    }
+    this.writeListing(listing);
+    this.sendListingAck(socket, true);
+  }
+
+  private sendListingAck(socket: WebSocket, listed: boolean): void {
+    try {
+      socket.send(
+        jsonMessage({
+          listed,
+          type: "listing",
+          v: SIGNALING_PROTOCOL_VERSION,
+        }),
+      );
+    } catch (error) {
+      console.error(
+        JSON.stringify({
+          error: error instanceof Error ? error.message : String(error),
+          message: "failed to acknowledge game listing",
+        }),
+      );
+    }
   }
 
   private sendError(socket: WebSocket, code: string, message: string): void {

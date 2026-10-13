@@ -108,6 +108,8 @@ int platform_web_online_set_player_customization(
 	int name10);
 int platform_web_online_get_state(void);
 int platform_web_online_get_error(void);
+/* 0 while the match is in the lobby, 1 while it is in progress or on the scoreboard. */
+int platform_web_online_get_match_phase(void);
 void platform_web_online_set_transport_state(int state);
 int platform_web_online_get_transport_state(void);
 

@@ -1,4 +1,6 @@
-/* Private-room signalling and the browser "Play online" experience.
+/* Room signalling and the browser "Play online" experience.
+   Public rooms appear in the server list. A match that has already started
+   holds newcomers until it returns to the lobby.
 
    Gameplay never passes through the room service.  It only exchanges room
    membership and WebRTC descriptions/candidates, then Halo's normal system-
@@ -17,6 +19,7 @@
   var GAME_POLL_MILLISECONDS = 200;
   var TURNSTILE_RENDER_ATTEMPTS = 80;
   var HOST_SETTINGS_STORAGE_KEY = "halo.web.host-settings.v1";
+  var BROWSER_STORAGE_KEY = "halo.web.server-browser.v1";
   var PLAYER_PROFILE_STORAGE_KEY = "halo.web.player-profile.v1";
   var PLAYER_NAME_MAXIMUM_LENGTH = 11;
   var LAST_MAP_INDEX = 12;
@@ -128,6 +131,20 @@
     joinRequested: false,
     wizardStep: "map",
     presenceTimer: 0,
+    browserGames: [],
+    browserRequest: 0,
+    browserTimer: 0,
+    browserLoaded: false,
+    browserSort: { key: "players", order: "desc" },
+    listPublic: false,
+    serverName: null,
+    matchPhase: null,
+    waitingForLobby: false,
+    waitingForHost: false,
+    waitingForHandoff: false,
+    awaitingHandoffReady: false,
+    hostEnded: false,
+    listingSentAt: 0,
   };
 
   function byId(id) {
@@ -215,6 +232,28 @@
     elements.livePlayerOnline = byId("live-player-online");
     elements.livePlayerCampaign = byId("live-player-campaign");
     elements.livePlayerToday = byId("live-player-today");
+    elements.browser = byId("online-browser");
+    elements.browserList = byId("online-browser-list");
+    elements.browserScroll = byId("online-browser-scroll");
+    elements.browserStatus = byId("online-browser-status");
+    elements.browserQuery = byId("online-browser-query");
+    elements.browserMap = byId("online-browser-map");
+    elements.browserMode = byId("online-browser-mode");
+    elements.browserHideFull = byId("online-browser-hide-full");
+    elements.browserRefresh = byId("online-browser-refresh");
+    elements.browserFilters = byId("online-browser-filters");
+    elements.modeTabs = byId("online-mode-tabs");
+    elements.tabBrowse = byId("online-tab-browse");
+    elements.tabHost = byId("online-tab-host");
+    elements.title = byId("online-title");
+    elements.serverName = byId("online-server-name");
+    elements.listPublic = byId("online-list-public");
+    elements.listingNote = byId("invite-listing");
+    elements.sortName = byId("online-browser-heading-name");
+    elements.sortPlayers = byId("online-browser-heading-players");
+    elements.sortQueue = byId("online-browser-heading-queue");
+    elements.sortMap = byId("online-browser-heading-map");
+    elements.sortMode = byId("online-browser-heading-mode");
   }
 
   function playerCountLabel(count, suffix) {
@@ -296,6 +335,12 @@
         throw new Error("Custom room services are allowed only for loopback development.");
       }
     }
+    /* The shipped page names the public room service. A loopback page is a
+       local build, and that service rejects its human-verification token.
+       Talk to the local room service unless ?signal= says otherwise. */
+    if (pageIsLoopback && !query && page.port !== "8787") {
+      return page.protocol + "//" + page.hostname + ":8787";
+    }
     var configured = query || (meta && meta.content);
     if (configured) {
       var parsed = new URL(configured, global.location.href);
@@ -303,10 +348,6 @@
         throw new Error("The room service URL must use HTTP or HTTPS.");
       }
       return parsed.href.replace(/\/$/, "");
-    }
-    if ((page.hostname === "127.0.0.1" || page.hostname === "localhost") &&
-        page.port !== "8787") {
-      return page.protocol + "//" + page.hostname + ":8787";
     }
     return page.origin;
   }
@@ -986,26 +1027,394 @@
       session.active && !session.closing;
   }
 
+  function readListPublic() {
+    return !!(elements.listPublic && elements.listPublic.checked);
+  }
+
+  function ensureServerNameDefault() {
+    if (!elements.serverName || elements.serverName.value.trim()) return;
+    var player = elements.playerName && elements.playerName.value.trim();
+    elements.serverName.value = player ? (player + "'s game").slice(0, 40) : "Open game";
+  }
+
+  function readServerName() {
+    ensureServerNameDefault();
+    var value = elements.serverName ? elements.serverName.value.trim() : "Open game";
+    if (!value || value.length > 40 || !/^[\u0020-\u007E]+$/.test(value) || !/[A-Za-z0-9]/.test(value)) {
+      throw new Error("Server name must be 1-40 letters, numbers, or basic punctuation.");
+    }
+    if (elements.serverName) elements.serverName.value = value;
+    return value;
+  }
+
+  function syncListPublicCopy() {
+    if (!elements.host || !elements.listPublic) return;
+    elements.host.textContent = readListPublic() ? "Host game" : "Create link";
+  }
+
+  function restoreBrowserPreferences() {
+    try {
+      var saved = JSON.parse(global.localStorage.getItem(BROWSER_STORAGE_KEY) || "null");
+      if (saved && typeof saved === "object") {
+        if (elements.listPublic && typeof saved.listed === "boolean") elements.listPublic.checked = saved.listed;
+        if (elements.serverName && typeof saved.serverName === "string") {
+          elements.serverName.value = saved.serverName.slice(0, 40);
+        }
+        if (elements.browserQuery && typeof saved.query === "string") {
+          elements.browserQuery.value = saved.query.slice(0, 40);
+        }
+        if (elements.browserMap && typeof saved.map === "string") elements.browserMap.value = saved.map;
+        if (elements.browserMode && typeof saved.mode === "string") elements.browserMode.value = saved.mode;
+        if (elements.browserHideFull && typeof saved.hideFull === "boolean") {
+          elements.browserHideFull.checked = saved.hideFull;
+        }
+        if (saved.sort === "name" || saved.sort === "players" || saved.sort === "queue" ||
+            saved.sort === "map" || saved.sort === "mode") {
+          session.browserSort.key = saved.sort;
+        }
+        if (saved.order === "asc" || saved.order === "desc") session.browserSort.order = saved.order;
+      }
+    } catch (error) { /* Stored filters are optional. */ }
+    syncListPublicCopy();
+  }
+
+  function saveBrowserPreferences() {
+    try {
+      global.localStorage.setItem(BROWSER_STORAGE_KEY, JSON.stringify({
+        listed: readListPublic(),
+        serverName: elements.serverName ? elements.serverName.value : "",
+        query: elements.browserQuery ? elements.browserQuery.value : "",
+        map: elements.browserMap ? elements.browserMap.value : "all",
+        mode: elements.browserMode ? elements.browserMode.value : "all",
+        hideFull: !!(elements.browserHideFull && elements.browserHideFull.checked),
+        sort: session.browserSort.key,
+        order: session.browserSort.order,
+      }));
+    } catch (error) { /* Private browsing can block storage. */ }
+  }
+
+  function sendListing() {
+    if (session.role !== "host" || !session.listPublic || !session.serverName ||
+        !session.inviteCode || !session.hostSettings) return;
+    var separator = session.inviteCode.indexOf(".");
+    if (separator <= 0) return;
+    session.listingSentAt = Date.now();
+    sendSocket({
+      v: PROTOCOL_VERSION,
+      type: "listing",
+      listed: true,
+      name: session.serverName,
+      map: session.hostSettings.mapName,
+      mode: session.hostSettings.modeName,
+      ticket: session.inviteCode.slice(separator + 1),
+    });
+  }
+
+  function readMatchPhase() {
+    var fn = global.Module && global.Module._platform_web_online_get_match_phase;
+    if (typeof fn !== "function") return "lobby";
+    return fn() === 1 ? "live" : "lobby";
+  }
+
+  function publishMatchPhase() {
+    if (session.role !== "host" || !session.socket) return;
+    var phase = readMatchPhase();
+    if (phase === session.matchPhase) return;
+    session.matchPhase = phase;
+    try {
+      sendSocket({ v: PROTOCOL_VERSION, type: "phase", phase: phase });
+    } catch (error) { /* The next poll retries. */ }
+  }
+
+  function knownOption(select, label) {
+    if (!select || !select.options) return false;
+    return Array.prototype.some.call(select.options, function(option) {
+      return option.textContent.trim() === label || option.value === label;
+    });
+  }
+
+  function normalizeListedGame(value) {
+    if (!value || typeof value.joinCode !== "string" || typeof value.name !== "string") return null;
+    if (value.phase !== "lobby" && value.phase !== "live") return null;
+    if (!knownOption(elements.map, value.map) || !knownOption(elements.mode, value.mode)) return null;
+    if (!Number.isInteger(value.players) || value.players < 1) return null;
+    if (!Number.isInteger(value.capacity) || value.capacity < value.players) return null;
+    if (!Number.isInteger(value.queue) || value.queue < 0) return null;
+    try { parseInvite(value.joinCode); } catch (error) { return null; }
+    if (value.buildId !== buildId()) return null;
+    return {
+      name: value.name,
+      hostName: typeof value.hostName === "string" ? value.hostName : "",
+      map: value.map,
+      mode: value.mode,
+      players: value.players,
+      capacity: value.capacity,
+      queue: value.queue,
+      phase: value.phase,
+      open: value.open !== false && value.players < value.capacity,
+      joinCode: value.joinCode,
+    };
+  }
+
+  function filteredGames() {
+    var query = elements.browserQuery ? elements.browserQuery.value.trim().toLowerCase() : "";
+    var map = elements.browserMap ? elements.browserMap.value : "all";
+    var mode = elements.browserMode ? elements.browserMode.value : "all";
+    var hideFull = !!(elements.browserHideFull && elements.browserHideFull.checked);
+    return session.browserGames.filter(function(game) {
+      if (hideFull && !game.open) return false;
+      if (map !== "all" && game.map !== map) return false;
+      if (mode !== "all" && game.mode !== mode) return false;
+      if (!query) return true;
+      return (game.name + " " + game.hostName + " " + game.map + " " + game.mode)
+        .toLowerCase().indexOf(query) !== -1;
+    }).sort(function(left, right) {
+      var key = session.browserSort.key;
+      var factor = session.browserSort.order === "asc" ? 1 : -1;
+      var a = left[key];
+      var b = right[key];
+      if (typeof a === "number" && typeof b === "number" && a !== b) return (a - b) * factor;
+      return String(a).localeCompare(String(b)) * factor;
+    });
+  }
+
+  function syncSortHeaders() {
+    ["name", "players", "queue", "map", "mode"].forEach(function(key) {
+      var heading = byId("online-browser-heading-" + key);
+      if (!heading) return;
+      if (session.browserSort.key === key) heading.setAttribute("aria-sort", session.browserSort.order === "asc" ? "ascending" : "descending");
+      else heading.removeAttribute("aria-sort");
+    });
+  }
+
+  function renderGames() {
+    var list = elements.browserList;
+    if (!list || typeof document.createElement !== "function") return;
+    syncSortHeaders();
+    var games = filteredGames();
+    var scroll = elements.browserScroll ? elements.browserScroll.scrollTop : 0;
+    list.replaceChildren();
+    if (elements.browserStatus) {
+      var live = games.filter(function(game) { return game.phase === "live" || game.players > 1; }).length;
+      elements.browserStatus.textContent = !session.browserGames.length
+        ? "No public games yet. Host one and leave it public."
+        : !games.length
+          ? "No servers match. Clear the search or turn off Hide full."
+          : games.length + (games.length === 1 ? " server" : " servers") +
+            (live ? " · " + live + " with players" : "");
+    }
+    if (!games.length) {
+      var empty = document.createElement("p");
+      empty.className = "browser-empty";
+      empty.textContent = session.browserGames.length
+        ? "No servers match. Clear the search or turn off Hide full."
+        : "No public games yet. Host one and other players can jump in. If a match is already going, they wait until it ends.";
+      list.appendChild(empty);
+      return;
+    }
+    games.forEach(function(game) {
+      var row = document.createElement("tr");
+      var server = document.createElement("td");
+      var serverText = document.createElement("div");
+      serverText.className = "browser-server";
+      var title = document.createElement("strong");
+      title.textContent = game.name;
+      serverText.appendChild(title);
+      if (game.hostName && game.hostName !== game.name) {
+        var host = document.createElement("span");
+        host.textContent = game.hostName;
+        serverText.appendChild(host);
+      }
+      server.appendChild(serverText);
+      var players = document.createElement("td");
+      var meter = document.createElement("div");
+      var ratio = game.capacity ? game.players / game.capacity : 0;
+      meter.className = "player-meter";
+      meter.dataset.fill = !game.open ? "full" : ratio >= 0.75 ? "busy" : "open";
+      var fill = document.createElement("span");
+      fill.style.width = Math.max(6, Math.min(100, Math.round(ratio * 100))) + "%";
+      meter.appendChild(fill);
+      meter.setAttribute("aria-hidden", "true");
+      var count = document.createElement("div");
+      count.textContent = game.players + "/" + game.capacity;
+      players.appendChild(meter);
+      players.appendChild(count);
+      var waiting = document.createElement("td");
+      waiting.textContent = game.queue ? String(game.queue) : "—";
+      var map = document.createElement("td");
+      map.textContent = game.map;
+      var mode = document.createElement("td");
+      mode.textContent = game.mode;
+      var action = document.createElement("td");
+      var button = document.createElement("button");
+      button.type = "button";
+      button.className = "browser-join" + (game.open ? " primary" : "");
+      var queued = game.phase === "live";
+      button.textContent = game.open ? (queued ? "Queue" : "Join") : "Full";
+      button.disabled = !game.open || humanVerification.busy;
+      if (!game.open) button.title = "This room is full.";
+      else if (queued) button.title = "You'll join when the current game ends.";
+      button.addEventListener("click", function() {
+        if (!game.open) return;
+        try { parseInvite(game.joinCode); } catch (error) {
+          if (elements.browserStatus) elements.browserStatus.textContent = error.message;
+          return;
+        }
+        showDialog();
+        showJoinConfirmation(game.joinCode,
+          queued
+            ? "Choose your name and color. You'll wait until " + game.name + " ends, then join the next lobby."
+            : "Choose your name and color, then join " + game.name + ".");
+      });
+      action.appendChild(button);
+      row.appendChild(server);
+      row.appendChild(players);
+      row.appendChild(waiting);
+      row.appendChild(map);
+      row.appendChild(mode);
+      row.appendChild(action);
+      list.appendChild(row);
+    });
+    if (elements.browserScroll) elements.browserScroll.scrollTop = scroll;
+  }
+
+  function showBrowserSkeleton() {
+    var list = elements.browserList;
+    if (!list || typeof document.createElement !== "function") return;
+    list.replaceChildren();
+    for (var index = 0; index < 4; index += 1) {
+      var row = document.createElement("tr");
+      var cell = document.createElement("td");
+      cell.colSpan = 6;
+      var bar = document.createElement("div");
+      bar.className = "browser-skeleton";
+      cell.appendChild(bar);
+      row.appendChild(cell);
+      list.appendChild(row);
+    }
+  }
+
+  async function loadGames(manual) {
+    if (!elements.browserList) return;
+    var requestId = ++session.browserRequest;
+    if (elements.browserRefresh) {
+      elements.browserRefresh.dataset.loading = "true";
+      elements.browserRefresh.disabled = true;
+      if (manual) elements.browserRefresh.textContent = "Refreshing…";
+    }
+    if (!session.browserLoaded) {
+      showBrowserSkeleton();
+      if (elements.browserStatus) elements.browserStatus.textContent = "Loading the server list…";
+    }
+    try {
+      var result = await fetchJson("/v1/games?buildId=" + encodeURIComponent(buildId()));
+      if (requestId !== session.browserRequest) return;
+      if (!result || result.v !== PROTOCOL_VERSION || !Array.isArray(result.games)) {
+        throw new Error("The server list came back incomplete.");
+      }
+      session.browserGames = result.games.map(normalizeListedGame).filter(Boolean);
+      session.browserLoaded = true;
+      renderGames();
+    } catch (error) {
+      if (requestId !== session.browserRequest) return;
+      var message = error && error.haloStatus === 429
+        ? "Too many refreshes. Wait a moment and try again."
+        : error && error.haloStatus === 404
+          ? "The server list isn't available on this build yet."
+          : "The server list didn't load. Refresh to try again.";
+      if (elements.browserStatus) elements.browserStatus.textContent = message;
+    } finally {
+      if (requestId === session.browserRequest && elements.browserRefresh) {
+        elements.browserRefresh.dataset.loading = "false";
+        elements.browserRefresh.disabled = !!humanVerification.busy;
+        elements.browserRefresh.textContent = "Refresh";
+      }
+    }
+  }
+
+  function showHome() {
+    if (elements.browser) showBrowser();
+    else showSetup();
+  }
+
+  function selectTab(browse) {
+    if (elements.tabBrowse) elements.tabBrowse.setAttribute("aria-selected", browse ? "true" : "false");
+    if (elements.tabHost) elements.tabHost.setAttribute("aria-selected", browse ? "false" : "true");
+    if (elements.modeTabs) elements.modeTabs.hidden = false;
+  }
+
+  function stopBrowserRefresh() {
+    if (session.browserTimer) global.clearInterval(session.browserTimer);
+    session.browserTimer = 0;
+  }
+
+  function dismissIdleOnline() {
+    if (session.active) return;
+    session.pendingInvite = null;
+    setHeader("Play online", "offline");
+    setStatus("");
+  }
+
+  function showBrowser() {
+    if (!elements.browser) {
+      showSetup();
+      return;
+    }
+    if (elements.dialog) elements.dialog.dataset.view = "browse";
+    if (elements.title) elements.title.textContent = "Server browser";
+    elements.description.textContent =
+      "Join an open lobby, or queue for a game that's already playing.";
+    selectTab(true);
+    if (!session.active) setHeader("Play online", "offline");
+    elements.browser.hidden = false;
+    if (elements.wizardSteps) elements.wizardSteps.hidden = true;
+    elements.setup.hidden = true;
+    elements.progress.hidden = true;
+    elements.invite.hidden = true;
+    if (elements.joinConfirm) elements.joinConfirm.hidden = true;
+    setProfileLocked(false);
+    renderTurnstile("join_room");
+    setStatus("");
+    if (!session.browserTimer) {
+      session.browserTimer = global.setInterval(function() {
+        if (!elements.dialog.open || elements.dialog.dataset.view !== "browse") return;
+        loadGames(false);
+      }, 8000);
+    }
+    loadGames(false);
+  }
+
   function showSetup() {
     session.joinRequested = false;
     if (elements.dialog) elements.dialog.dataset.view = "setup";
+    if (elements.title) elements.title.textContent = "Host a game";
     if (elements.wizardSteps) elements.wizardSteps.hidden = false;
     elements.setup.hidden = false;
+    if (elements.browser) elements.browser.hidden = true;
+    stopBrowserRefresh();
+    selectTab(false);
+    if (!session.active) setHeader("Play online", "offline");
     elements.invite.hidden = true;
     elements.progress.hidden = true;
     if (elements.joinConfirm) elements.joinConfirm.hidden = true;
-    setWizardStep("map");
+    setWizardStep(session.wizardStep || "map");
     setProfileLocked(false);
     renderTurnstile("create_room");
     setStatus("");
-    elements.description.textContent =
-      "Pick a map and mode, then send the invite link to your friends.";
+    ensureServerNameDefault();
+    elements.description.textContent = readListPublic()
+      ? "Pick a map and mode. The room shows up on the server list."
+      : "Pick a map and mode, then send the invite link to your friends.";
+    syncListPublicCopy();
   }
 
   function showProgress() {
     if (elements.dialog) elements.dialog.dataset.view = "progress";
     if (elements.wizardSteps) elements.wizardSteps.hidden = session.role === "guest";
     elements.setup.hidden = true;
+    if (elements.browser) elements.browser.hidden = true;
+    if (elements.modeTabs) elements.modeTabs.hidden = true;
+    stopBrowserRefresh();
     elements.invite.hidden = true;
     elements.progress.hidden = false;
     if (elements.joinConfirm) elements.joinConfirm.hidden = true;
@@ -1024,15 +1433,18 @@
     if (elements.dialog.open) elements.dialog.close();
   }
 
-  function showJoinConfirmation(invite) {
+  function showJoinConfirmation(invite, summary) {
     session.pendingInvite = invite;
     if (elements.dialog) elements.dialog.dataset.view = "join";
     if (elements.wizardSteps) elements.wizardSteps.hidden = true;
     elements.setup.hidden = true;
+    if (elements.browser) elements.browser.hidden = true;
+    if (elements.modeTabs) elements.modeTabs.hidden = true;
+    stopBrowserRefresh();
     elements.invite.hidden = true;
     elements.progress.hidden = true;
     if (elements.joinConfirm) elements.joinConfirm.hidden = false;
-    if (elements.joinSummary) elements.joinSummary.textContent =
+    if (elements.joinSummary) elements.joinSummary.textContent = summary ||
       "Choose your name and color, then join your friend's game.";
     elements.description.textContent = "You're invited.";
     setHeader("Ready to join", "waiting");
@@ -1331,6 +1743,130 @@
     }
   }
 
+  function optionIndex(select, label) {
+    if (!select || !select.options) return 0;
+    for (var index = 0; index < select.options.length; index++) {
+      if (select.options[index].textContent.trim() === label) {
+        var value = Number(select.options[index].value);
+        return Number.isInteger(value) ? value : index;
+      }
+    }
+    return 0;
+  }
+
+  function settingsFromNames(mapName, modeName) {
+    return {
+      mapIndex: optionIndex(elements.map, mapName),
+      modeIndex: optionIndex(elements.mode, modeName),
+      mapName: mapName,
+      modeName: modeName,
+      advanced: null,
+    };
+  }
+
+  function removeAllPeers() {
+    Array.from(session.peerPromises.keys()).forEach(removePeer);
+  }
+
+  function endHostedGame() {
+    if (session.hostEnded && session.leavePromise) return;
+    session.hostEnded = true;
+    session.closing = true;
+    leave(false).then(function() {
+      showDialog();
+      showHome();
+      setHeader("Play online", "offline");
+      setStatus("The host ended the game. Choose another room, or host a new one.");
+      setBusy(false);
+      if (elements.browserQuery && typeof elements.browserQuery.focus === "function") {
+        elements.browserQuery.focus();
+      }
+    });
+  }
+
+  async function acceptHandoff(message, generation, operation) {
+    var guestTicket = session.roomTicket;
+    session.role = "host";
+    syncTelemetryContext();
+    session.roomTicket = message.ticket;
+    session.waitingForLobby = false;
+    session.waitingForHost = false;
+    session.waitingForHandoff = false;
+    session.guestWasJoined = false;
+    session.hostWasReady = false;
+    session.gameCommandIssued = false;
+    session.listPublic = message.listed === true;
+    session.serverName = message.listed === true ? message.name : null;
+    session.hostSettings = settingsFromNames(message.map, message.mode);
+    if (session.room && session.room.id && guestTicket) {
+      session.inviteCode = session.room.id + "." + guestTicket;
+      session.inviteUrl = makeInviteUrl(session.inviteCode);
+    }
+    removeAllPeers();
+    var peers = Array.isArray(message.peers) ? message.peers : [];
+    await Promise.all(peers.map(function(peer) {
+      return ensurePeer(peer, generation, operation);
+    }));
+    showDialog();
+    showProgress();
+    setHeader("You're the host", "waiting");
+    setStatus("The host left. You're starting the next lobby.");
+    try {
+      try { requestGame(COMMAND.CANCEL); } catch (cancelError) { /* Already at the menu. */ }
+      requestConfiguredHost(session.hostSettings);
+      session.gameCommandIssued = true;
+      session.awaitingHandoffReady = true;
+      startGamePolling();
+    } catch (error) {
+      leave(true);
+    }
+  }
+
+  async function followHandoff(message, generation, operation) {
+    session.waitingForHandoff = true;
+    session.waitingForHost = false;
+    session.waitingForLobby = false;
+    session.guestWasJoined = false;
+    session.gameCommandIssued = false;
+    try { requestGame(COMMAND.CANCEL); } catch (error) { /* Not in a match. */ }
+    removeAllPeers();
+    if (typeof message.hostPeerId === "string" && typeof message.identifier === "string") {
+      await ensurePeer({
+        peerId: message.hostPeerId,
+        identifier: message.identifier,
+        role: "host",
+      }, generation, operation);
+    }
+    showDialog();
+    showProgress();
+    setHeader("New host", "waiting");
+    setStatus((message.hostName || "Another player") +
+      " is starting the next lobby. You'll join when it's ready.");
+  }
+
+  function beginGuestJoin() {
+    if (session.role !== "guest" || session.gameCommandIssued || session.waitingForLobby) return;
+    try {
+      applyPlayerCustomization(session.profile);
+      requestGame(COMMAND.JOIN);
+      session.gameCommandIssued = true;
+      startGamePolling();
+      setStatus("Connected. Finding the Halo lobby…");
+    } catch (error) {
+      fail(error);
+    }
+  }
+
+  function showQueueStatus(position, size) {
+    var place = Number(position) > 0 && Number(size) > 0
+      ? "You're #" + position + " of " + size + ". "
+      : "";
+    setHeader("In queue", "waiting");
+    setStatus(place + "This game is in progress. You'll join when it ends.");
+    showDialog();
+    showProgress();
+  }
+
   function handleTransportState(event) {
     if (!session.active || !event || !event.peerId ||
         !session.peerPromises.has(event.peerId)) return;
@@ -1338,16 +1874,10 @@
     updateAggregateTransportState();
     if (event.state === "connected") {
       determineConnectionPath(event.peerId);
-      if (session.role === "guest" && !session.gameCommandIssued) {
-        try {
-          applyPlayerCustomization(session.profile);
-          requestGame(COMMAND.JOIN);
-          session.gameCommandIssued = true;
-          startGamePolling();
-          setStatus("Connected. Finding your friend's Halo lobby…");
-        } catch (error) {
-          fail(error);
-        }
+      if (session.waitingForHandoff) {
+        setStatus("Connected to the new host. Waiting for the lobby…");
+      } else if (session.role === "guest" && !session.gameCommandIssued && !session.waitingForLobby) {
+        beginGuestJoin();
       } else if (session.role === "host") {
         global.setTimeout(function() {
           if (elements.dialog.open && session.active) elements.dialog.close();
@@ -1397,6 +1927,10 @@
     if (message.type === "welcome") {
       session.selfPeerId = message.self && message.self.peerId;
       session.role = message.self && message.self.role;
+      if (message.admission === "hold") {
+        session.waitingForLobby = true;
+        showQueueStatus(message.queuePosition, message.queueSize);
+      }
       syncTelemetryContext();
       updateLocalRoster();
       var peers = Array.isArray(message.peers) ? message.peers : [];
@@ -1411,25 +1945,40 @@
         session.roster.set(joined.peerId, joined);
         renderRoster();
       }
+      if (message.peer && message.peer.role === "host" && session.waitingForHost) {
+        session.waitingForHost = false;
+        setHeader("Host returned", "waiting");
+        setStatus("The host is back. Reconnecting…");
+      }
       await ensurePeer(message.peer, generation, operation);
       return;
     }
     if (message.type === "peer-left") {
       session.roster.delete(message.peerId);
       renderRoster();
+      if (message.reason === "host-away" && session.role === "guest") {
+        session.waitingForHost = true;
+        showDialog();
+        showProgress();
+        setHeader("Host disconnected", "waiting");
+        setStatus("The host disconnected. Waiting for them to return…");
+      }
       var departedTransportPeerId = session.peerAliases.get(message.peerId) || message.peerId;
       if (session.peerStates.get(departedTransportPeerId) === "connected") {
         session.peerAliases.delete(message.peerId);
         if (session.peerSignalTargets.get(departedTransportPeerId) === message.peerId) {
           session.peerSignalTargets.delete(departedTransportPeerId);
         }
-        elements.detail.textContent =
-          "Gameplay is still connected directly; the room link closed.";
+        if (message.reason !== "host-away" && !session.waitingForHandoff) {
+          elements.detail.textContent =
+            "Gameplay is still connected directly; the room link closed.";
+        }
         return;
       }
       removePeer(departedTransportPeerId);
+      if (session.waitingForHandoff || session.waitingForHost || session.role === "host") return;
       if (session.role === "guest" && message.reason === "host-disconnected") {
-        fail(new Error("The host closed the room."));
+        endHostedGame();
       }
       return;
     }
@@ -1458,7 +2007,54 @@
       }
       return;
     }
+    if (message.type === "hold") {
+      session.waitingForLobby = true;
+      showQueueStatus(message.position, message.size);
+      return;
+    }
+    if (message.type === "admit") {
+      session.waitingForLobby = false;
+      session.waitingForHandoff = false;
+      setHeader("Joining lobby", "waiting");
+      setStatus("The game ended. Joining the lobby…");
+      if (session.transportConnected && !session.gameCommandIssued) beginGuestJoin();
+      return;
+    }
+    if (message.type === "listing") {
+      if (elements.listingNote) elements.listingNote.hidden = message.listed === false;
+      return;
+    }
+    if (message.type === "host-handoff") {
+      if (typeof message.ticket === "string") {
+        await acceptHandoff(message, generation, operation);
+      } else {
+        await followHandoff(message, generation, operation);
+      }
+      return;
+    }
+    if (message.type === "room-closed") {
+      endHostedGame();
+      return;
+    }
+    if (message.type === "phase") {
+      if (message.phase === "lobby" && session.waitingForHandoff) {
+        session.waitingForHandoff = false;
+        if (session.transportConnected && !session.gameCommandIssued) beginGuestJoin();
+      }
+      return;
+    }
     if (message.type === "error") {
+      if (message.code === "LISTING_REJECTED" || message.code === "LISTING_FORBIDDEN" ||
+          message.code === "DIRECTORY_FULL" ||
+          (session.role === "host" && message.code === "INVALID_MESSAGE" &&
+           session.listingSentAt && Date.now() - session.listingSentAt < 5000)) {
+        if (elements.listingNote) {
+          elements.listingNote.hidden = false;
+          elements.listingNote.textContent = message.message ||
+            "This room stayed private. The invite link still works.";
+        }
+        return;
+      }
       if (session.role === "host" &&
           (message.code === "PEER_NOT_FOUND" ||
            message.code === "SIGNAL_ROUTE_FORBIDDEN" ||
@@ -1540,6 +2136,7 @@
             type: "profile",
             profile: session.profile,
           });
+          try { sendListing(); } catch (listingError) { /* A private room still works. */ }
         } catch (error) {
           settled = true;
           socket.close();
@@ -1670,9 +2267,10 @@
     return error && error.haloStatus === 403 && error.haloCode === "TURNSTILE_REJECTED";
   }
 
-  async function recoverTurnstile(action, invite) {
+  async function recoverTurnstile(action, invite, wizardStep) {
     resetTurnstile();
     await leave(false);
+    if (wizardStep) session.wizardStep = wizardStep;
     showDialog();
     if (action === "join_room") showJoinConfirmation(invite);
     else showSetup();
@@ -1685,15 +2283,21 @@
   async function host(value, turnstileToken) {
     if (!session.runtimeReady) throw new Error("Halo is still starting.");
     var settings = normalizeHostSettings(value);
+    var listPublic = value && typeof value.listPublic === "boolean" ? value.listPublic : readListPublic();
+    var serverName = listPublic ? readServerName() : null;
     var profile = readPlayerProfile();
     saveHostSettings(settings);
     savePlayerProfile(profile);
+    var wizardStep = session.wizardStep;
     await leave(false);
     var operation = ++session.operationGeneration;
     session.active = true;
     session.role = "host";
     syncTelemetryContext();
     session.hostSettings = settings;
+    session.listPublic = listPublic;
+    session.serverName = serverName;
+    saveBrowserPreferences();
     session.closing = false;
     renderRoster();
     showDialog();
@@ -1746,7 +2350,7 @@
       if (operation === session.operationGeneration && (!error || !error.haloCanceled)) {
         if (isTurnstileRejection(error)) {
           recoveredVerification = true;
-          await recoverTurnstile("create_room");
+          await recoverTurnstile("create_room", null, wizardStep);
         } else {
           fail(error);
         }
@@ -1840,6 +2444,16 @@
       return;
     }
     if (session.role === "host") {
+      if (session.awaitingHandoffReady) {
+        if (state === GAME_STATE.HOSTING) {
+          session.awaitingHandoffReady = false;
+          session.matchPhase = null;
+          publishMatchPhase();
+          try { sendListing(); } catch (error) { /* The invite still works. */ }
+        }
+      } else {
+        publishMatchPhase();
+      }
       if (state === GAME_STATE.HOSTING) {
         if (!session.hostWasReady) showInvite();
         session.hostWasReady = true;
@@ -1875,6 +2489,12 @@
         if (canvas) canvas.focus();
       }, 700);
     } else if (session.guestWasJoined && state === GAME_STATE.IDLE) {
+      if (session.waitingForHost || session.waitingForHandoff) {
+        setStatus(session.waitingForHandoff
+          ? "The match ended. Waiting for the next lobby…"
+          : "The match ended. Waiting to see if the host returns…");
+        return;
+      }
       leave(true);
     }
   }
@@ -1907,6 +2527,15 @@
     session.pendingInvite = null;
     session.joinRequested = false;
     session.wizardStep = "map";
+    session.listPublic = false;
+    session.serverName = null;
+    session.matchPhase = null;
+    session.waitingForLobby = false;
+    session.waitingForHost = false;
+    session.waitingForHandoff = false;
+    session.awaitingHandoffReady = false;
+    session.hostEnded = false;
+    session.listingSentAt = 0;
     syncTelemetryContext();
     renderRoster();
   }
@@ -1918,12 +2547,20 @@
       session.closing = true;
       var pendingWork = [session.messageChain].concat(Array.from(session.peerPromises.values()));
       if (session.role === "host" && session.room && session.roomTicket) {
-        fetchJson("/v1/rooms/" + encodeURIComponent(session.room.id), {
-          method: "DELETE",
-          body: JSON.stringify({ ticket: session.roomTicket }),
-        }).catch(function() {
-          /* The room expires automatically if revocation cannot reach the service. */
-        });
+        var handoff = { ticket: session.roomTicket, listed: session.listPublic === true };
+        if (session.hostSettings) {
+          handoff.map = session.hostSettings.mapName;
+          handoff.mode = session.hostSettings.modeName;
+        }
+        if (session.serverName) handoff.name = session.serverName;
+        try {
+          await fetchJson("/v1/rooms/" + encodeURIComponent(session.room.id), {
+            method: "DELETE",
+            body: JSON.stringify(handoff),
+          });
+        } catch (error) {
+          /* A dropped request still ends the room once the host socket closes. */
+        }
       }
       stopHeartbeat();
       stopGamePolling();
@@ -1944,9 +2581,10 @@
       try { setGameTransportState(TRANSPORT_STATE.DISCONNECTED); } catch (error) { /* runtime unavailable */ }
       resetSessionState();
       setHeader("Play online", "offline");
-      elements.detail.textContent = "Private invite room · gameplay connects peer-to-peer when possible";
+      elements.detail.textContent =
+        "Public rooms are listed here. Gameplay still connects peer-to-peer when it can.";
       if (returnToSetup !== false) {
-        showSetup();
+        showHome();
         setBusy(false);
       }
     })();
@@ -1964,13 +2602,13 @@
     var wasActive = session.active;
     leave(false).then(function() {
       showDialog();
-      showSetup();
+      showHome();
       setStatus(message, "error");
       setBusy(false);
     });
     if (!wasActive) {
       showDialog();
-      showSetup();
+      showHome();
       setStatus(message, "error");
     }
   }
@@ -2031,18 +2669,19 @@
         return;
       }
       showDialog();
-      if (!session.active && session.pendingInvite) showJoinConfirmation(session.pendingInvite);
-      else if (!session.active) showSetup();
+      if (!session.active) showHome();
       else showProgress();
     });
     elements.close.addEventListener("click", function() {
       session.joinRequested = false;
       elements.dialog.close();
+      dismissIdleOnline();
     });
     elements.dialog.addEventListener("cancel", function(event) {
       event.preventDefault();
       session.joinRequested = false;
       elements.dialog.close();
+      dismissIdleOnline();
     });
     elements.hostForm.addEventListener("submit", function(event) {
       event.preventDefault();
@@ -2118,6 +2757,63 @@
     };
     if (elements.playerName) elements.playerName.addEventListener("input", updateProfilePreview);
     if (elements.styleOptions) elements.styleOptions.addEventListener("change", updateProfilePreview);
+    if (elements.tabBrowse) {
+      elements.tabBrowse.addEventListener("click", function() {
+        if (!session.active) showBrowser();
+      });
+    }
+    if (elements.tabHost) {
+      elements.tabHost.addEventListener("click", function() {
+        if (!session.active) showSetup();
+      });
+    }
+    if (elements.browserFilters) {
+      elements.browserFilters.addEventListener("submit", function(event) { event.preventDefault(); });
+      elements.browserFilters.addEventListener("input", function() {
+        saveBrowserPreferences();
+        renderGames();
+      });
+      elements.browserFilters.addEventListener("change", function() {
+        saveBrowserPreferences();
+        renderGames();
+      });
+    }
+    if (elements.browserRefresh) {
+      elements.browserRefresh.addEventListener("click", function() { loadGames(true); });
+    }
+    ["name", "players", "queue", "map", "mode"].forEach(function(key) {
+      var heading = byId("online-browser-heading-" + key);
+      if (!heading) return;
+      heading.addEventListener("click", function(event) {
+        var button = event.target && event.target.closest ? event.target.closest("button") : event.target;
+        if (!button || !heading.contains(button)) return;
+        if (session.browserSort.key === key) {
+          session.browserSort.order = session.browserSort.order === "asc" ? "desc" : "asc";
+        } else {
+          session.browserSort.key = key;
+          session.browserSort.order = key === "players" || key === "queue" ? "desc" : "asc";
+        }
+        saveBrowserPreferences();
+        renderGames();
+      });
+    });
+    if (elements.listPublic) {
+      elements.listPublic.addEventListener("change", function() {
+        syncListPublicCopy();
+        saveBrowserPreferences();
+        if (elements.dialog && elements.dialog.dataset.view === "setup") {
+          elements.description.textContent = readListPublic()
+            ? "Pick a map and mode. The room shows up on the server list."
+            : "Pick a map and mode, then send the invite link to your friends.";
+        }
+      });
+    }
+    if (elements.dialog) {
+      elements.dialog.addEventListener("close", function() {
+        stopBrowserRefresh();
+        dismissIdleOnline();
+      });
+    }
     elements.copy.addEventListener("click", function() {
       copyInvite().catch(function() {
         elements.inviteLink.focus();
@@ -2136,6 +2832,7 @@
     collectElements();
     restoreHostSettings();
     restorePlayerProfile();
+    restoreBrowserPreferences();
     attachEvents();
     renderRoster();
     setBusy(false);
