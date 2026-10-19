@@ -397,7 +397,7 @@ BOOL platform_video_initialize(unsigned long width, unsigned long height)
 #endif
 
 #ifdef HALO_WEB
-	platform_window = SDL_CreateWindow("Halo", (int)(width * scale), (int)(height * scale),
+	platform_window = SDL_CreateWindow("Combat Lab", (int)(width * scale), (int)(height * scale),
 		SDL_WINDOW_OPENGL);
 #elif defined(HALO_ANDROID)
 	platform_window = SDL_CreateWindow("Halo", (int)(width * scale), (int)(height * scale),
