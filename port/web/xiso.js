@@ -96,7 +96,7 @@
         };
       }
     }
-    throw new XisoError("This is not an Xbox XDVDFS disc image.");
+    throw new XisoError("This is not a supported XDVDFS disc image.");
   }
 
   async function readDirectory(image, partition, sector, size, description) {
@@ -194,7 +194,7 @@
       byName.set(name, entry);
     }
     if (!byName.has("ui.map")) {
-      throw new XisoError("The maps directory has no ui.map; this is not a Halo disc.");
+      throw new XisoError("The maps directory has no ui.map; choose a supported game disc.");
     }
     return { partition: volume.partition, files, byName };
   }
@@ -202,7 +202,7 @@
   function storageManager() {
     if (!global.navigator || !global.navigator.storage ||
         typeof global.navigator.storage.getDirectory !== "function") {
-      throw new XisoError("This browser does not support the private local storage Halo needs.");
+      throw new XisoError("This browser does not support the private local storage the game needs.");
     }
     return global.navigator.storage;
   }
@@ -215,7 +215,7 @@
     const manifest = JSON.parse(await file.text());
     if (!manifest || manifest.version !== INSTALL_VERSION ||
         !manifest.maps || typeof manifest.maps !== "object") {
-      throw new XisoError("The local Halo data manifest is invalid.");
+      throw new XisoError("The local game-data manifest is invalid.");
     }
     return { root, install, manifest };
   }
@@ -249,11 +249,11 @@
 
   async function install(image, onProgress) {
     const report = typeof onProgress === "function" ? onProgress : () => {};
-    report({ phase: "catalog", message: "Checking the Xbox disc image…" });
+    report({ phase: "catalog", message: "Checking the disc image…" });
     const catalog = await readCatalog(image);
     const missing = REQUIRED_MAPS.filter(name => !catalog.byName.has(name));
     if (missing.length) {
-      throw new XisoError(`This Halo disc is missing required maps: ${missing.join(", ")}.`);
+      throw new XisoError(`This disc is missing required maps: ${missing.join(", ")}.`);
     }
     const entries = REQUIRED_MAPS.map(name => catalog.byName.get(name));
     const totalBytes = entries.reduce((sum, entry) => sum + entry.size, 0);
@@ -268,7 +268,7 @@
       if (Number.isFinite(estimate.quota) && Number.isFinite(estimate.usage) &&
           estimate.quota - estimate.usage < totalBytes + (64 << 20)) {
         throw new XisoError(
-          `Not enough browser storage. Halo needs about ${formatBytes(totalBytes)} free.`);
+          `Not enough browser storage. The game needs about ${formatBytes(totalBytes)} free.`);
       }
     }
     if (typeof storage.persist === "function") {

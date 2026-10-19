@@ -36,7 +36,7 @@
       return;
     }
     event.respondWith(fetch(event.request).then(response => {
-      if (response.type === "opaque") return response;
+      if (response.type === "opaque" || response.type === "opaqueredirect") return response;
       const headers = new Headers(response.headers);
       headers.set("Cross-Origin-Opener-Policy", "same-origin");
       headers.set("Cross-Origin-Embedder-Policy", "require-corp");

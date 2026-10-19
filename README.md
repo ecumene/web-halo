@@ -1,7 +1,7 @@
 # Halo: Combat Evolved for Linux, Windows and Android
 
 > This repository is the source-only home of the independently hosted browser
-> version at [mitchellhynes.com/halo](https://mitchellhynes.com/halo). It does
+> version at [Combat Lab](https://mitchellhynes.com/combat-lab/). It does
 > not include proprietary Halo game data, generated web builds, deployment
 > secrets, or local agent/workspace material. CI enforces those boundaries.
 
@@ -63,7 +63,7 @@ On Android:
 ### Play in a browser (experimental)
 
 The public multiplayer build is available at
-[mitchellhynes.com/halo](https://mitchellhynes.com/halo).
+[Combat Lab](https://mitchellhynes.com/combat-lab/).
 To comply with copyright law and respect the original Halo CE decompilation team, the site
 does not host or transmit Halo game data. On first use, choose an XISO made from
 your own Xbox copy. The browser validates it locally, copies only the required

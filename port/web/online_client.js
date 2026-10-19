@@ -72,9 +72,9 @@
     FAILED: 3,
   });
   var GAME_ERRORS = Object.freeze({
-    1: "Halo could not open the host lobby.",
-    2: "Halo could not start its multiplayer client.",
-    3: "Halo could not open the pregame lobby.",
+    1: "The game could not open the host lobby.",
+    2: "The game could not start its multiplayer client.",
+    3: "The game could not open the pregame lobby.",
     4: "The host rejected or ended the join.",
     5: "The host lobby did not answer within 90 seconds.",
   });
@@ -197,7 +197,6 @@
     elements.styleOptions = byId("online-style-options");
     elements.profilePreview = byId("online-profile-preview");
     elements.profilePreviewName = byId("online-profile-preview-name");
-    elements.spartanImage = byId("online-spartan-image");
     elements.joinConfirm = byId("online-join-confirm");
     elements.joinProfile = byId("online-join-profile");
     elements.joinSummary = byId("online-join-summary");
@@ -409,7 +408,7 @@
           setVerificationState(
             "ready",
             action === "join_room"
-              ? (session.runtimeReady ? "Verified — ready to join." : "Verified — Halo is still loading.")
+              ? (session.runtimeReady ? "Verified — ready to join." : "Verified — the game is still loading.")
               : "Verified — ready to create your link.");
           if (action !== "join_room" || session.runtimeReady) setStatus("");
           maybeStartRequestedJoin();
@@ -468,7 +467,7 @@
       return;
     }
     if (!session.runtimeReady) {
-      setStatus("Halo is still loading. Your game will join automatically when it is ready.");
+      setStatus("The game is still loading. It will join automatically when ready.");
       return;
     }
     if (!turnstileReady("join_room")) {
@@ -608,7 +607,7 @@
     } catch (error) {
       /* A friendly fallback does not require cryptographic randomness. */
     }
-    return "Spartan " + value;
+    return "Pilot " + value;
   }
 
   function normalizePlayerProfile(value) {
@@ -634,13 +633,6 @@
   function renderPlayerProfilePreview(profile) {
     if (elements.profilePreview) elements.profilePreview.dataset.style = profile.style;
     if (elements.profilePreviewName) elements.profilePreviewName.textContent = profile.name;
-    if (elements.spartanImage) {
-      if (elements.spartanImage.dataset.style !== profile.style) {
-        elements.spartanImage.src = "assets/ui/spartan/" + profile.style + ".png";
-        elements.spartanImage.dataset.style = profile.style;
-      }
-      elements.spartanImage.alt = profile.name + " in " + profile.style + " armor";
-    }
   }
 
   function writePlayerProfile(profile) {
@@ -689,7 +681,7 @@
       args.push(index < profile.name.length ? profile.name.charCodeAt(index) : 0);
     }
     if (!fn.apply(null, args)) {
-      throw new Error("Halo could not apply your player customization.");
+      throw new Error("The game could not apply your player customization.");
     }
   }
 
@@ -1036,7 +1028,7 @@
       "Choose your name and color, then join your friend's game.";
     elements.description.textContent = "You're invited.";
     setHeader("Ready to join", "waiting");
-    setStatus(session.runtimeReady ? "" : "Loading Halo…");
+    setStatus(session.runtimeReady ? "" : "Loading game…");
     setProfileLocked(false);
     renderTurnstile("join_room");
     setBusy(false);
@@ -1121,13 +1113,13 @@
 
   function wasmFunction(name) {
     var fn = global.Module && global.Module["_" + name];
-    if (typeof fn !== "function") throw new Error("Halo is still starting.");
+    if (typeof fn !== "function") throw new Error("The game is still starting.");
     return fn;
   }
 
   function requestGame(command) {
     if (!wasmFunction("platform_web_online_request")(command)) {
-      throw new Error("Halo could not accept the online-play request.");
+      throw new Error("The game could not accept the online-play request.");
     }
   }
 
@@ -1151,7 +1143,7 @@
         settings.mapIndex, settings.modeIndex);
     }
     if (!accepted) {
-      throw new Error("Halo could not accept those host settings.");
+      throw new Error("The game could not accept those host settings.");
     }
   }
 
@@ -1323,8 +1315,8 @@
       if (connected) {
         setHeader(connectedFriendsLabel(connected), "connected");
         setStatus(connected === 1 ?
-          "Your friend is connected. Press Start Game in Halo when ready." :
-          connected + " friends are connected. Press Start Game in Halo when ready.");
+          "Your friend is connected. Press Start Game when ready." :
+          connected + " friends are connected. Press Start Game when ready.");
       } else if (session.active) {
         setHeader("Waiting for friends", "waiting");
       }
@@ -1344,7 +1336,7 @@
           requestGame(COMMAND.JOIN);
           session.gameCommandIssued = true;
           startGamePolling();
-          setStatus("Connected. Finding your friend's Halo lobby…");
+          setStatus("Connected. Finding your friend's lobby…");
         } catch (error) {
           fail(error);
         }
@@ -1683,7 +1675,7 @@
   }
 
   async function host(value, turnstileToken) {
-    if (!session.runtimeReady) throw new Error("Halo is still starting.");
+    if (!session.runtimeReady) throw new Error("The game is still starting.");
     var settings = normalizeHostSettings(value);
     var profile = readPlayerProfile();
     saveHostSettings(settings);
@@ -1741,7 +1733,7 @@
       session.gameCommandIssued = true;
       startGamePolling();
       setHeader("Preparing lobby…", "waiting");
-      setStatus("Opening Halo's lobby with " + hostSettingsLabel() + "…");
+      setStatus("Opening the game lobby with " + hostSettingsLabel() + "…");
     } catch (error) {
       if (operation === session.operationGeneration && (!error || !error.haloCanceled)) {
         if (isTurnstileRejection(error)) {
@@ -1836,7 +1828,7 @@
     }
     elements.dialog.dataset.gameState = String(state);
     if (state === GAME_STATE.ERROR) {
-      fail(new Error(GAME_ERRORS[gameError()] || "Halo could not enter the online lobby."));
+      fail(new Error(GAME_ERRORS[gameError()] || "The game could not enter the online lobby."));
       return;
     }
     if (session.role === "host") {
@@ -1848,23 +1840,23 @@
           session.connectedPeerCount ? "connected" : "waiting");
         setStatus(session.connectedPeerCount ?
           connectedFriendsLabel(session.connectedPeerCount) + ". " + hostSettingsLabel() +
-            " is ready — press Start Game in Halo." :
+            " is ready — press Start Game." :
           hostSettingsLabel() + " is ready — send the invite link to your friends.");
       } else if (state === GAME_STATE.WAITING) {
-        setStatus("Waiting for Halo's main menu…");
+        setStatus("Waiting for the main menu…");
       } else if (state === GAME_STATE.HOST_STARTING) {
-        setStatus("Opening Halo's multiplayer lobby…");
+        setStatus("Opening the multiplayer lobby…");
       } else if (session.hostWasReady && state === GAME_STATE.IDLE) {
         leave(true);
       }
       return;
     }
     if (state === GAME_STATE.WAITING) {
-      setStatus("Waiting for Halo's main menu…");
+      setStatus("Waiting for the main menu…");
     } else if (state === GAME_STATE.JOIN_SEARCHING) {
-      setStatus("Connected. Finding your friend's Halo lobby…");
+      setStatus("Connected. Finding your friend's lobby…");
     } else if (state === GAME_STATE.JOIN_CONNECTING) {
-      setStatus("Halo found the lobby. Joining…");
+      setStatus("Found the lobby. Joining…");
     } else if (state === GAME_STATE.JOINED) {
       session.guestWasJoined = true;
       setHeader("Connected to friend", "connected");

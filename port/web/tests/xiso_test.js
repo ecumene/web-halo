@@ -11,12 +11,14 @@ const stage = fs.readFileSync(path.join(repository, 'tools', 'web_stage_cloudfla
 const worker = fs.readFileSync(path.join(repository, 'services', 'web', 'src', 'index.js'), 'utf8');
 const wrangler = fs.readFileSync(path.join(repository, 'services', 'web', 'wrangler.jsonc'), 'utf8');
 
-assert.match(shell, /id="xiso-dialog"[\s\S]*comply with copyright law[\s\S]*does not provide Halo game data[\s\S]*discord\.gg\/DQRgPUq6B8/,
-  'the first-run gate must explain the lawful local-disc requirement');
-assert.match(shell, /Independent website[\s\S]*not part of, operated by, or supported by[\s\S]*halocombatevolved\.com/,
-  'the XISO gate must clearly distinguish this website from OpenCE');
-assert.doesNotMatch(shell, /Your game · your device|The XISO never leaves this device/,
-  'the first-run gate must stay compact');
+const importer = shell.match(/<dialog id="xiso-dialog"[\s\S]*?<\/dialog>/)[0];
+const importerText = importer.replace(/<[^>]*>/g, ' ');
+assert.match(importer, /id="xiso-file"[^>]*type="file"[^>]*accept="\.iso,\.xiso/,
+  'the first-run gate must retain the local disc-image file picker');
+assert.match(importer, /id="xiso-description"/,
+  'the first-run gate must keep an accessible import description');
+assert.doesNotMatch(importerText, /\b(?:Halo|Xbox|Spartan)\b|comply with copyright law/i,
+  'the importer must use independent branding without legal assurances');
 assert.doesNotMatch(shell, /i am mitch|activateLegacyBrowserFlow|halo-legacy-map-url/,
   'the public XISO gate must not contain a hidden legacy-flow bypass');
 assert.match(buildRules, /--pre-js \{WEB_DIR\}\/xiso\.js/,
@@ -163,7 +165,7 @@ async function main() {
   assert.equal(HaloXiso.parseRange('bytes=20-', 10), false);
 
   const invalid = new Blob([new Uint8Array(0x12000)]);
-  await assert.rejects(HaloXiso.readCatalog(invalid), /not an Xbox XDVDFS disc image/i);
+  await assert.rejects(HaloXiso.readCatalog(invalid), /not a supported XDVDFS disc image/i);
 }
 
 main().then(() => console.log('browser XISO tests passed'));

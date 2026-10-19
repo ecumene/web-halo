@@ -9,13 +9,16 @@
   <meta name="halo-turnstile-sitekey" content="0x4AAAAAAFJKYJ-u47UliqDs">
   <script src="coi-serviceworker.js"></script>
   <script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" async defer></script>
-  <title>Halo: Combat Evolved</title>
+  <title>Combat Lab</title>
+  <meta name="description" content="An independent browser playground. Bring your own compatible disc image and play with friends.">
+  <meta name="theme-color" content="#20201e">
+  <link rel="canonical" href="https://mitchellhynes.com/combat-lab/">
   <style>
     :root {
       color-scheme: dark;
       font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-      background: #050807;
-      color: #e9f3ee;
+      background: #161513;
+      color: #f3efe9;
     }
     * { box-sizing: border-box; }
     html, body { width: 100%; height: 100%; margin: 0; overflow: hidden; }
@@ -23,8 +26,8 @@
       display: grid;
       grid-template-rows: auto minmax(0, 1fr) auto;
       background:
-        radial-gradient(circle at 50% -20%, rgba(78, 126, 104, .26), transparent 48%),
-        #050807;
+        radial-gradient(circle at 50% -20%, rgba(122, 100, 82, .26), transparent 48%),
+        #161513;
     }
     header, footer {
       display: flex;
@@ -32,12 +35,12 @@
       gap: .8rem;
       min-height: 2.55rem;
       padding: .42rem clamp(.65rem, 2vw, 1.15rem);
-      background: rgba(7, 13, 11, .9);
-      border-color: rgba(151, 189, 169, .16);
+      background: rgba(22, 21, 19, .9);
+      border-color: rgba(187, 168, 153, .16);
       z-index: 2;
     }
-    header { border-bottom: 1px solid rgba(151, 189, 169, .16); }
-    footer { border-top: 1px solid rgba(151, 189, 169, .16); }
+    header { border-bottom: 1px solid rgba(187, 168, 153, .16); }
+    footer { border-top: 1px solid rgba(187, 168, 153, .16); }
     .brand {
       appearance: none;
       border: 0;
@@ -52,35 +55,35 @@
       cursor: default;
     }
     .brand:hover, .brand:focus-visible { background: transparent; }
-    #status { color: #aebdb5; font-size: .78rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    #isolation-warning { color: #ffd892; }
+    #status { color: #bdb5ae; font-size: .78rem; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    #isolation-warning { color: #d9cbb8; }
     .spacer { flex: 1; }
     button {
       appearance: none;
-      border: 1px solid rgba(181, 219, 198, .28);
+      border: 1px solid rgba(216, 202, 184, .28);
       border-radius: .35rem;
       padding: .43rem .72rem;
       color: inherit;
-      background: rgba(115, 155, 134, .15);
+      background: rgba(155, 133, 115, .15);
       font: inherit;
       cursor: pointer;
     }
-    button:hover { background: rgba(142, 189, 163, .25); }
+    button:hover { background: rgba(183, 164, 148, .25); }
     button:focus-visible, input:focus-visible {
-      outline: 2px solid #78c8ff;
+      outline: 2px solid #ee8f4c;
       outline-offset: 2px;
     }
     button.primary {
-      border-color: rgba(91, 184, 255, .72);
-      background: rgba(20, 119, 190, .72);
+      border-color: rgba(238, 143, 76, .72);
+      background: rgba(238, 143, 76, .72);
       font-weight: 700;
     }
-    button.primary:hover { background: rgba(29, 139, 219, .9); }
+    button.primary:hover { background: rgba(238, 143, 76, .9); }
     button:disabled { cursor: wait; opacity: .55; }
-    #online[data-state="waiting"] { color: #bfe2ff; }
+    #online[data-state="waiting"] { color: #e9e0d5; }
     #online[data-state="connected"] {
-      border-color: rgba(91, 221, 153, .55);
-      color: #bff5d4;
+      border-color: rgba(238, 143, 76, .55);
+      color: #e5dccf;
     }
     main { position: relative; min-height: 0; display: grid; place-items: center; overflow: hidden; }
     canvas.emscripten {
@@ -92,7 +95,7 @@
       height: 480px;
       border: 0;
       outline: 0;
-      background: #000;
+      background: #000000;
       object-fit: contain;
       transform: translate(-50%, -50%) scaleY(-1);
     }
@@ -109,9 +112,9 @@
       translate: -50% -50%;
       width: min(26rem, calc(100% - 3rem));
       padding: 1rem;
-      border: 1px solid rgba(151, 189, 169, .2);
+      border: 1px solid rgba(187, 168, 153, .2);
       border-radius: .6rem;
-      background: rgba(5, 9, 7, .88);
+      background: rgba(22, 21, 19, .88);
       box-shadow: 0 1rem 4rem rgba(0, 0, 0, .5);
       text-align: center;
       pointer-events: none;
@@ -126,9 +129,9 @@
       max-height: min(36rem, calc(100% - 1.5rem));
       margin: auto;
       padding: 1rem;
-      border: 1px solid rgba(151, 189, 169, .28);
+      border: 1px solid rgba(187, 168, 153, .28);
       border-radius: .75rem;
-      background: rgba(4, 10, 8, .96);
+      background: rgba(22, 21, 19, .96);
       box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, .75);
     }
     .diagnostics-heading { display: flex; align-items: center; gap: 1rem; }
@@ -144,19 +147,19 @@
       gap: .2rem;
       min-width: 0;
       padding: .65rem .75rem;
-      border: 1px solid rgba(151, 189, 169, .15);
+      border: 1px solid rgba(187, 168, 153, .15);
       border-radius: .45rem;
-      background: rgba(111, 153, 131, .08);
+      background: rgba(153, 130, 111, .08);
     }
-    .diagnostic-stat span { color: #82958b; font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
-    .diagnostic-stat output { overflow: hidden; color: #bde0cd; font: .73rem/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; text-overflow: ellipsis; white-space: nowrap; }
+    .diagnostic-stat span { color: #958b82; font-size: .67rem; letter-spacing: .08em; text-transform: uppercase; }
+    .diagnostic-stat output { overflow: hidden; color: #ddd1c0; font: .73rem/1.25 ui-monospace, SFMono-Regular, Menlo, monospace; text-overflow: ellipsis; white-space: nowrap; }
     #diagnostics {
       min-height: 8rem;
       margin: 0;
       padding: .8rem;
       overflow: auto;
-      color: #ffb9a8;
-      border: 1px solid rgba(255, 185, 168, .12);
+      color: #e1d5c6;
+      border: 1px solid rgba(225, 213, 198, .12);
       border-radius: .45rem;
       background: rgba(0, 0, 0, .32);
       font: .7rem/1.4 ui-monospace, SFMono-Regular, Menlo, monospace;
@@ -164,13 +167,13 @@
       white-space: pre-wrap;
       user-select: text;
     }
-    #diagnostics:empty::before { content: "No runtime messages."; color: #718078; }
-    .diagnostics-shortcut { margin: .65rem 0 0; color: #64736b; font-size: .68rem; text-align: right; }
-    progress { width: 100%; height: .4rem; margin-top: .8rem; accent-color: #81b796; }
+    #diagnostics:empty::before { content: "No runtime messages."; color: #807871; }
+    .diagnostics-shortcut { margin: .65rem 0 0; color: #736b64; font-size: .68rem; text-align: right; }
+    progress { width: 100%; height: .4rem; margin-top: .8rem; accent-color: #b09a88; }
     footer {
       position: relative;
       justify-content: center;
-      color: #89978f;
+      color: #978f89;
       font-size: .76rem;
     }
     .game-controls { display: flex; align-items: center; gap: .45rem; }
@@ -184,15 +187,15 @@
       z-index: 20;
       width: min(19rem, calc(100vw - 1.5rem));
       padding: .75rem;
-      border: 1px solid rgba(91, 184, 255, .38);
+      border: 1px solid rgba(238, 143, 76, .38);
       border-radius: .5rem;
-      background: rgba(2, 15, 30, .97);
+      background: rgba(22, 21, 19, .97);
       box-shadow: 0 .8rem 2.4rem rgba(0, 0, 0, .55);
       text-align: left;
     }
-    .game-settings-option { display: flex; align-items: center; gap: .55rem; color: #d6eaf5; font-size: .76rem; font-weight: 700; }
-    .game-settings-option input { accent-color: #55bfff; }
-    .game-settings-panel p { margin: .45rem 0 0 1.45rem; color: #7594a7; font-size: .65rem; line-height: 1.35; }
+    .game-settings-option { display: flex; align-items: center; gap: .55rem; color: #ede7de; font-size: .76rem; font-weight: 700; }
+    .game-settings-option input { accent-color: #ee8f4c; }
+    .game-settings-panel p { margin: .45rem 0 0 1.45rem; color: #a58c77; font-size: .65rem; line-height: 1.35; }
     .control-button {
       display: inline-flex;
       align-items: center;
@@ -200,17 +203,17 @@
       gap: .42rem;
       min-height: 2.1rem;
       padding: .35rem .62rem;
-      border-color: rgba(181, 219, 198, .2);
-      background: rgba(115, 155, 134, .1);
+      border-color: rgba(216, 202, 184, .2);
+      background: rgba(155, 133, 115, .1);
       font-size: .76rem;
     }
     .control-button:hover,
     .control-button:active,
     .control-button:focus-visible,
     .game-settings-menu[open] > summary {
-      color: #edf8ff;
-      border-color: rgba(91, 184, 255, .62);
-      background: rgba(20, 119, 190, .32);
+      color: #f9f6f3;
+      border-color: rgba(238, 143, 76, .62);
+      background: rgba(238, 143, 76, .32);
     }
     .control-button svg { width: 1rem; height: 1rem; fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; stroke-width: 1.7; }
     #mute.is-muted .sound-wave,
@@ -224,14 +227,14 @@
       max-height: calc(100% - 2rem);
       padding: 0;
       overflow: hidden;
-      color: #edf7f2;
-      border: 1px solid rgba(130, 196, 238, .4);
+      color: #f6f3ee;
+      border: 1px solid rgba(238, 143, 76, .4);
       border-radius: .8rem;
-      background: rgba(6, 15, 20, .97);
+      background: rgba(22, 21, 19, .97);
       box-shadow: 0 1.5rem 5rem rgba(0, 0, 0, .72);
     }
     dialog::backdrop {
-      background: rgba(0, 4, 7, .72);
+      background: rgba(22, 21, 19, .72);
       backdrop-filter: blur(5px);
     }
     .online-card {
@@ -251,23 +254,23 @@
       gap: 1rem;
     }
     .online-heading h2 { margin: 0; font-size: 1.32rem; }
-    .online-heading p { margin: .3rem 0 0; color: #9baeb7; font-size: .8rem; line-height: 1.4; }
+    .online-heading p { margin: .3rem 0 0; color: #b7a89b; font-size: .8rem; line-height: 1.4; }
     .icon-button { margin-left: auto; padding: .25rem .5rem; background: transparent; }
     .online-dialog-close { position: absolute; top: 1.05rem; right: 1.05rem; z-index: 2; margin: 0; }
     .online-status {
       margin: .8rem 0 0;
       padding: .6rem .72rem;
-      border: 1px solid rgba(130, 196, 238, .2);
+      border: 1px solid rgba(238, 143, 76, .2);
       border-radius: .5rem;
-      background: rgba(62, 122, 153, .1);
-      color: #c8dbe4;
+      background: rgba(129, 105, 86, .1);
+      color: #e2d8ca;
       font-size: .84rem;
       line-height: 1.45;
     }
     .online-status[data-tone="error"] {
-      border-color: rgba(255, 137, 116, .38);
-      background: rgba(133, 43, 31, .18);
-      color: #ffc7bb;
+      border-color: rgba(238, 143, 76, .38);
+      background: rgba(238, 143, 76, .18);
+      color: #e7ded3;
     }
     .online-actions { display: flex; flex-wrap: wrap; gap: .5rem; }
     .online-stack { display: grid; gap: .7rem; }
@@ -278,18 +281,18 @@
       min-width: 0;
       padding: 1.25rem;
       overflow: hidden auto;
-      border-right: 1px solid rgba(130, 196, 238, .22);
+      border-right: 1px solid rgba(238, 143, 76, .22);
       background:
-        linear-gradient(180deg, rgba(29, 73, 92, .34), rgba(6, 18, 24, .88)),
-        radial-gradient(circle at 50% 35%, rgba(76, 144, 174, .28), transparent 50%);
+        linear-gradient(180deg, rgba(238, 143, 76, .34), rgba(22, 21, 19, .88)),
+        radial-gradient(circle at 50% 35%, rgba(150, 122, 100, .28), transparent 50%);
     }
     .profile-kicker {
-      color: #80b8d4;
+      color: #bba899;
       font: 700 .67rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
       letter-spacing: .14em;
       text-transform: uppercase;
     }
-    .spartan-preview {
+    .pilot-preview {
       position: relative;
       display: grid;
       grid-template-rows: minmax(0, 1fr) auto;
@@ -298,7 +301,7 @@
       margin: 0;
       isolation: isolate;
     }
-    .spartan-preview::before {
+    .pilot-preview::before {
       content: "";
       position: absolute;
       left: 50%;
@@ -311,7 +314,7 @@
       filter: blur(.5rem);
       translate: -50% 0;
     }
-    .spartan-image {
+    .pilot-mark {
       display: block;
       width: 100%;
       height: 100%;
@@ -320,25 +323,25 @@
       object-position: 50% 100%;
       filter: drop-shadow(0 .9rem 1.2rem rgba(0, 0, 0, .55));
     }
-    .spartan-preview figcaption {
+    .pilot-preview figcaption {
       min-width: 0;
       overflow: hidden;
-      color: #dff3ff;
+      color: #f4f0ea;
       font-weight: 700;
       text-align: center;
       text-overflow: ellipsis;
       white-space: nowrap;
     }
     .profile-name { display: grid; gap: .3rem; }
-    .profile-name label, .style-legend { color: #9db0ba; font-size: .72rem; }
+    .profile-name label, .style-legend { color: #baaa9d; font-size: .72rem; }
     .profile-name input {
       width: 100%;
       min-width: 0;
       padding: .52rem .6rem;
-      border: 1px solid rgba(181, 219, 230, .27);
+      border: 1px solid rgba(220, 208, 191, .27);
       border-radius: .4rem;
-      color: #edf7f2;
-      background: #0b1a20;
+      color: #f6f3ee;
+      background: #171614;
       font: inherit;
     }
     #online-style-options { min-width: 0; margin: 0; padding: 0; border: 0; }
@@ -351,12 +354,12 @@
       height: 1.12rem;
       border: 1px solid rgba(255, 255, 255, .32);
       border-radius: 50%;
-      background: var(--player-color, #78986a);
-      box-shadow: 0 0 0 0 rgba(146, 205, 172, .7);
+      background: var(--player-color, #987f6a);
+      box-shadow: 0 0 0 0 rgba(191, 174, 160, .7);
       transition: box-shadow .12s ease, transform .12s ease;
     }
-    .style-choice input:checked + .style-swatch { box-shadow: 0 0 0 2px #07100c, 0 0 0 4px #a6d4bb; transform: scale(.9); }
-    .style-choice input:focus-visible + .style-swatch { outline: 2px solid #78c8ff; outline-offset: 3px; }
+    .style-choice input:checked + .style-swatch { box-shadow: 0 0 0 2px #161513, 0 0 0 4px #cabcb0; transform: scale(.9); }
+    .style-choice input:focus-visible + .style-swatch { outline: 2px solid #ee8f4c; outline-offset: 3px; }
     .style-choice:has(input:disabled) { cursor: not-allowed; opacity: .5; }
     [data-style="white"] { --player-color: #d9ddd8; }
     [data-style="black"] { --player-color: #252927; }
@@ -390,7 +393,7 @@
       justify-content: center;
       gap: .35rem;
       min-width: 0;
-      color: #718690;
+      color: #907f71;
       font-size: .7rem;
     }
     .wizard-step::before {
@@ -399,37 +402,37 @@
       place-items: center;
       width: 1.25rem;
       height: 1.25rem;
-      border: 1px solid rgba(130, 196, 238, .25);
+      border: 1px solid rgba(238, 143, 76, .25);
       border-radius: 50%;
       font: 700 .65rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-    .wizard-step[aria-current="step"] { color: #d9effa; }
-    .wizard-step[aria-current="step"]::before { border-color: #59b9f5; background: rgba(20, 119, 190, .52); }
-    .wizard-step[data-complete="true"] { color: #95cdb0; }
-    .wizard-step[data-complete="true"]::before { content: "✓"; border-color: #5ecb91; }
+    .wizard-step[aria-current="step"] { color: #f0eae3; }
+    .wizard-step[aria-current="step"]::before { border-color: #ee8f4c; background: rgba(238, 143, 76, .52); }
+    .wizard-step[data-complete="true"] { color: #c1afa1; }
+    .wizard-step[data-complete="true"]::before { content: "✓"; border-color: #ee8f4c; }
     .host-setup {
       min-height: 0;
       padding: .85rem;
-      border: 1px solid rgba(130, 196, 238, .18);
+      border: 1px solid rgba(238, 143, 76, .18);
       border-radius: .65rem;
-      background: rgba(20, 51, 68, .18);
+      background: rgba(47, 44, 41, .18);
     }
     .host-setup-title {
       margin: 0;
-      color: #dcecf4;
+      color: #efe9e1;
       font-size: .88rem;
       font-weight: 700;
     }
     .host-field { display: grid; gap: .3rem; min-width: 0; }
-    .host-field label { color: #9db0ba; font-size: .75rem; }
+    .host-field label { color: #baaa9d; font-size: .75rem; }
     .host-field select {
       min-width: 0;
       width: 100%;
       padding: .58rem .65rem;
-      border: 1px solid rgba(181, 219, 230, .27);
+      border: 1px solid rgba(220, 208, 191, .27);
       border-radius: .4rem;
-      color: #edf7f2;
-      background: #0b1a20;
+      color: #f6f3ee;
+      background: #171614;
       font: inherit;
     }
     .picker-select { position: absolute; width: 1px !important; height: 1px; padding: 0 !important; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0 !important; }
@@ -457,19 +460,19 @@
       min-width: 0;
       height: 100%;
       overflow: hidden;
-      border: 1px solid rgba(131, 180, 204, .22);
+      border: 1px solid rgba(185, 166, 150, .22);
       border-radius: .48rem;
-      background: rgba(6, 18, 25, .72);
+      background: rgba(22, 21, 19, .72);
       transition: border-color .12s ease, background .12s ease, transform .12s ease;
     }
-    .visual-choice:hover .visual-choice-card { border-color: rgba(104, 194, 244, .56); background: rgba(15, 50, 69, .75); }
+    .visual-choice:hover .visual-choice-card { border-color: rgba(238, 143, 76, .56); background: rgba(45, 42, 39, .75); }
     .visual-choice > input:checked + .visual-choice-card,
     .visual-choice[data-selected="true"] .visual-choice-card {
-      border-color: #5ac0fb;
-      background: rgba(21, 86, 124, .52);
-      box-shadow: 0 0 0 1px rgba(90, 192, 251, .25), inset 0 0 1.3rem rgba(42, 154, 219, .12);
+      border-color: #ee8f4c;
+      background: rgba(238, 143, 76, .52);
+      box-shadow: 0 0 0 1px rgba(238, 143, 76, .25), inset 0 0 1.3rem rgba(238, 143, 76, .12);
     }
-    .visual-choice > input:focus-visible + .visual-choice-card { outline: 2px solid #a8ddff; outline-offset: 2px; }
+    .visual-choice > input:focus-visible + .visual-choice-card { outline: 2px solid #e1d5c6; outline-offset: 2px; }
     .visual-choice:has(input:disabled) { cursor: wait; opacity: .52; }
     .map-choice-card { grid-template-rows: 4.7rem auto; }
     .map-choice-card img {
@@ -477,14 +480,14 @@
       height: 4.7rem;
       object-fit: cover;
       object-position: center;
-      background: #071118;
+      background: #161513;
     }
     .choice-label {
       align-self: center;
       min-width: 0;
       padding: .42rem .5rem;
       overflow: hidden;
-      color: #d8e8ef;
+      color: #ece5db;
       font-size: .7rem;
       font-weight: 650;
       line-height: 1.15;
@@ -503,9 +506,9 @@
     .wizard-actions { display: flex; justify-content: flex-end; gap: .5rem; margin-top: .7rem; }
     .advanced-settings {
       margin-top: .7rem;
-      border: 1px solid rgba(91, 184, 255, .2);
+      border: 1px solid rgba(238, 143, 76, .2);
       border-radius: .45rem;
-      background: rgba(4, 24, 42, .42);
+      background: rgba(24, 23, 22, .42);
     }
     .advanced-settings > summary {
       display: flex;
@@ -513,28 +516,28 @@
       justify-content: space-between;
       gap: .6rem;
       padding: .58rem .65rem;
-      color: #b9d9eb;
+      color: #e0d4c4;
       cursor: pointer;
       font-size: .76rem;
       font-weight: 700;
       list-style: none;
     }
     .advanced-settings > summary::-webkit-details-marker { display: none; }
-    .advanced-settings > summary::after { color: #67c9ff; content: "+"; font-size: 1rem; }
+    .advanced-settings > summary::after { color: #ee8f4c; content: "+"; font-size: 1rem; }
     .advanced-settings[open] > summary::after { content: "−"; }
-    .advanced-settings-optional { color: #718fa1; font-size: .62rem; font-weight: 500; }
+    .advanced-settings-optional { color: #a18771; font-size: .62rem; font-weight: 500; }
     .advanced-settings-body { display: grid; gap: .65rem; padding: 0 .65rem .7rem; }
     .advanced-toggle,
     .advanced-check {
       display: flex;
       align-items: center;
       gap: .5rem;
-      color: #bdd2de;
+      color: #dcd0bf;
       font-size: .72rem;
     }
-    .advanced-toggle { padding-bottom: .55rem; border-bottom: 1px solid rgba(91, 184, 255, .14); }
+    .advanced-toggle { padding-bottom: .55rem; border-bottom: 1px solid rgba(238, 143, 76, .14); }
     .advanced-toggle input,
-    .advanced-check input { accent-color: #55bfff; }
+    .advanced-check input { accent-color: #ee8f4c; }
     .advanced-fields {
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -544,19 +547,19 @@
       border: 0;
     }
     .advanced-fields:disabled { opacity: .42; }
-    .advanced-number { display: grid; gap: .28rem; color: #8eabba; font-size: .64rem; }
+    .advanced-number { display: grid; gap: .28rem; color: #b6a292; font-size: .64rem; }
     .advanced-number input {
       min-width: 0;
       width: 100%;
       padding: .42rem .5rem;
-      border: 1px solid rgba(112, 190, 235, .25);
+      border: 1px solid rgba(238, 143, 76, .25);
       border-radius: .3rem;
-      color: #e7f5fc;
-      background: rgba(0, 8, 16, .5);
+      color: #f6f2ed;
+      background: rgba(22, 21, 19, .5);
       font: .74rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
     .advanced-checks { display: grid; grid-column: 1 / -1; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .42rem .7rem; }
-    .join-direct { margin-top: .7rem; color: #8fa1aa; font-size: .76rem; }
+    .join-direct { margin-top: .7rem; color: #aa9b8f; font-size: .76rem; }
     .join-direct summary { width: fit-content; cursor: pointer; }
     #online-wizard:has(#online-setup[hidden]) #online-wizard-steps { display: none; }
     .join-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .5rem; margin-top: .6rem; }
@@ -564,20 +567,20 @@
       min-width: 0;
       width: 100%;
       padding: .58rem .65rem;
-      border: 1px solid rgba(181, 219, 230, .27);
+      border: 1px solid rgba(220, 208, 191, .27);
       border-radius: .4rem;
-      color: #edf7f2;
+      color: #f6f3ee;
       background: rgba(0, 0, 0, .27);
       font: .82rem/1.2 ui-monospace, SFMono-Regular, Menlo, monospace;
     }
-    .invite-label { color: #9db0ba; font-size: .78rem; }
-    #online-detail { margin: .75rem 0 0; color: #80949e; font-size: .7rem; line-height: 1.4; }
+    .invite-label { color: #baaa9d; font-size: .78rem; }
+    #online-detail { margin: .75rem 0 0; color: #9e8e80; font-size: .7rem; line-height: 1.4; }
     .profile-join-action {
       display: grid;
       gap: .7rem;
       margin-top: auto;
       padding-top: .9rem;
-      border-top: 1px solid rgba(130, 196, 238, .18);
+      border-top: 1px solid rgba(238, 143, 76, .18);
       text-align: center;
     }
     .profile-join-action button { width: 100%; min-height: 2.7rem; }
@@ -607,15 +610,15 @@
       justify-content: center;
       gap: .55rem;
       padding: .34rem .55rem;
-      border: 1px solid rgba(76, 171, 226, .2);
+      border: 1px solid rgba(238, 143, 76, .2);
       border-radius: .35rem;
-      background: rgba(4, 28, 48, .54);
+      background: rgba(28, 26, 24, .54);
     }
     .verification-status {
       display: inline-flex;
       align-items: center;
       gap: .38rem;
-      color: rgba(188, 218, 237, .84);
+      color: rgba(225, 214, 200, .84);
       font-size: .72rem;
       letter-spacing: .04em;
     }
@@ -624,45 +627,45 @@
       width: .55rem;
       height: .55rem;
       flex: 0 0 auto;
-      border: 1px solid rgba(91, 190, 248, .32);
-      border-top-color: #67c9ff;
+      border: 1px solid rgba(238, 143, 76, .32);
+      border-top-color: #ee8f4c;
       border-radius: 50%;
       animation: verification-spin .8s linear infinite;
     }
     .human-verification[data-state="ready"] .verification-feedback {
-      border-color: rgba(104, 213, 154, .28);
-      background: rgba(7, 54, 38, .42);
+      border-color: rgba(238, 143, 76, .28);
+      background: rgba(32, 31, 29, .42);
     }
-    .human-verification[data-state="ready"] .verification-status { color: #a7e6c1; }
+    .human-verification[data-state="ready"] .verification-status { color: #ee8f4c; }
     .human-verification[data-state="ready"] .verification-status::before {
       content: "✓";
       width: auto;
       height: auto;
       border: 0;
-      color: #70d99d;
+      color: #ee8f4c;
       font-size: .82rem;
       line-height: 1;
       animation: none;
     }
     .human-verification[data-state="error"] .verification-feedback {
-      border-color: rgba(255, 177, 94, .34);
-      background: rgba(66, 35, 8, .45);
+      border-color: rgba(238, 143, 76, .34);
+      background: rgba(39, 37, 35, .45);
     }
-    .human-verification[data-state="error"] .verification-status { color: #ffd4a4; }
+    .human-verification[data-state="error"] .verification-status { color: #dfd3c4; }
     .human-verification[data-state="error"] .verification-status::before {
       content: "!";
       width: auto;
       height: auto;
       border: 0;
-      color: #ffbd73;
+      color: #ee8f4c;
       font-weight: 800;
       animation: none;
     }
     .verification-retry {
       min-height: 1.7rem;
       padding: .24rem .58rem;
-      border-color: rgba(255, 195, 127, .4);
-      color: #ffe1bf;
+      border-color: rgba(238, 143, 76, .4);
+      color: #e9e0d5;
       font-size: .68rem;
       white-space: nowrap;
     }
@@ -670,7 +673,7 @@
     @media (prefers-reduced-motion: reduce) {
       .verification-status::before { animation: none; }
     }
-    #online-join-summary { margin: 0; color: #adbec6; font-size: .82rem; line-height: 1.45; }
+    #online-join-summary { margin: 0; color: #c6b8ad; font-size: .82rem; line-height: 1.45; }
     #online-dialog[data-view="join"] {
       width: min(21rem, calc(100% - 1.4rem));
       height: min(45rem, calc(100% - 1.4rem));
@@ -689,9 +692,9 @@
       bottom: -.1rem;
       z-index: 2;
       padding-bottom: .15rem;
-      background: linear-gradient(180deg, rgba(2, 13, 31, 0), rgba(2, 13, 31, .98) 28%);
+      background: linear-gradient(180deg, rgba(22, 21, 19, 0), rgba(22, 21, 19, .98) 28%);
     }
-    #online-dialog[data-view="join"] .spartan-preview { height: 20rem; }
+    #online-dialog[data-view="join"] .pilot-preview { height: 20rem; }
     #player-sidebar {
       position: absolute;
       left: .75rem;
@@ -701,9 +704,9 @@
       max-height: calc(100% - 1.5rem);
       overflow: auto;
       overscroll-behavior: contain;
-      border: 1px solid rgba(132, 196, 164, .25);
+      border: 1px solid rgba(182, 162, 146, .25);
       border-radius: .6rem;
-      background: rgba(5, 13, 10, .88);
+      background: rgba(22, 21, 19, .88);
       box-shadow: 0 .8rem 2.2rem rgba(0, 0, 0, .42);
       backdrop-filter: blur(9px);
     }
@@ -711,10 +714,10 @@
       display: grid;
       gap: .4rem;
       padding: .65rem;
-      background: linear-gradient(135deg, rgba(35, 91, 68, .3), rgba(8, 22, 17, .08));
+      background: linear-gradient(135deg, rgba(76, 62, 50, .3), rgba(22, 21, 19, .08));
     }
     .sidebar-kicker {
-      color: #8eaa9b;
+      color: #aa9b8e;
       font-size: .61rem;
       font-weight: 700;
       letter-spacing: .1em;
@@ -726,7 +729,7 @@
       flex-wrap: wrap;
       gap: .32rem;
       width: fit-content;
-      color: rgba(151, 194, 218, .66);
+      color: rgba(199, 183, 170, .66);
       font: 600 .56rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
       font-variant-numeric: tabular-nums;
       letter-spacing: .055em;
@@ -736,29 +739,29 @@
       width: .34rem;
       height: .34rem;
       border-radius: 50%;
-      background: rgba(88, 201, 153, .72);
-      box-shadow: 0 0 .45rem rgba(88, 201, 153, .36);
+      background: rgba(238, 143, 76, .72);
+      box-shadow: 0 0 .45rem rgba(238, 143, 76, .36);
       content: "";
     }
     .live-player-count-item + .live-player-count-item::before {
       margin-right: .32rem;
-      color: rgba(151, 194, 218, .32);
+      color: rgba(199, 183, 170, .32);
       content: "·";
     }
     #online {
       width: 100%;
       min-height: 2.55rem;
-      border-color: rgba(91, 184, 255, .58);
-      background: rgba(20, 119, 190, .62);
+      border-color: rgba(238, 143, 76, .58);
+      background: rgba(238, 143, 76, .62);
       font-weight: 750;
       text-align: center;
     }
-    #online:hover { background: rgba(29, 139, 219, .82); }
-    #online[data-state="waiting"] { color: #d6edff; }
+    #online:hover { background: rgba(238, 143, 76, .82); }
+    #online[data-state="waiting"] { color: #f1ebe4; }
     #online[data-state="connected"] {
-      border-color: rgba(91, 221, 153, .55);
-      color: #d5f8e2;
-      background: rgba(37, 122, 78, .48);
+      border-color: rgba(238, 143, 76, .55);
+      color: #eee8df;
+      background: rgba(238, 143, 76, .48);
     }
     #player-sidebar[data-online-active="false"] .sidebar-roster { display: none; }
     .player-sidebar-heading { display: flex; align-items: center; min-height: 2.35rem; padding: .5rem .65rem; }
@@ -771,59 +774,58 @@
       margin-left: .42rem;
       padding: 0 .3rem;
       border-radius: 999px;
-      color: #bde8cf;
-      background: rgba(58, 152, 99, .25);
+      color: #e0d4c5;
+      background: rgba(126, 103, 84, .25);
       font: 700 .65rem/1 ui-monospace, SFMono-Regular, Menlo, monospace;
       font-variant-numeric: tabular-nums;
       white-space: nowrap;
     }
     #player-sidebar-toggle { display: none; min-width: 2.25rem; min-height: 2.25rem; margin-left: auto; padding: .2rem .35rem; border: 0; background: transparent; }
     #player-list { display: grid; gap: .18rem; max-height: 18rem; margin: 0; padding: 0 .4rem .45rem; overflow: auto; list-style: none; }
-    #player-list li, .player-card { display: flex; align-items: center; gap: .48rem; min-width: 0; padding: .4rem .35rem; border-radius: .35rem; color: #d9e9e0; font-size: .73rem; }
-    #player-list li:hover, .player-card:hover { background: rgba(123, 177, 148, .08); }
-    .player-swatch, .player-avatar { flex: 0 0 auto; width: .72rem; height: .72rem; border: 1px solid rgba(255, 255, 255, .25); border-radius: 50%; background: var(--player-color, #78986a); }
+    #player-list li, .player-card { display: flex; align-items: center; gap: .48rem; min-width: 0; padding: .4rem .35rem; border-radius: .35rem; color: #e9e2d9; font-size: .73rem; }
+    #player-list li:hover, .player-card:hover { background: rgba(171, 148, 129, .08); }
+    .player-swatch, .player-avatar { flex: 0 0 auto; width: .72rem; height: .72rem; border: 1px solid rgba(255, 255, 255, .25); border-radius: 50%; background: var(--player-color, #987f6a); }
     .player-name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-    .player-you, .player-role { margin-left: auto; color: #718a7e; font-size: .62rem; text-transform: uppercase; }
-    #player-empty { margin: 0; padding: 0 .75rem .7rem; color: #708078; font-size: .7rem; }
+    .player-you, .player-role { margin-left: auto; color: #8a7c71; font-size: .62rem; text-transform: uppercase; }
+    #player-empty { margin: 0; padding: 0 .75rem .7rem; color: #807770; font-size: .7rem; }
     .sidebar-invite {
       display: grid;
       gap: .42rem;
       padding: .65rem;
-      border-top: 1px solid rgba(132, 196, 164, .2);
-      background: rgba(20, 54, 40, .16);
+      border-top: 1px solid rgba(182, 162, 146, .2);
+      background: rgba(39, 37, 35, .16);
     }
-    .sidebar-invite-label { color: #86a895; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
+    .sidebar-invite-label { color: #a89586; font-size: .62rem; letter-spacing: .08em; text-transform: uppercase; }
     .sidebar-invite-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: .4rem; }
     #player-sidebar #invite-link { min-width: 0; padding: .45rem .5rem; font-size: .67rem; }
     .sidebar-invite-row button { width: 4.8rem; min-width: 0; padding: .38rem .52rem; font-size: .67rem; white-space: nowrap; }
-    .sidebar-copy-status { margin: 0; color: #b8cbc1; font-size: .65rem; line-height: 1.35; }
-    #online-leave-host { width: 100%; padding: .34rem .48rem; color: #9eb0a6; background: transparent; font-size: .67rem; }
+    .sidebar-copy-status { margin: 0; color: #cbc1b8; font-size: .65rem; line-height: 1.35; }
+    #online-leave-host { width: 100%; padding: .34rem .48rem; color: #b0a69e; background: transparent; font-size: .67rem; }
     .sr-only { position: absolute; width: 1px; height: 1px; padding: 0; overflow: hidden; clip: rect(0, 0, 0, 0); white-space: nowrap; border: 0; }
     [hidden] { display: none !important; }
 
-    /* Halo CE browser shell ------------------------------------------------ */
+    /* Combat Lab browser shell ------------------------------------------------ */
     :root {
-      --halo-ink: #020713;
-      --halo-panel: rgba(3, 15, 31, .9);
-      --halo-panel-soft: rgba(5, 25, 48, .72);
-      --halo-line: rgba(31, 157, 255, .48);
-      --halo-line-strong: #18a8ff;
-      --halo-glow: #70c9ff;
-      --halo-text: #e5f4ff;
-      --halo-muted: #7395ae;
-      background: var(--halo-ink);
-      color: var(--halo-text);
-      font-family: "Arial Narrow", "Avenir Next Condensed", "Segoe UI", sans-serif;
+      --lab-ink: #161513;
+      --lab-panel: rgba(22, 21, 19, .9);
+      --lab-panel-soft: rgba(28, 27, 25, .72);
+      --lab-line: rgba(238, 143, 76, .48);
+      --lab-line-strong: #ee8f4c;
+      --lab-glow: #ee8f4c;
+      --lab-text: #f6f3ee;
+      --lab-muted: #a78e7a;
+      background: var(--lab-ink);
+      color: var(--lab-text);
+      font-family: "Avenir Next", "Segoe UI", sans-serif;
     }
     body {
       display: block;
       position: relative;
       isolation: isolate;
       background:
-        linear-gradient(90deg, rgba(1, 8, 21, .8), rgba(0, 13, 31, .28) 48%, rgba(0, 8, 20, .68)),
-        linear-gradient(180deg, rgba(1, 7, 18, .2), rgba(1, 8, 20, .72)),
-        url("assets/ui/shell/halo-ce-ring-menu.jpg") center / cover fixed no-repeat,
-        var(--halo-ink);
+        linear-gradient(90deg, rgba(22, 21, 19, .8), rgba(22, 21, 19, .28) 48%, rgba(22, 21, 19, .68)),
+        linear-gradient(180deg, rgba(22, 21, 19, .2), rgba(22, 21, 19, .72)),
+        var(--lab-ink);
     }
     body::before,
     body::after {
@@ -835,13 +837,13 @@
     body::before {
       z-index: -1;
       background:
-        radial-gradient(circle at 50% 46%, rgba(0, 77, 143, .12), transparent 38%),
-        linear-gradient(90deg, rgba(0, 7, 18, .34), transparent 23%, transparent 77%, rgba(0, 7, 18, .34));
+        radial-gradient(circle at 50% 46%, rgba(238, 143, 76, .12), transparent 38%),
+        linear-gradient(90deg, rgba(22, 21, 19, .34), transparent 23%, transparent 77%, rgba(22, 21, 19, .34));
     }
     body::after {
       z-index: 30;
       opacity: .14;
-      background: repeating-linear-gradient(180deg, rgba(104, 195, 255, .08) 0 1px, transparent 1px 4px);
+      background: repeating-linear-gradient(180deg, rgba(238, 143, 76, .08) 0 1px, transparent 1px 4px);
       mix-blend-mode: screen;
     }
     header {
@@ -851,45 +853,45 @@
       z-index: 7;
       min-height: 0;
       padding: .34rem .55rem;
-      border: 1px solid rgba(24, 168, 255, .28);
-      background: rgba(2, 14, 30, .76);
+      border: 1px solid rgba(238, 143, 76, .28);
+      background: rgba(22, 21, 19, .76);
       box-shadow: 0 .65rem 2rem rgba(0, 0, 0, .34);
-      clip-path: polygon(.45rem 0, 100% 0, 100% calc(100% - .45rem), calc(100% - .45rem) 100%, 0 100%, 0 .45rem);
+      clip-path: none;
       backdrop-filter: blur(8px);
     }
     .brand {
-      color: #dff4ff;
+      color: #f4f0ea;
       font-size: .72rem;
       letter-spacing: .24em;
-      text-shadow: 0 0 .8rem rgba(65, 179, 255, .38);
+      text-shadow: 0 0 .8rem rgba(238, 143, 76, .38);
     }
-    #status, footer { color: #7998ad; }
+    #status, footer { color: #a9917d; }
     button {
-      border-color: var(--halo-line);
+      border-color: var(--lab-line);
       border-radius: .16rem;
-      color: var(--halo-text);
-      background: linear-gradient(180deg, rgba(11, 52, 83, .76), rgba(4, 22, 43, .86));
-      box-shadow: inset 0 0 1rem rgba(22, 135, 210, .07);
+      color: var(--lab-text);
+      background: linear-gradient(180deg, rgba(50, 47, 44, .76), rgba(25, 24, 22, .86));
+      box-shadow: inset 0 0 1rem rgba(238, 143, 76, .07);
       letter-spacing: .025em;
     }
     button:hover {
-      border-color: rgba(87, 196, 255, .82);
-      background: linear-gradient(180deg, rgba(15, 76, 119, .88), rgba(5, 34, 65, .94));
-      box-shadow: inset 0 0 1rem rgba(32, 159, 237, .16), 0 0 .7rem rgba(27, 152, 232, .12);
+      border-color: rgba(238, 143, 76, .82);
+      background: linear-gradient(180deg, rgba(238, 143, 76, .88), rgba(37, 35, 33, .94));
+      box-shadow: inset 0 0 1rem rgba(238, 143, 76, .16), 0 0 .7rem rgba(238, 143, 76, .12);
     }
     button.primary {
-      border-color: rgba(81, 193, 255, .88);
-      background: linear-gradient(180deg, rgba(8, 111, 183, .92), rgba(2, 61, 111, .94));
-      box-shadow: inset 0 0 1.2rem rgba(85, 202, 255, .17), 0 0 .8rem rgba(24, 155, 245, .13);
+      border-color: rgba(238, 143, 76, .88);
+      background: linear-gradient(180deg, rgba(238, 143, 76, .92), rgba(238, 143, 76, .94));
+      box-shadow: inset 0 0 1.2rem rgba(238, 143, 76, .17), 0 0 .8rem rgba(238, 143, 76, .13);
     }
-    button.primary:hover { background: linear-gradient(180deg, rgba(16, 142, 224, .96), rgba(3, 82, 145, .98)); }
+    button.primary:hover { background: linear-gradient(180deg, rgba(238, 143, 76, .96), rgba(238, 143, 76, .98)); }
     main {
       position: absolute;
       inset: 0;
       isolation: isolate;
       background:
-        linear-gradient(90deg, rgba(1, 7, 18, .24), transparent 22%, transparent 78%, rgba(1, 7, 18, .24)),
-        radial-gradient(circle at 58% 50%, rgba(5, 39, 73, .18), transparent 44%);
+        linear-gradient(90deg, rgba(22, 21, 19, .24), transparent 22%, transparent 78%, rgba(22, 21, 19, .24)),
+        radial-gradient(circle at 58% 50%, rgba(41, 39, 37, .18), transparent 44%);
     }
     #game-frame {
       position: absolute;
@@ -912,7 +914,7 @@
       top: auto;
       z-index: 1;
       max-width: 100%;
-      background: #041020;
+      background: #161513;
       transform: scaleY(-1);
     }
     #game-frame canvas.emscripten.ready {
@@ -924,7 +926,7 @@
       max-width: 100%;
       max-height: none;
       aspect-ratio: 16 / 9;
-      background: #02050b;
+      background: #161513;
       transform: scaleY(-1);
     }
     #campaign-loading {
@@ -938,7 +940,7 @@
       width: min(24rem, calc(100% - 2rem));
       padding: .62rem .75rem;
       border: 1px solid rgba(255, 255, 255, .2);
-      color: #fff;
+      color: #ffffff;
       background: rgba(0, 0, 0, .9);
       box-shadow: 0 .6rem 2rem rgba(0, 0, 0, .45);
       font-size: .72rem;
@@ -963,12 +965,12 @@
       height: 2px;
       margin: 0;
       border: 0;
-      accent-color: #fff;
+      accent-color: #ffffff;
       background: rgba(255, 255, 255, .18);
     }
     #campaign-loading progress::-webkit-progress-bar { background: rgba(255, 255, 255, .18); }
-    #campaign-loading progress::-webkit-progress-value { background: #fff; box-shadow: none; }
-    #campaign-loading progress::-moz-progress-bar { background: #fff; }
+    #campaign-loading progress::-webkit-progress-value { background: #ffffff; box-shadow: none; }
+    #campaign-loading progress::-moz-progress-bar { background: #ffffff; }
     #game-frame footer {
       position: relative;
       z-index: 2;
@@ -995,7 +997,7 @@
     .site-credit {
       min-width: 0;
       overflow: hidden;
-      color: #5f8199;
+      color: #957a63;
       font-size: .74rem;
       letter-spacing: .025em;
       text-align: center;
@@ -1007,7 +1009,7 @@
       min-height: 0;
       padding: 0;
       border: 0;
-      color: #78bfe7;
+      color: #ee8f4c;
       background: transparent;
       box-shadow: none;
       font-size: inherit;
@@ -1016,7 +1018,7 @@
       text-underline-offset: .18em;
     }
     .site-credit a:hover,
-    #about-open:hover { color: #c6ecff; background: transparent; box-shadow: none; }
+    #about-open:hover { color: #ebe4da; background: transparent; box-shadow: none; }
     #isolation-warning {
       position: absolute;
       left: .15rem;
@@ -1056,10 +1058,10 @@
       gap: .55rem;
       width: 17rem;
       padding: .65rem .72rem .72rem;
-      border: 1px solid rgba(34, 151, 220, .3);
-      background: rgba(2, 15, 30, .74);
+      border: 1px solid rgba(238, 143, 76, .3);
+      background: rgba(22, 21, 19, .74);
       box-shadow: 0 .65rem 2rem rgba(0, 0, 0, .34);
-      clip-path: polygon(.55rem 0, 100% 0, 100% calc(100% - .55rem), calc(100% - .55rem) 100%, 0 100%, 0 .55rem);
+      clip-path: none;
       backdrop-filter: blur(8px);
     }
     .duke-figure { display: grid; justify-items: center; margin: 0; }
@@ -1080,7 +1082,7 @@
     .duke-binding dt, .duke-binding dd { margin: 0; }
     .duke-binding dt {
       flex: 0 0 auto;
-      color: #73c8f5;
+      color: #ee8f4c;
       font-size: .7rem;
       font-weight: 760;
       letter-spacing: .045em;
@@ -1088,7 +1090,7 @@
     }
     .duke-binding dd {
       overflow: hidden;
-      color: #c4d8e5;
+      color: #e1d6c8;
       font-size: .72rem;
       letter-spacing: .02em;
       text-overflow: ellipsis;
@@ -1123,16 +1125,16 @@
     .about-copy { min-width: 0; }
     .about-copy h2 {
       margin: 0 2rem .45rem 0;
-      color: #bfe8ff;
+      color: #e9e0d5;
       font-size: .9rem;
       font-weight: 650;
       letter-spacing: .06em;
       text-transform: uppercase;
     }
     .about-copy ul { display: grid; gap: .48rem; margin: 0; padding-left: 1rem; }
-    .about-copy li { color: #9cb4c4; font-size: .76rem; line-height: 1.45; }
-    .about-copy a { color: #71c8f6; text-underline-offset: .16em; }
-    .about-copy a:hover { color: #c9eeff; }
+    .about-copy li { color: #c0aea0; font-size: .76rem; line-height: 1.45; }
+    .about-copy a { color: #ee8f4c; text-underline-offset: .16em; }
+    .about-copy a:hover { color: #ece5dc; }
     .about-support { list-style: none; margin-left: -1rem; }
     #about-close { position: absolute; top: .62rem; right: .62rem; z-index: 1; }
 
@@ -1149,10 +1151,9 @@
       place-items: center;
       translate: none;
       background:
-        linear-gradient(90deg, rgba(1, 8, 24, .7), rgba(1, 14, 34, .46) 53%, rgba(0, 7, 20, .64)),
-        linear-gradient(180deg, rgba(0, 7, 20, .12), rgba(0, 7, 20, .52)),
-        url("assets/ui/shell/halo-ce-ring-menu.jpg") center / cover no-repeat,
-        #020713;
+        linear-gradient(90deg, rgba(22, 21, 19, .7), rgba(22, 21, 19, .46) 53%, rgba(22, 21, 19, .64)),
+        linear-gradient(180deg, rgba(22, 21, 19, .12), rgba(22, 21, 19, .52)),
+        #161513;
     }
     #loading::before,
     #loading::after {
@@ -1163,7 +1164,7 @@
     #loading::before {
       inset: 0;
       opacity: .08;
-      background: repeating-linear-gradient(180deg, rgba(83, 188, 255, .12) 0 1px, transparent 1px 4px);
+      background: repeating-linear-gradient(180deg, rgba(238, 143, 76, .12) 0 1px, transparent 1px 4px);
     }
     #loading::after {
       display: none;
@@ -1181,58 +1182,58 @@
       height: 5.25rem;
       padding: .95rem 1.1rem;
       overflow: hidden;
-      border: 1px solid rgba(37, 166, 247, .38);
+      border: 1px solid rgba(238, 143, 76, .38);
       background:
-        linear-gradient(180deg, rgba(7, 30, 57, .82), rgba(2, 13, 31, .92)),
-        repeating-linear-gradient(90deg, rgba(67, 172, 237, .04) 0 1px, transparent 1px 24px);
-      box-shadow: inset 0 0 1.8rem rgba(0, 113, 189, .08), 0 .8rem 2.5rem rgba(0, 0, 0, .48);
-      clip-path: polygon(.65rem 0, calc(100% - .65rem) 0, 100% .65rem, 100% calc(100% - .65rem), calc(100% - .65rem) 100%, .65rem 100%, 0 calc(100% - .65rem), 0 .65rem);
+        linear-gradient(180deg, rgba(34, 32, 30, .82), rgba(22, 21, 19, .92)),
+        repeating-linear-gradient(90deg, rgba(238, 143, 76, .04) 0 1px, transparent 1px 24px);
+      box-shadow: inset 0 0 1.8rem rgba(238, 143, 76, .08), 0 .8rem 2.5rem rgba(0, 0, 0, .48);
+      clip-path: none;
     }
     .loading-subtitle {
       grid-column: 2;
       grid-row: 1;
       align-self: end;
-      color: #77b9df;
+      color: #ee8f4c;
       font-size: .57rem;
       font-weight: 700;
       letter-spacing: .2em;
       text-transform: uppercase;
     }
-    .loading-orbit {
+    .loading-mark {
       position: relative;
       grid-column: 1;
       grid-row: 1 / 4;
       width: 2.25rem;
       height: 2.25rem;
       margin: 0;
-      border: 1px solid rgba(68, 188, 255, .22);
+      border: 1px solid rgba(238, 143, 76, .22);
       border-radius: 50%;
-      box-shadow: inset 0 0 1.2rem rgba(29, 159, 235, .09), 0 0 1.2rem rgba(29, 159, 235, .08);
+      box-shadow: inset 0 0 1.2rem rgba(238, 143, 76, .09), 0 0 1.2rem rgba(238, 143, 76, .08);
     }
-    .loading-orbit::before,
-    .loading-orbit::after {
+    .loading-mark::before,
+    .loading-mark::after {
       content: "";
       position: absolute;
       border-radius: 50%;
     }
-    .loading-orbit::before {
+    .loading-mark::before {
       inset: .38rem;
       border: 2px solid transparent;
-      border-top-color: #70d3ff;
-      border-right-color: rgba(40, 167, 244, .62);
-      animation: halo-orbit 1.15s linear infinite;
-      filter: drop-shadow(0 0 .32rem #1da9f7);
+      border-top-color: #ee8f4c;
+      border-right-color: rgba(238, 143, 76, .62);
+      animation: lab-pulse 1.15s linear infinite;
+      filter: drop-shadow(0 0 .32rem #ee8f4c);
     }
-    .loading-orbit::after {
+    .loading-mark::after {
       left: 50%;
       top: 50%;
       width: .42rem;
       height: .42rem;
-      background: #a6e4ff;
-      box-shadow: 0 0 .75rem #36b9ff;
+      background: #e0d4c5;
+      box-shadow: 0 0 .75rem #ee8f4c;
       translate: -50% -50%;
     }
-    @keyframes halo-orbit { to { rotate: 1turn; } }
+    @keyframes lab-pulse { to { rotate: 1turn; } }
     #loading-label {
       grid-column: 2;
       grid-row: 2;
@@ -1240,7 +1241,7 @@
       min-height: 0;
       margin: 0;
       overflow: hidden;
-      color: #d4efff;
+      color: #f0eae3;
       font-size: .72rem;
       letter-spacing: .025em;
       text-overflow: ellipsis;
@@ -1255,16 +1256,16 @@
       overflow: hidden;
       border: 0;
       border-radius: 0;
-      accent-color: #1dacff;
-      background: rgba(55, 154, 216, .13);
+      accent-color: #ee8f4c;
+      background: rgba(238, 143, 76, .13);
     }
     #loading progress[hidden] {
       display: block !important;
       visibility: hidden;
     }
-    progress::-webkit-progress-bar { background: rgba(55, 154, 216, .13); }
-    progress::-webkit-progress-value { background: linear-gradient(90deg, #076fbc, #70d9ff); box-shadow: 0 0 .6rem rgba(72, 195, 255, .65); }
-    progress::-moz-progress-bar { background: linear-gradient(90deg, #076fbc, #70d9ff); }
+    progress::-webkit-progress-bar { background: rgba(238, 143, 76, .13); }
+    progress::-webkit-progress-value { background: linear-gradient(90deg, #ee8f4c, #ee8f4c); box-shadow: 0 0 .6rem rgba(238, 143, 76, .65); }
+    progress::-moz-progress-bar { background: linear-gradient(90deg, #ee8f4c, #ee8f4c); }
 
     #xiso-dialog {
       width: min(26rem, calc(100% - 1.25rem));
@@ -1281,109 +1282,109 @@
     }
     .xiso-card h1 {
       margin: 0;
-      color: #e4f4ff;
+      color: #f6f2ed;
       font-size: clamp(1.15rem, 4vw, 1.4rem);
       line-height: 1.1;
     }
-    .xiso-card p { margin: 0; color: #aac0ce; font-size: .75rem; line-height: 1.45; }
-    .xiso-card a { color: #79d1ff; text-underline-offset: .16em; }
+    .xiso-card p { margin: 0; color: #c9bbaf; font-size: .75rem; line-height: 1.45; }
+    .xiso-card a { color: #ee8f4c; text-underline-offset: .16em; }
     .xiso-card .xiso-disclaimer {
       padding: .55rem .65rem;
-      border-left: 2px solid #69c9ff;
-      background: rgba(32, 133, 196, .1);
-      color: #c8dfec;
+      border-left: 2px solid #ee8f4c;
+      background: rgba(238, 143, 76, .1);
+      color: #e5dccf;
     }
-    .xiso-disclaimer strong { color: #e8f6ff; }
+    .xiso-disclaimer strong { color: #f7f4f0; }
     .xiso-actions { display: flex; flex-wrap: wrap; align-items: center; gap: .75rem; }
     #xiso-file { position: fixed; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
     #xiso-progress {
       width: 100%;
       height: .36rem;
       border: 0;
-      accent-color: #39bfff;
+      accent-color: #ee8f4c;
     }
     #xiso-progress[hidden] { display: none; }
-    #xiso-status { min-height: 1.3rem; color: #bcd4e3; }
-    #xiso-status[data-state="error"] { color: #ffd0c7; }
-    #xiso-status[data-state="ready"] { color: #a8f1ca; }
+    #xiso-status { min-height: 1.3rem; color: #ded1c1; }
+    #xiso-status[data-state="error"] { color: #ebe4db; }
+    #xiso-status[data-state="ready"] { color: #dccfbd; }
 
     #diagnostics-overlay,
     dialog {
-      border-color: rgba(41, 167, 246, .66);
+      border-color: rgba(238, 143, 76, .66);
       border-radius: .18rem;
       background:
-        linear-gradient(180deg, rgba(5, 25, 48, .98), rgba(2, 11, 27, .99)),
-        repeating-linear-gradient(180deg, rgba(84, 185, 244, .04) 0 1px, transparent 1px 4px);
-      box-shadow: inset 0 0 2.5rem rgba(12, 108, 177, .08), 0 1.5rem 5rem rgba(0, 0, 0, .76), 0 0 1.4rem rgba(10, 129, 215, .12);
-      clip-path: polygon(1rem 0, calc(100% - 1rem) 0, 100% 1rem, 100% calc(100% - 1rem), calc(100% - 1rem) 100%, 1rem 100%, 0 calc(100% - 1rem), 0 1rem);
+        linear-gradient(180deg, rgba(28, 27, 25, .98), rgba(22, 21, 19, .99)),
+        repeating-linear-gradient(180deg, rgba(238, 143, 76, .04) 0 1px, transparent 1px 4px);
+      box-shadow: inset 0 0 2.5rem rgba(238, 143, 76, .08), 0 1.5rem 5rem rgba(0, 0, 0, .76), 0 0 1.4rem rgba(238, 143, 76, .12);
+      clip-path: none;
     }
-    dialog::backdrop { background: rgba(0, 6, 17, .78); backdrop-filter: blur(7px) saturate(.75); }
+    dialog::backdrop { background: rgba(22, 21, 19, .78); backdrop-filter: blur(7px) saturate(.75); }
     .profile-panel {
-      border-color: rgba(29, 153, 232, .35);
+      border-color: rgba(238, 143, 76, .35);
       background:
-        radial-gradient(circle at 50% 33%, rgba(16, 107, 171, .24), transparent 45%),
-        repeating-linear-gradient(90deg, rgba(63, 158, 220, .045) 0 1px, transparent 1px 24px),
-        linear-gradient(180deg, rgba(5, 29, 54, .88), rgba(2, 13, 31, .96));
+        radial-gradient(circle at 50% 33%, rgba(238, 143, 76, .24), transparent 45%),
+        repeating-linear-gradient(90deg, rgba(238, 143, 76, .045) 0 1px, transparent 1px 24px),
+        linear-gradient(180deg, rgba(31, 30, 28, .88), rgba(22, 21, 19, .96));
     }
-    .profile-kicker, .host-setup-title, .online-heading h2 { color: #65c2ff; letter-spacing: .06em; text-transform: uppercase; }
-    .online-heading h2 { font-weight: 600; text-shadow: 0 0 .7rem rgba(45, 169, 246, .25); }
-    .online-heading p, #online-detail, .join-direct, .profile-name label, .style-legend { color: var(--halo-muted); }
+    .profile-kicker, .host-setup-title, .online-heading h2 { color: #ee8f4c; letter-spacing: .06em; text-transform: uppercase; }
+    .online-heading h2 { font-weight: 600; text-shadow: 0 0 .7rem rgba(238, 143, 76, .25); }
+    .online-heading p, #online-detail, .join-direct, .profile-name label, .style-legend { color: var(--lab-muted); }
     .host-setup {
-      border-color: rgba(31, 151, 231, .3);
+      border-color: rgba(238, 143, 76, .3);
       border-radius: .18rem;
-      background: rgba(1, 15, 33, .68);
+      background: rgba(22, 21, 19, .68);
     }
     .visual-choice-card {
-      border-color: rgba(40, 143, 209, .32);
+      border-color: rgba(238, 143, 76, .32);
       border-radius: .1rem;
-      background: rgba(1, 12, 28, .86);
+      background: rgba(22, 21, 19, .86);
     }
-    .visual-choice:hover .visual-choice-card { border-color: rgba(91, 199, 255, .74); background: rgba(4, 38, 72, .88); }
+    .visual-choice:hover .visual-choice-card { border-color: rgba(238, 143, 76, .74); background: rgba(40, 38, 36, .88); }
     .visual-choice > input:checked + .visual-choice-card,
     .visual-choice[data-selected="true"] .visual-choice-card {
-      border-color: #42c2ff;
-      background: rgba(5, 52, 93, .82);
-      box-shadow: inset 0 0 1.35rem rgba(33, 164, 237, .13), 0 0 .65rem rgba(35, 166, 240, .18);
+      border-color: #ee8f4c;
+      background: rgba(52, 49, 46, .82);
+      box-shadow: inset 0 0 1.35rem rgba(238, 143, 76, .13), 0 0 .65rem rgba(238, 143, 76, .18);
     }
-    .wizard-step { color: #53768f; text-transform: uppercase; letter-spacing: .08em; }
-    .wizard-step[aria-current="step"] { color: #d9f3ff; }
-    .wizard-step[aria-current="step"]::before { border-color: #59c9ff; background: rgba(6, 95, 158, .72); box-shadow: 0 0 .7rem rgba(43, 177, 247, .35); }
-    .wizard-step[data-complete="true"] { color: #78b5d8; }
-    .wizard-step[data-complete="true"]::before { border-color: #53b9ee; }
+    .wizard-step { color: #886f5a; text-transform: uppercase; letter-spacing: .08em; }
+    .wizard-step[aria-current="step"] { color: #f2ede6; }
+    .wizard-step[aria-current="step"]::before { border-color: #ee8f4c; background: rgba(238, 143, 76, .72); box-shadow: 0 0 .7rem rgba(238, 143, 76, .35); }
+    .wizard-step[data-complete="true"] { color: #ee8f4c; }
+    .wizard-step[data-complete="true"]::before { border-color: #ee8f4c; }
     .profile-name input, .host-field select, .join-row input, #invite-link {
-      border-color: rgba(45, 157, 226, .4);
+      border-color: rgba(238, 143, 76, .4);
       border-radius: .12rem;
-      background: rgba(0, 9, 24, .8);
+      background: rgba(22, 21, 19, .8);
     }
     #player-sidebar {
-      border-color: rgba(35, 164, 243, .52);
+      border-color: rgba(238, 143, 76, .52);
       border-radius: .14rem;
       background:
-        linear-gradient(180deg, rgba(4, 25, 47, .94), rgba(1, 12, 28, .95)),
-        repeating-linear-gradient(180deg, rgba(72, 172, 231, .04) 0 1px, transparent 1px 4px);
-      box-shadow: inset 0 0 1.7rem rgba(17, 109, 176, .07), 0 .8rem 2.4rem rgba(0, 0, 0, .55), 0 0 1rem rgba(14, 119, 193, .11);
-      clip-path: polygon(.75rem 0, 100% 0, 100% calc(100% - .75rem), calc(100% - .75rem) 100%, 0 100%, 0 .75rem);
+        linear-gradient(180deg, rgba(27, 26, 24, .94), rgba(22, 21, 19, .95)),
+        repeating-linear-gradient(180deg, rgba(238, 143, 76, .04) 0 1px, transparent 1px 4px);
+      box-shadow: inset 0 0 1.7rem rgba(238, 143, 76, .07), 0 .8rem 2.4rem rgba(0, 0, 0, .55), 0 0 1rem rgba(238, 143, 76, .11);
+      clip-path: none;
       backdrop-filter: blur(12px) saturate(.8);
     }
-    .sidebar-launch { background: linear-gradient(135deg, rgba(8, 76, 125, .42), rgba(2, 18, 38, .16)); }
-    .sidebar-kicker, .sidebar-invite-label { color: #68bdec; letter-spacing: .16em; }
-    #online { border-color: rgba(62, 184, 249, .78); background: linear-gradient(180deg, rgba(8, 102, 171, .84), rgba(3, 53, 99, .9)); text-transform: uppercase; letter-spacing: .08em; }
-    #online:hover { background: linear-gradient(180deg, rgba(17, 139, 218, .94), rgba(4, 73, 130, .96)); }
-    #online[data-state="connected"] { border-color: rgba(80, 198, 255, .72); color: #d9f4ff; background: rgba(5, 77, 128, .72); }
-    #player-count { color: #cceeff; background: rgba(14, 105, 167, .34); }
-    .player-you, .player-role { color: #6289a2; }
-    .sidebar-invite { border-color: rgba(32, 151, 225, .28); background: rgba(3, 36, 67, .35); }
-    .sidebar-copy-status { color: #a7d5ed; }
+    .sidebar-launch { background: linear-gradient(135deg, rgba(238, 143, 76, .42), rgba(22, 21, 19, .16)); }
+    .sidebar-kicker, .sidebar-invite-label { color: #ee8f4c; letter-spacing: .16em; }
+    #online { border-color: rgba(238, 143, 76, .78); background: linear-gradient(180deg, rgba(238, 143, 76, .84), rgba(238, 143, 76, .9)); text-transform: uppercase; letter-spacing: .08em; }
+    #online:hover { background: linear-gradient(180deg, rgba(238, 143, 76, .94), rgba(238, 143, 76, .96)); }
+    #online[data-state="connected"] { border-color: rgba(238, 143, 76, .72); color: #f2ede6; background: rgba(238, 143, 76, .72); }
+    #player-count { color: #ede7de; background: rgba(238, 143, 76, .34); }
+    .player-you, .player-role { color: #9b7f69; }
+    .sidebar-invite { border-color: rgba(238, 143, 76, .28); background: rgba(37, 35, 33, .35); }
+    .sidebar-copy-status { color: #daccba; }
     .control-button {
-      border-color: rgba(45, 155, 222, .36);
-      background: rgba(3, 25, 48, .72);
+      border-color: rgba(238, 143, 76, .36);
+      background: rgba(27, 26, 24, .72);
     }
-    #focus[data-state="locked"] { border-color: rgba(89, 202, 255, .72); color: #cceeff; background: rgba(5, 79, 130, .72); }
-    #focus[data-state="pending"] { cursor: progress; color: #8bc9ec; }
-    #footer-hint { color: #68869b; }
+    #focus[data-state="locked"] { border-color: rgba(238, 143, 76, .72); color: #ede7de; background: rgba(238, 143, 76, .72); }
+    #focus[data-state="pending"] { cursor: progress; color: #ee8f4c; }
+    #footer-hint { color: #9b7f68; }
 
     @media (prefers-reduced-motion: reduce) {
-      .loading-orbit::before { animation-duration: 2.5s; }
+      .loading-mark::before { animation-duration: 2.5s; }
     }
     @media (max-width: 860px) {
       #game-frame {
@@ -1400,10 +1401,10 @@
         padding: 1rem 1.2rem;
         overflow: visible;
         border-right: 0;
-        border-bottom: 1px solid rgba(130, 196, 238, .22);
+        border-bottom: 1px solid rgba(238, 143, 76, .22);
       }
       .profile-kicker { grid-column: 1 / -1; }
-      .spartan-preview { grid-row: 2 / 4; height: 13rem; }
+      .pilot-preview { grid-row: 2 / 4; height: 13rem; }
       .profile-name, #online-style-options { align-self: end; }
       .online-flow { overflow: visible; }
       .map-choice-grid { grid-template-columns: repeat(auto-fit, minmax(7rem, 1fr)); }
@@ -1428,7 +1429,7 @@
       #status { display: none; }
       dialog { width: calc(100% - 1rem); max-height: calc(100% - 1rem); }
       .profile-panel { display: flex; padding: .9rem; }
-      .spartan-preview { height: 15rem; }
+      .pilot-preview { height: 15rem; }
       .online-flow { padding: 1rem .85rem; }
       .mode-choice-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       .mode-choice-card { grid-template-columns: 2.7rem minmax(0, 1fr); }
@@ -1459,17 +1460,85 @@
       .about-card { grid-template-columns: 3.2rem minmax(0, 1fr); gap: .7rem; padding: .9rem; }
       .about-jester { width: 2.9rem; }
     }
+
+    /* Original Combat Lab graphics and matte, warm controls. */
+    :root { --lab-ink: #20201e; --lab-text: #f3eee4; --lab-muted: #b7b0a4; --lab-line: #514a40; }
+    body, main { background: #20201e; }
+    body::before, body::after, #loading::before, #loading::after { display: none; }
+    body { background: radial-gradient(ellipse at 80% 10%, #343027, #20201e 65%); }
+    button, button:hover, .control-button { border-radius: .4rem; box-shadow: none; background: #35322d; color: #f3eee4; }
+    button:hover { background: #494036; border-color: #ee8f4c; }
+    button.primary, #online { background: #ee8f4c; color: #211d18; border-color: #ee8f4c; box-shadow: none; }
+    button.primary:hover, #online:hover { background: #ffad70; color: #211d18; }
+    button:focus-visible, input:focus-visible, summary:focus-visible { outline-color: #ffb17b; }
+    .brand, .online-heading h2 { text-shadow: none; }
+    header, #duke-legend, #player-sidebar, .game-settings-panel { background: #292824; border-color: #514a40; border-radius: .65rem; box-shadow: 0 .6rem 2rem #0003; backdrop-filter: none; }
+    #player-sidebar { width: 17rem; }
+    .sidebar-launch, .sidebar-invite { background: transparent; }
+    .site-credit, #footer-hint, .sidebar-kicker, #player-empty, .sidebar-invite-label { color: #b7b0a4; }
+    .site-credit strong { color: #f3eee4; font-weight: 600; }
+    .site-credit a, #about-open, .xiso-card a, .about-copy a { color: #ffc195; }
+    .site-credit a:hover, #about-open:hover, .about-copy a:hover { color: #fff0da; }
+    #diagnostics-overlay, dialog { background: #292824; color: #f3eee4; border: 1px solid #625344; border-radius: .8rem; box-shadow: 0 1.5rem 5rem #0008; }
+    dialog::backdrop { background: #171714c9; backdrop-filter: blur(8px); }
+    .profile-panel { background: #24231f; border-color: #514a40; }
+    .host-setup, .advanced-settings, .online-status, .verification-feedback { background: #22211e; border-color: #514a40; border-radius: .5rem; }
+    .profile-kicker, .host-setup-title, .online-heading h2, .about-copy h2 { color: #f3eee4; letter-spacing: .015em; text-transform: none; }
+    .profile-kicker, .lab-eyebrow { color: #eea36b; font: 650 .68rem/1.3 ui-monospace, monospace; letter-spacing: .09em; text-transform: uppercase; }
+    .profile-name input, .host-field select, .join-row input, #invite-link, .advanced-number input { background: #1d1d1a; color: #f3eee4; border-color: #655b4e; }
+    .pilot-preview { height: 15rem; align-items: center; }
+    .pilot-preview::before { display: none; }
+    .pilot-mark { display: block; width: 100%; height: 100%; max-height: 13rem; color: var(--player-color, #ee8f4c); filter: none; }
+    .pilot-outline { fill: none; stroke: #6b6356; stroke-width: 1; }
+    .pilot-preview figcaption { color: #f3eee4; font-size: .9rem; }
+    .style-choice input:checked + .style-swatch { box-shadow: 0 0 0 2px #24231f, 0 0 0 4px #f3eee4; }
+    #online-dialog[data-view="join"] .pilot-preview { height: 14rem; }
+    #online-dialog[data-view="join"] .profile-join-action { background: #24231f; }
+    .keyboard-diagram { display: block; width: 13rem; height: auto; color: #d8cab8; }
+    .duke-figure figcaption { margin: .3rem 0 .15rem; color: #f3eee4; font-size: .73rem; font-weight: 600; }
+    .duke-binding dt { color: #eea36b; }
+    .duke-binding dd { color: #c9c1b5; }
+    .lab-mark { display: block; width: 3.8rem; color: #ee8f4c; }
+    .about-copy li, .xiso-card p { color: #c9c1b5; line-height: 1.55; }
+    .xiso-card h1 { color: #f3eee4; font-size: clamp(1.55rem, 4vw, 2rem); letter-spacing: -.035em; line-height: 1.1; }
+    #xiso-dialog { width: min(30rem, calc(100% - 1.5rem)); height: auto; }
+    .xiso-card { gap: 1rem; padding: clamp(1.25rem, 4vw, 2rem); }
+    .xiso-card .xiso-disclaimer { background: #383027; color: #d8c8b4; border-color: #ee8f4c; }
+    .xiso-actions button { min-height: 2.65rem; padding-inline: 1rem; }
+    .map-choice-card { grid-template-rows: 4.7rem auto; }
+    .map-diagram { width: 100%; height: 4.7rem; color: #bfa78d; background: #24231f; }
+    .diagram-grid { fill: none; stroke: #5a5144; stroke-width: .6; }
+    .map-diagram text { fill: #f3eee4; font: 7px ui-monospace, monospace; }
+    .mode-diagram { width: 2.8rem; height: 2.8rem; fill: none; stroke: #eea36b; stroke-width: 2; stroke-linejoin: round; stroke-linecap: round; }
+    .visual-choice-card { background: #302c26; border-color: #554a3b; border-radius: .45rem; }
+    .visual-choice:hover .visual-choice-card { background: #403529; border-color: #ee8f4c; }
+    .visual-choice > input:checked + .visual-choice-card, .visual-choice[data-selected="true"] .visual-choice-card { background: #4d3523; border-color: #ffad70; box-shadow: 0 0 0 1px #ffad70; }
+    .visual-choice > input:checked + .visual-choice-card .map-diagram { color: #ee8f4c; }
+    .choice-label { color: #f3eee4; }
+    #loading { background: #20201e; }
+    .loading-panel { border-radius: .8rem; border-color: #625344; background: #292824; box-shadow: 0 .8rem 2.5rem #0005; height: auto; min-height: 6rem; }
+    .loading-subtitle { color: #f3eee4; font-size: .76rem; letter-spacing: .09em; }
+    .loading-mark { width: 2.25rem; height: 2.25rem; border: 0; border-radius: 0; background: #ee8f4c; box-shadow: none; transform: rotate(-8deg); animation: lab-breathe 1.4s ease-in-out infinite alternate; }
+    .loading-mark::before { inset: .5rem; border: 0; border-radius: 0; background: #292824; animation: none; filter: none; }
+    .loading-mark::after { display: none; }
+    #loading-label { color: #c9c1b5; }
+    progress::-webkit-progress-value { background: #ee8f4c; box-shadow: none; }
+    progress::-moz-progress-bar { background: #ee8f4c; }
+    @keyframes lab-breathe { to { opacity: .45; transform: rotate(8deg); } }
+    @media (prefers-reduced-motion: reduce) { .loading-mark { animation: none; } }
+    @media (max-width: 760px) { .keyboard-diagram { width: 10rem; } .pilot-preview { height: 12rem; } }
+    @media (max-height: 680px) { #duke-legend { display: none; } }
   </style>
 </head>
 <body>
   <header hidden>
-    <button id="diagnostics-secret" class="brand" type="button">Halo CE · Web</button>
+    <button id="diagnostics-secret" class="brand" type="button">Combat Lab</button>
     <span id="status">Preparing runtime…</span>
   </header>
   <main id="game-area">
-    <section id="game-frame" aria-label="Halo game screen">
+    <section id="game-frame" aria-label="Game screen">
       <canvas class="emscripten" id="canvas" width="1280" height="720"
-              tabindex="-1" aria-label="Halo game display"
+              tabindex="-1" aria-label="Game display"
               oncontextmenu="event.preventDefault()"></canvas>
       <div id="campaign-loading" role="status" aria-live="polite" hidden>
         <span id="campaign-loading-label">Loading campaign…</span>
@@ -1500,16 +1569,15 @@
             </div>
           </details>
         </div>
-        <span class="site-credit">Made by <a href="https://mitchellhynes.com/" target="_blank" rel="noopener noreferrer">Mitchell Hynes</a>. <button id="about-open" type="button">Learn more</button></span>
+        <span class="site-credit"><strong>Combat Lab</strong> · Made by <a href="https://mitchellhynes.com/" target="_blank" rel="noopener noreferrer">Mitchell Hynes</a>. <button id="about-open" type="button">Learn more</button></span>
         <span id="footer-hint" class="hint">Click the game or Focus game to capture the mouse</span>
         <span id="isolation-warning"></span>
         <button id="logs" type="button" hidden>Diagnostics</button>
       </footer>
     </section>
-    <aside id="duke-legend" aria-label="Duke controller keyboard mapping">
+    <aside id="duke-legend" aria-label="Gamepad to keyboard controls">
       <figure class="duke-figure">
-        <img class="duke-controller" src="assets/ui/shell/xbox-duke-controller.png"
-             alt="Black original Xbox Duke controller">
+        <svg class="keyboard-diagram" viewBox="0 0 240 100" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="1.5"><rect x="57" y="8" width="34" height="34" rx="5"/><rect x="17" y="48" width="34" height="34" rx="5"/><rect x="57" y="48" width="34" height="34" rx="5"/><rect x="97" y="48" width="34" height="34" rx="5"/><rect x="175" y="15" width="43" height="68" rx="20"/><path d="M196 15v23m-20 0h41"/></g><g fill="currentColor" font-family="sans-serif" font-size="13" text-anchor="middle"><text x="74" y="30">W</text><text x="34" y="70">A</text><text x="74" y="70">S</text><text x="114" y="70">D</text></g></svg><figcaption>Keyboard + mouse</figcaption>
       </figure>
       <dl class="duke-bindings">
         <div class="duke-binding" aria-label="A button - Space">
@@ -1567,8 +1635,8 @@
     </aside>
     <section id="loading" aria-live="polite" aria-busy="true">
       <div class="loading-panel">
-        <div class="loading-subtitle">Halo CE · Web</div>
-        <div class="loading-orbit" aria-hidden="true"></div>
+        <div class="loading-subtitle">Combat Lab</div>
+        <div class="loading-mark" aria-hidden="true"></div>
         <div id="loading-label">Downloading WebAssembly…</div>
         <progress id="progress" value="0" max="100" hidden></progress>
       </div>
@@ -1595,11 +1663,12 @@
   </main>
   <dialog id="xiso-dialog" aria-labelledby="xiso-title" aria-describedby="xiso-description" tabindex="-1">
     <section class="xiso-card">
-      <h1 id="xiso-title">Choose your Halo XISO</h1>
-      <p class="xiso-disclaimer"><strong>Independent website.</strong> This website is maintained by Mitchell Hynes. It is not part of, operated by, or supported by <a href="https://halocombatevolved.com/" target="_blank" rel="noopener noreferrer">OpenCE</a>.</p>
-      <p id="xiso-description">To comply with copyright law and respect the original Halo CE decompilation team, this website does not provide Halo game data. Choose an XISO made from your own Xbox copy of <cite>Halo: Combat Evolved</cite>.</p>
-      <p>Need help ripping your own disc? The OpenCE community has <a href="https://discord.gg/DQRgPUq6B8" target="_blank" rel="noopener noreferrer">disc-ripping instructions</a>. For help with this website, please contact Mitchell—not OpenCE.</p>
-      <input id="xiso-file" type="file" accept=".iso,.xiso,application/octet-stream" aria-label="Choose Halo XISO">
+      <div class="lab-eyebrow">Combat Lab / Browser play</div>
+      <h1 id="xiso-title">Bring your own disc</h1>
+      <p class="xiso-disclaimer"><strong>Independently maintained.</strong> Combat Lab is maintained by Mitchell Hynes. It is not operated or supported by the <a href="https://halocombatevolved.com/" target="_blank" rel="noopener noreferrer">upstream project</a> or the original game’s creators.</p>
+      <p id="xiso-description">Game data is not included. Choose a compatible XISO made from a disc you own. Your image is processed locally, and the imported files stay in this browser.</p>
+      <p>Need help preparing a disc image? The upstream community has <a href="https://discord.gg/DQRgPUq6B8" target="_blank" rel="noopener noreferrer">disc-ripping instructions</a>. For help with this website, please contact Mitchell.</p>
+      <input id="xiso-file" type="file" accept=".iso,.xiso,application/octet-stream" aria-label="Choose a compatible disc image">
       <div class="xiso-actions">
         <button id="xiso-choose" class="primary" type="button">Choose XISO</button>
         <span id="xiso-file-name" aria-live="polite"></span>
@@ -1611,17 +1680,16 @@
   <dialog id="about-dialog" aria-labelledby="about-title">
     <article class="about-card">
       <button id="about-close" class="icon-button" type="button" aria-label="Close">✕</button>
-      <img class="about-jester" src="assets/ui/shell/mitchell-jester-card.svg"
-           alt="Red Joker card from mitchellhynes.com">
+      <svg class="lab-mark" viewBox="0 0 100 100" aria-hidden="true"><path d="M15 15h47v18H33v34h29v18H15z" fill="currentColor"/><path d="M70 39h15v46H44V70h26z" fill="currentColor" opacity=".55"/></svg>
       <div class="about-copy">
-        <h2 id="about-title">About this web build</h2>
+        <h2 id="about-title">About Combat Lab</h2>
         <ul>
           <li>Built from the decompilation work in
-            <a href="https://github.com/bnunu/halo-ce-universal" target="_blank" rel="noopener noreferrer">bnunu/halo-ce-universal</a>
+            <a href="https://github.com/bnunu/halo-ce-universal" target="_blank" rel="noopener noreferrer">bnunu’s source project</a>
             and
-            <a href="https://github.com/cybersecurity/halo-ce-universal" target="_blank" rel="noopener noreferrer">cybersecurity/halo-ce-universal</a>.
+            <a href="https://github.com/cybersecurity/halo-ce-universal" target="_blank" rel="noopener noreferrer">cybersecurity’s source project</a>.
           </li>
-          <li>This web version is independently hosted and maintained by <a href="https://mitchellhynes.com/" target="_blank" rel="noopener noreferrer">Mitchell Hynes</a>. Those projects and contributors are not affiliated with or responsible for this website.</li>
+          <li>This browser interface is independently hosted and maintained by <a href="https://mitchellhynes.com/" target="_blank" rel="noopener noreferrer">Mitchell Hynes</a>. Those projects and contributors are not affiliated with or responsible for this website.</li>
         </ul>
       </div>
     </article>
@@ -1630,10 +1698,9 @@
     <div class="online-card">
       <button id="online-close" class="icon-button online-dialog-close" type="button" aria-label="Close">✕</button>
       <section id="online-profile" class="profile-panel" aria-label="Player profile">
-        <div class="profile-kicker">Your Spartan</div>
-        <figure id="online-profile-preview" class="spartan-preview" data-style="sage">
-          <img id="online-spartan-image" class="spartan-image"
-               src="assets/ui/spartan/sage.png" alt="Your customized Halo Spartan">
+        <div class="profile-kicker">Your pilot</div>
+        <figure id="online-profile-preview" class="pilot-preview" data-style="sage">
+          <svg class="pilot-mark" viewBox="0 0 180 180" aria-hidden="true"><path class="pilot-outline" d="M28 28h124v124H28zM28 90h124M90 28v124"/><path d="M48 48h48v25H73v35H48zM107 73h25v59H73v-25h34z" fill="currentColor"/><path d="M112 48h20v10h-20zM48 122h10v10H48z" fill="currentColor" opacity=".5"/></svg>
           <figcaption id="online-profile-preview-name">Player</figcaption>
         </figure>
         <div class="profile-name">
@@ -1642,7 +1709,7 @@
                  autocomplete="nickname" spellcheck="false" placeholder="Player">
         </div>
         <fieldset id="online-style-options">
-          <legend class="style-legend">Armor</legend>
+          <legend class="style-legend">Accent color</legend>
           <div class="style-choices">
             <label class="style-choice" data-style="white" title="White"><input type="radio" name="player-style" value="white"><span class="style-swatch"></span><span class="sr-only">White</span></label>
             <label class="style-choice" data-style="black" title="Black"><input type="radio" name="player-style" value="black"><span class="style-swatch"></span><span class="sr-only">Black</span></label>
@@ -1695,19 +1762,19 @@
               <section id="online-step-map">
                 <p id="online-map-title" class="host-setup-title">Choose a map</p>
                 <div id="online-map-options" class="choice-grid map-choice-grid" role="radiogroup" aria-labelledby="online-map-title">
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="0" checked><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/battle-creek.png" alt=""><span class="choice-label">Battle Creek</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="1"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/sidewinder.png" alt=""><span class="choice-label">Sidewinder</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="2"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/damnation.png" alt=""><span class="choice-label">Damnation</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="3"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/rat-race.png" alt=""><span class="choice-label">Rat Race</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="4"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/prisoner.png" alt=""><span class="choice-label">Prisoner</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="5"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/hang-em-high.png" alt=""><span class="choice-label">Hang 'Em High</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="6"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/chill-out.png" alt=""><span class="choice-label">Chill Out</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="7"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/derelict.png" alt=""><span class="choice-label">Derelict</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="8"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/boarding-action.png" alt=""><span class="choice-label">Boarding Action</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="9"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/blood-gulch.png" alt=""><span class="choice-label">Blood Gulch</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="10"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/wizard.png" alt=""><span class="choice-label">Wizard</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="11"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/chiron-tl-34.png" alt=""><span class="choice-label">Chiron TL-34</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="12"><span class="visual-choice-card map-choice-card"><img src="assets/ui/maps/longest.png" alt=""><span class="choice-label">Longest</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="0" checked><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M18 12h25v14h-12v14H18zM84 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">01</text></svg><span class="choice-label">Battle Creek</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="1"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M29 19h25v14h-12v14H29zM75 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">02</text></svg><span class="choice-label">Sidewinder</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="2"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M40 26h25v14h-12v14H40zM66 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">03</text></svg><span class="choice-label">Damnation</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="3"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M51 12h25v14h-12v14H51zM84 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">04</text></svg><span class="choice-label">Rat Race</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="4"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M18 19h25v14h-12v14H18zM75 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">05</text></svg><span class="choice-label">Prisoner</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="5"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M29 26h25v14h-12v14H29zM66 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">06</text></svg><span class="choice-label">Hang 'Em High</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="6"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M40 12h25v14h-12v14H40zM84 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">07</text></svg><span class="choice-label">Chill Out</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="7"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M51 19h25v14h-12v14H51zM75 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">08</text></svg><span class="choice-label">Derelict</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="8"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M18 26h25v14h-12v14H18zM66 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">09</text></svg><span class="choice-label">Boarding Action</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="9"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M29 12h25v14h-12v14H29zM84 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">10</text></svg><span class="choice-label">Blood Gulch</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="10"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M40 19h25v14h-12v14H40zM75 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">11</text></svg><span class="choice-label">Wizard</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="11"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M51 26h25v14h-12v14H51zM66 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">12</text></svg><span class="choice-label">Chiron TL-34</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-map-choice" value="12"><span class="visual-choice-card map-choice-card"><svg class="map-diagram" viewBox="0 0 120 64" aria-hidden="true"><path d="M10 10h100v44H10zM10 32h100M60 10v44" class="diagram-grid"/><path d="M18 12h25v14h-12v14H18zM84 18h16v28H74v-12h10z" fill="currentColor"/><text x="14" y="57">13</text></svg><span class="choice-label">Longest</span></span></label>
                 </div>
                 <label class="sr-only" for="online-map">Selected map</label>
                 <select id="online-map" class="picker-select" name="map" tabindex="-1" aria-hidden="true">
@@ -1732,12 +1799,12 @@
               <section id="online-step-mode" hidden>
                 <p id="online-mode-title" class="host-setup-title">Choose a mode</p>
                 <div id="online-mode-options" class="choice-grid mode-choice-grid" role="radiogroup" aria-labelledby="online-mode-title">
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="0" checked><span class="visual-choice-card mode-choice-card"><img src="assets/ui/modes/slayer.png" alt=""><span class="choice-label">Slayer</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="1"><span class="visual-choice-card mode-choice-card"><img src="assets/ui/modes/team-slayer.png" alt=""><span class="choice-label">Team Slayer</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="2"><span class="visual-choice-card mode-choice-card"><img src="assets/ui/modes/capture-the-flag.png" alt=""><span class="choice-label">Capture the Flag</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="3"><span class="visual-choice-card mode-choice-card"><img src="assets/ui/modes/oddball.png" alt=""><span class="choice-label">Oddball</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="4"><span class="visual-choice-card mode-choice-card"><img src="assets/ui/modes/king-of-the-hill.png" alt=""><span class="choice-label">King of the Hill</span></span></label>
-                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="5"><span class="visual-choice-card mode-choice-card"><img src="assets/ui/modes/race.png" alt=""><span class="choice-label">Race</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="0" checked><span class="visual-choice-card mode-choice-card"><svg class="mode-diagram" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 12h16v16H12zM36 36h16v16H36zM20 44l24-24"/></svg><span class="choice-label">Slayer</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="1"><span class="visual-choice-card mode-choice-card"><svg class="mode-diagram" viewBox="0 0 64 64" aria-hidden="true"><path d="M8 12h18v18H8zM38 12h18v18H38zM23 40h18v16H23z"/></svg><span class="choice-label">Team Slayer</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="2"><span class="visual-choice-card mode-choice-card"><svg class="mode-diagram" viewBox="0 0 64 64" aria-hidden="true"><path d="M18 54V10h29l-7 10 7 10H18"/></svg><span class="choice-label">Capture the Flag</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="3"><span class="visual-choice-card mode-choice-card"><svg class="mode-diagram" viewBox="0 0 64 64" aria-hidden="true"><path d="M32 10l21 22-21 22-21-22zM25 25h14v14H25z"/></svg><span class="choice-label">Oddball</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="4"><span class="visual-choice-card mode-choice-card"><svg class="mode-diagram" viewBox="0 0 64 64" aria-hidden="true"><path d="M10 51V35h14V22h16V10h14v41z"/></svg><span class="choice-label">King of the Hill</span></span></label>
+                  <label class="visual-choice" data-picker-option><input type="radio" name="halo-mode-choice" value="5"><span class="visual-choice-card mode-choice-card"><svg class="mode-diagram" viewBox="0 0 64 64" aria-hidden="true"><path d="M12 18h30l-7-7m7 7-7 7M52 46H22l7-7m-7 7 7 7"/></svg><span class="choice-label">Race</span></span></label>
                 </div>
                 <label class="sr-only" for="online-mode">Selected mode</label>
                 <select id="online-mode" class="picker-select" name="mode" tabindex="-1" aria-hidden="true">
@@ -1866,7 +1933,7 @@
     ];
     const campaignMissions = [
       ["a10", "The Pillar of Autumn"],
-      ["a30", "Halo"],
+      ["a30", "Mission 02"],
       ["a50", "The Truth and Reconciliation"],
       ["b30", "The Silent Cartographer"],
       ["b40", "Assault on the Control Room"],
@@ -1892,7 +1959,7 @@
       const release = releaseXisoDependency;
       releaseXisoDependency = null;
       if (xisoDialog.open) xisoDialog.close();
-      setStatus("Starting Halo…");
+      setStatus("Starting game…");
       release();
     }
 
@@ -1942,13 +2009,13 @@
           }
         });
         xisoStatus.dataset.state = "ready";
-        xisoStatus.textContent = "Game data is ready. Starting Halo…";
+        xisoStatus.textContent = "Game data is ready. Starting game…";
         finishXisoGate();
       } catch (error) {
         xisoStatus.dataset.state = "error";
         xisoStatus.textContent = error && error.message
           ? error.message
-          : "That XISO could not be read. Choose your Halo Xbox disc image and try again.";
+          : "That XISO could not be read. Choose a compatible disc image and try again.";
         xisoChooseButton.disabled = false;
         xisoChooseButton.textContent = "Choose another XISO";
         xisoFileInput.value = "";
@@ -1961,7 +2028,7 @@
     xisoFileInput.addEventListener("change", () => installSelectedXiso(xisoFileInput.files[0]));
     xisoDialog.addEventListener("cancel", event => event.preventDefault());
     xisoDialog.addEventListener("close", () => {
-      if (releaseXisoDependency) showXisoGate("Choose your Halo XISO to continue.");
+      if (releaseXisoDependency) showXisoGate("Choose your disc image to continue.");
     });
     function percentile(values, fraction) {
       const sorted = [...values].sort((left, right) => left - right);
@@ -2949,14 +3016,14 @@
         }
         runtimeStage = "calibrating";
         statusElement.textContent = "Starting display…";
-        loadingLabel.textContent = "Calibrating ring interface…";
+        loadingLabel.textContent = "Preparing your display…";
         progressElement.hidden = true;
         waitForPresentedGame();
         return;
       }
 
       if (/^Preparing files/u.test(text)) runtimeStage = "dependencies";
-      else if (/^Starting Halo/u.test(text)) runtimeStage = "runtime";
+      else if (/^Starting game/u.test(text)) runtimeStage = "runtime";
       else if (/^(Could not start:|Aborted:)/iu.test(text)) runtimeStage = "failed";
       else runtimeStage = "loading";
       statusElement.textContent = text;
@@ -3013,7 +3080,7 @@
         this.totalDependencies = Math.max(this.totalDependencies, left);
         setStatus(left
           ? `Preparing files… (${this.totalDependencies - left}/${this.totalDependencies})`
-          : "Starting Halo…");
+          : "Starting game…");
       },
       onRuntimeInitialized() {
         haloRuntimeReady = true;
@@ -3030,7 +3097,7 @@
         window.setInterval(updateCampaignLoading, 200);
         updateRuntimeTelemetry();
         window.setInterval(updateRuntimeTelemetry, 250);
-        setStatus("Starting Halo…");
+        setStatus("Starting game…");
         waitForPresentedGame();
       },
       onAbort(reason) {

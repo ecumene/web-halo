@@ -42,7 +42,7 @@ const elements = {};
   'online-wizard', 'online-wizard-steps', 'online-wizard-map', 'online-wizard-mode',
   'online-step-map', 'online-step-mode', 'online-map-next', 'online-mode-back',
   'online-profile', 'online-player-name', 'online-style-options',
-  'online-profile-preview', 'online-profile-preview-name', 'online-spartan-image',
+  'online-profile-preview', 'online-profile-preview-name',
   'online-join-confirm', 'online-join-profile', 'online-join-summary',
   'online-join-status', 'online-human-verification', 'online-verification-status',
   'online-verification-retry', 'online-turnstile', 'player-sidebar',
@@ -170,7 +170,7 @@ async function settle() {
 
   renderCalls[0].callback('first-token');
   assert.equal(elements['online-human-verification'].dataset.state, 'ready');
-  assert.match(elements['online-verification-status'].textContent, /Halo is still loading/);
+  assert.match(elements['online-verification-status'].textContent, /the game is still loading/);
   assert.equal(elements['online-join-profile'].disabled, false);
   assert.equal(requestBodies.length, 0,
     'a verified token still waits for the runtime');

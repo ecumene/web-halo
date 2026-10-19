@@ -82,7 +82,7 @@ const elements = {};
   'online-wizard', 'online-wizard-map', 'online-wizard-mode',
   'online-step-map', 'online-step-mode', 'online-map-next', 'online-mode-back',
   'online-profile', 'online-player-name', 'online-profile-preview',
-  'online-profile-preview-name', 'online-spartan-image',
+  'online-profile-preview-name',
   'online-join-confirm', 'online-join-profile', 'online-join-summary',
   'online-join-status',
   'online-map-options', 'online-mode-options',
@@ -278,8 +278,6 @@ vm.runInContext(
   assert.equal(styleInputs.find(input => input.checked).value, 'rose');
   assert.equal(elements['online-profile-preview-name'].textContent, 'TestSpartan');
   assert.equal(elements['online-profile-preview'].dataset.style, 'rose');
-  assert.equal(elements['online-spartan-image'].src, 'assets/ui/spartan/rose.png');
-  assert.match(elements['online-spartan-image'].alt, /TestSpartan in rose armor/);
   assert.equal(elements['online-host'].disabled, true);
   assert.equal(elements['player-sidebar'].hidden, false);
   assert.equal(elements['player-count'].textContent, '0/128');
@@ -291,7 +289,7 @@ vm.runInContext(
   assert.equal(elements['online-dialog'].dataset.view, 'join');
   assert.equal(elements['online-join-confirm'].hidden, false);
   assert.equal(elements['online-join-status'].hidden, false);
-  assert.equal(elements['online-join-status'].textContent, 'Loading Halo…');
+  assert.equal(elements['online-join-status'].textContent, 'Loading game…');
   await context.HaloOnline.leave();
   assert.equal(elements['online-dialog'].dataset.view, 'setup');
 

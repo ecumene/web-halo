@@ -28,12 +28,13 @@ const loading = shell.match(/<section id="loading"[\s\S]*?<\/section>/);
 assert(loading, 'missing loading overlay');
 assert.doesNotMatch(loading[0], /class="loading-wordmark"/,
   'loading must not show a large duplicate Halo wordmark');
-assert.match(loading[0], /class="loading-orbit"/);
+assert.match(loading[0], /class="loading-mark"/);
 assert.match(shell, /.loading-panel \{[\s\S]*?height: 5.25rem;/,
   'loading panel needs fixed geometry so status changes cannot move it');
 assert.match(shell, /#loading progress\[hidden\][\s\S]*?visibility: hidden;/,
   'hidden progress must retain its reserved layout slot');
-assert.match(shell, /url\("assets\/ui\/shell\/halo-ce-ring-menu\.jpg"\)/);
+assert.doesNotMatch(shell, /url\("assets\/ui\/shell\/halo-ce-ring-menu\.jpg"\)/,
+  'the launcher must not use the former game background');
 assert.doesNotMatch(shell, /hud-frame\.png/,
   'the decorative blue HUD frame must not cover the game on constrained devices');
 
@@ -81,16 +82,16 @@ assert.doesNotMatch(readyCanvasStyle[0], /border:|box-shadow:|clip-path:/,
 assert.match(shell,
   /#game-area:fullscreen #player-sidebar,\s*#game-area:fullscreen #duke-legend \{ display: none; \}/,
   'fullscreen must hide the online sidebar and Duke legend');
-assert.match(shell, /id="duke-legend"[\s\S]*xbox-duke-controller\.png/,
-  'the legend must use the high-resolution Duke image');
+assert.match(shell, /id="duke-legend"[\s\S]*<svg class="keyboard-diagram"/,
+  'the legend must use the original keyboard diagram');
 assert.match(shell, /<dt>A<\/dt>[\s\S]*?<dd>- Space<\/dd>[\s\S]*?<dt>B<\/dt>[\s\S]*?<dd>- F<\/dd>[\s\S]*?<dt>X<\/dt><dd>- E \/ R<\/dd>[\s\S]*?<dt>Y<\/dt><dd>- Tab \/ Wheel<\/dd>[\s\S]*?<dt>White<\/dt><dd>- Q<\/dd>[\s\S]*?<dt>Black<\/dt><dd>- X<\/dd>[\s\S]*?<dt>LT<\/dt><dd>- G \/ RMB<\/dd>[\s\S]*?<dt>RT<\/dt><dd>- LMB<\/dd>[\s\S]*?<dt>Move<\/dt><dd>- WASD<\/dd>[\s\S]*?<dt>Aim<\/dt><dd>- Mouse<\/dd>[\s\S]*?<dt>L3<\/dt><dd>- C<\/dd>[\s\S]*?<dt>R3<\/dt><dd>- Z \/ MMB<\/dd>[\s\S]*?<dt>D-pad<\/dt><dd>- Arrows<\/dd>[\s\S]*?<dt>Start<\/dt><dd>- Esc<\/dd>[\s\S]*?<dt>Back<\/dt><dd>- F1<\/dd>/,
   'the high-resolution Duke legend must document the complete keyboard mapping');
 assert.doesNotMatch(shell, /<figcaption>Duke<\/figcaption>/,
   'the controller image must not carry a redundant Duke caption');
 assert.match(shell, /Made by[\s\S]*mitchellhynes\.com[\s\S]*Mitchell Hynes[\s\S]*id="about-open"[\s\S]*Learn more/,
   'the under-screen row must include the compact creator credit');
-assert.match(shell, /id="about-dialog"[\s\S]*mitchell-jester-card\.svg[\s\S]*github\.com\/bnunu\/halo-ce-universal[\s\S]*github\.com\/cybersecurity\/halo-ce-universal[\s\S]*independently hosted[\s\S]*mitchellhynes\.com[\s\S]*responsible for this website/,
-  'Learn more must disclose sources, independence, and the Joker card');
+assert.match(shell, /id="about-dialog"[\s\S]*<svg class="lab-mark"[\s\S]*github\.com\/bnunu\/halo-ce-universal[\s\S]*github\.com\/cybersecurity\/halo-ce-universal[\s\S]*independently hosted[\s\S]*mitchellhynes\.com[\s\S]*responsible for this website/,
+  'Learn more must disclose sources and independence alongside the original site mark');
 assert.doesNotMatch(shell, /ko-fi|kofi-support|Buy me a coffee/i,
   'the site must not include Ko-fi links or promotional copy');
 assert.match(shell, /onlineDialog\.open \|\| aboutDialog\.open/,
@@ -120,7 +121,7 @@ assert.match(shell,
   /Array\.from\(gamepad\.buttons \|\| \[\]\)\.some[\s\S]*Array\.from\(gamepad\.axes \|\| \[\]\)\.some[\s\S]*setAutomaticInputMode\("controller"\)/,
   'real gamepad activity must select the controller magnetism default');
 assert.match(shell,
-  /\.control-button:hover,[\s\S]*?\.control-button:active,[\s\S]*?\.game-settings-menu\[open\] > summary[\s\S]*?background: rgba\(20, 119, 190, \.32\)/,
+  /\.control-button:hover,[\s\S]*?\.control-button:active,[\s\S]*?\.game-settings-menu\[open\] > summary[\s\S]*?background: rgba\(238, 143, 76, \.32\)/,
   'game controls must share the same hover, pressed, and open visual state');
 assert.match(shell,
   /canvas\.addEventListener\("pointerdown"[\s\S]*setAutomaticInputMode\("keyboard-mouse"\)[\s\S]*document\.addEventListener\("keydown"[\s\S]*setAutomaticInputMode\("keyboard-mouse"\)/,
